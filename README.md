@@ -1,1 +1,1 @@
-# Agile-Project-Team2
+# Agile Software Engineering Team 2
