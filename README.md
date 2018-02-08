@@ -1,3 +1,4 @@
-# Agile Software Engineering Team 2
+# GrantMan [![Build Satus](https://travis-ci.com/gavinhenderson/AC31007-Team2.svg?token=zGHzssRv4pwPdCHDq9fz&branch=master)]
+## AC31009 Team 2
 
-Now a java project. i think....
+A research grant management system.
