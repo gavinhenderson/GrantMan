@@ -10,3 +10,4 @@ script:
   - npm test
 notifications:
   email: false
+  slack: jdmc-team:uDadFX5DSkCQ4bnZFJwOEISx
