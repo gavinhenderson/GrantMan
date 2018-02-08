@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - "4.1"
+  - "4.0"
+install:
+  - npm i -g mocha
+  - cd server
+  - npm i
+script:
+  - npm test
+notifications:
+  email: false
