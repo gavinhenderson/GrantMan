@@ -1,7 +1,7 @@
 language: node_js
 node_js:
-  - "4.1"
-  - "4.0"
+  - "lts/*"
+  - "node"
 install:
   - npm i -g mocha
   - cd server
