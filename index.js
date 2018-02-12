@@ -1,10 +1,15 @@
-// Dependencies
-const express = require('express');
-const LocalStrategy = require('passport-local').Strategy;
+// Dependencies ================================================================
+const express  = require('express');
 const mongoose = require('mongoose');
-const fs = require('fs');
-const https = require('https');
+const fs       = require('fs');
+const https    = require('https');
+const passport = require('passport');
 
+const LocalStrategy = require('passport-local').Strategy;
+const cookieParser  = require('cookie-parser');
+const bodyParser    = require('body-parser');
+
+// Setup =======================================================================
 // Debug CLI option
 var debug = false;
 if (process.argv[2] == "--debug") debug = true;
@@ -12,19 +17,10 @@ if (process.argv[2] == "--debug") debug = true;
 // Express setup
 const app = express();
 
-// Get SSL/TLS setup if in production
-var opts;
-if (!debug) {
-  opts = {
-    key: fs.readFileSync('/etc/letsencrypt/live/grant.mhi.io/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/grant.mhi.io/fullchain.pem')
-  }
-}
-
 // View engine
 app.set('view engine', 'ejs');
 
-// Routes
+// Routes ======================================================================
 app.get('/', (req, res) => {
   // Get the current date
   var cDate = new Date();
@@ -39,14 +35,23 @@ app.get('/', (req, res) => {
   res.render('index', { genDate: dateTime });
 });
 
+// Launch ======================================================================
 // Initialise the app
 if (debug) {
   // Debug code
   app.listen(3000, () => console.log("Debugging on port 3000"));
 } else {
   // Production code
+  // SSL/TLS options
+  const opts = {
+    key: fs.readFileSync('/etc/letsencrypt/live/grant.mhi.io/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/grant.mhi.io/fullchain.pem')
+  }
+
   // Set the app to listen on port 80
-  https.createServer(opts, app).listen(443, () => console.log("Listening on 443"));
+  https.createServer(opts, app).listen(443, () => {
+    console.log("Listening on 443");
+  });
 
   // Redirect http to https
   const http = express();
