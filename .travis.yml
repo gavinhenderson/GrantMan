@@ -11,4 +11,4 @@ notifications:
   slack:
     on_success: always
 after_success:
-  - scp -r package* views index.js root@grant.mhi.io:~/grantman -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q
+  - scp -r package* views index.js root@grant.mhi.io:~/grantman -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
