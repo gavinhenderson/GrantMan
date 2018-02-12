@@ -7,7 +7,7 @@
     "test": "mocha test",
     "start": "node index.js",
     "watch": "supervisor index.js",
-    "debug": "node index.js --debug",
+    "debug": "node index.js --debug"
   },
   "author": "",
   "license": "ISC",
