@@ -8,7 +8,6 @@ script:
   - npm test
 notifications:
   email: false
-  slack:
-    on_success: always
+  slack: jdmc-team:uDadFX5DSkCQ4bnZFJwOEISx
 after_success:
-  - scp -r package* views index.js root@grant.mhi.io:~/grantman -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+  - scp -r package* views index.js root@grant.mhi.io:~/grantman -o StrictHostKeyChecking=no
