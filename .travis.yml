@@ -10,4 +10,4 @@ script:
 notifications:
   email: false
 after_success:
-  - scp -r package* views index.js root@grant.mhi.io:~/grantman
+  - scp -r package* views index.js root@grant.mhi.io:~/grantman -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q
