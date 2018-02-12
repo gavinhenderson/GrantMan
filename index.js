@@ -21,6 +21,11 @@ app.get('/', (req, res) => {
 });
 
 // Set the app to listen on port 80
-https.createServer(opts, app).listen(443, () => {
-  console.log("Listening on 443");
+https.createServer(opts, app).listen(443, () => console.log("Listening on 443"));
+
+// Redirect http to https
+const http = express();
+http.get('*', (req, res) => {
+  res.redirect('https://' + req.headers.host + req.url);
 });
+http.listen(80, () => console.log("Redirecting from port 80"));
