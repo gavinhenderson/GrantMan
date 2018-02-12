@@ -1,7 +1,6 @@
 language: node_js
 node_js:
   - "4.1"
-  - "4.0"
 install:
   - npm i -g mocha mongodb
   - npm i
@@ -9,5 +8,7 @@ script:
   - npm test
 notifications:
   email: false
+  slack:
+    on_success: always
 after_success:
   - scp -r package* views index.js root@grant.mhi.io:~/grantman -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q
