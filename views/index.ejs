@@ -4,42 +4,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css">
-    <link rel="stylesheet" type="text/css" href="bulma-carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bulma-carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-    <script type="text/javascript" src="bulma-carousel.js"></script>
+    <script type="text/javascript" src="js/bulma-carousel.js"></script>
     <title>GrantMan</title>
   </head>
 
-  <div class="container">
-  <header>
-    <% include nav %>
-  </header>
-
   <body>
-    <div class="columns" style="padding-bottom:40px;">
-      <!-- Image carousel -->
-      <div class="column is-three-quarters">
-        <div class='carousel carousel-animated carousel-animate-slide' data-autoplay="true">
-          <div class='carousel-container'  style="height:600px;">
-            <div class='carousel-item has-background is-active'>
-              <img class="is-background" src="img/crosswalk.jpg" alt="" width="640" height="310" style="border-radius:10px;"/>
-            </div>
-            <div class='carousel-item has-background'>
-              <img class="is-background" src="img/thelaw.jpg" alt="" width="640" height="100" style="border-radius:10px;"/>
-            </div>
-            <div class='carousel-item has-background'>
-              <img class="is-background" src="img/topdown.jpg" alt="" width="640" height="310" style="border-radius:10px;"/>
-            </div>
-            <div class='carousel-item has-background'>
-              <img class="is-background" src="img/top200.jpg" alt="" width="640" height="310" style="border-radius:10px;"/>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <div class="page-wrap">
       <!-- Register Box -->
       <div class="column">
-        <div class="card">
+        <div class="card login-card">
           <!-- card header -->
           <header class="card-header">
             <p class="card-header-title">
@@ -86,9 +62,7 @@
         </div>
       </div>
     </div>
+    <% include footer %>
   </body>
-</div>
-
-<% include footer %>
 
 </html>

@@ -1,0 +1,26 @@
+html {
+  height: 100%;
+}
+
+body {
+  background-image: url('/img/topdown.jpg');
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.page-wrap {
+  height: 100%;
+  margin-bottom: -60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-card {
+  max-width: 300px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -30px;
+}
