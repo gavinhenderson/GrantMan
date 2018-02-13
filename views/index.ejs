@@ -5,68 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css">
     <link rel="stylesheet" type="text/css" href="css/bulma-carousel.min.css">
-    <link rel="stylesheet" type="text/css" href="css/index.css">
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script type="text/javascript" src="js/bulma-carousel.js"></script>
     <title>GrantMan</title>
   </head>
 
   <body>
-    <div class="page-wrap">
-      <!-- Register Box -->
-      <div class="column">
-        <div class="card login-card">
-          <!-- card header -->
-          <header class="card-header">
-            <p class="card-header-title">
-              Login to Your Account
-            </p>
-          </header>
-
-
-          <!-- Card content -->
-          <div class="card-content">
-
-            <form action="/login" method="post">
-
-              <!-- Email -->
-              <div class="field">
-                <label class="label">Email</label>
-                <div class="control has-icons-left">
-                  <input class="input" type="email" placeholder="Enter your email">
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-envelope"></i>
-                  </span>
-                </div>
-              </div>
-
-              <!-- password -->
-              <div class="field">
-                <label class="label">Password</label>
-                <div class="control has-icons-left">
-                  <input class="input" type="password" placeholder="Enter your Password">
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-lock"></i>
-                  </span>
-                </div>
-              </div>
-
-              <!-- create button -->
-              <div class="field">
-                <p class="control">
-                  <button type="submit" class="button is-success">
-                    Login
-                  </button>
-                </p>
-              </div>
-
-            </form>
-
-          </div>
-        </div>
-      </div>
-    </div>
-    <% include footer %>
+    Logged in as <%= user.name %>. <a href="/logout">Logout</a>.
   </body>
 
 </html>

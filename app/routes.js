@@ -2,23 +2,20 @@
 module.exports = (app, passport) => {
 
   // Home page =================================================================
-  app.get('/', (req, res) => {
-    // Get the current date
-    var cDate = new Date();
-    var dateTime = cDate.getDate() + "/"
-                  + (cDate.getMonth()+1)  + "/"
-                  + cDate.getFullYear() + " @ "
-                  + cDate.getHours() + ":"
-                  + cDate.getMinutes() + ":"
-                  + cDate.getSeconds();
-
-    var data = {
-      genDate: dateTime,
-      loggedIn: true
-    }
-    // Pass to the template
-    res.render('index',data);
-  });
+  app.get('/',
+    (req, res) => {
+      console.log(req.user);
+      if (req.user) {
+        // Render the index
+        var data = {
+          user: req.user
+        };
+        res.render('index', data);
+      } else {
+        // Redirect to login
+        res.redirect('/login')
+      }
+    });
 
   // Login page ================================================================
   app.get('/login', (req, res) => {
@@ -29,5 +26,11 @@ module.exports = (app, passport) => {
     successRedirect: '/',
     failureRedirect: '/login'
   }));
+
+  // Logout ====================================================================
+  app.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/login');
+  });
 
 }
