@@ -17,23 +17,19 @@ if (process.argv[2] == "--debug") debug = true;
 // Express setup
 const app = express();
 
+app.use(cookieParser());
+app.use(bodyParser());
+
+// Passport setup
+app.use(session({ secret: 'UZ4*^&f14jHU@cIPF^lhLUQcivs2fD' }));
+app.use(passport.initialize());
+app.use(passport.session());
+
 // View engine
 app.set('view engine', 'ejs');
 
 // Routes ======================================================================
-app.get('/', (req, res) => {
-  // Get the current date
-  var cDate = new Date();
-  var dateTime = cDate.getDate() + "/"
-                + (cDate.getMonth()+1)  + "/"
-                + cDate.getFullYear() + " @ "
-                + cDate.getHours() + ":"
-                + cDate.getMinutes() + ":"
-                + cDate.getSeconds();
-
-  // Pass to the template
-  res.render('index', { genDate: dateTime });
-});
+require('./app/routes.js')(app, passport); // Load routes from routes.js
 
 // Launch ======================================================================
 // Initialise the app
