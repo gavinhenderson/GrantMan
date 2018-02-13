@@ -28,22 +28,7 @@ passport.deserializeUser(function(id, done) {
 passport.use(new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password'
-  },
-  function(username, password, done) {
-    // Todo: Real auth
-    if (debug) console.log('Login attempt: ' + username + ', ' + password);
-    if (username == "user@user.com") {
-      if (password == "pass") {
-        console.log('Log in success!');
-        return done(null, { name: 'Bobby Drop Tables', id: 125180 });
-      } else {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-    } else {
-      return done(null, false, { message: 'Incorrect username.' });
-    }
-  }
-));
+  }, require('./app/authenticate.js')));
 
 // Express setup
 const app = express();
