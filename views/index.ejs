@@ -26,37 +26,39 @@
 
           <!-- Card content -->
           <div class="card-content">
+            <form action="/login" method="POST">
 
-            <!-- Email -->
-            <div class="field">
-              <label class="label">Email</label>
-              <div class="control has-icons-left">
-                <input class="input" type="email" placeholder="Enter your email">
-                <span class="icon is-small is-left">
-                  <i class="fas fa-envelope"></i>
-                </span>
+              <!-- Email -->
+              <div class="field">
+                <label class="label">Email</label>
+                <div class="control has-icons-left">
+                  <input class="input" name="username" type="email" placeholder="Enter your email">
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-envelope"></i>
+                  </span>
+                </div>
               </div>
-            </div>
 
-            <!-- password -->
-            <div class="field">
-              <label class="label">Password</label>
-              <div class="control has-icons-left">
-                <input class="input" type="password" placeholder="Enter your Password">
-                <span class="icon is-small is-left">
-                  <i class="fas fa-lock"></i>
-                </span>
+              <!-- password -->
+              <div class="field">
+                <label class="label">Password</label>
+                <div class="control has-icons-left">
+                  <input class="input" name="password" type="password" placeholder="Enter your Password">
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-lock"></i>
+                  </span>
+                </div>
               </div>
-            </div>
 
-            <!-- create button -->
-            <div class="field">
-              <p class="control">
-                <button class="button is-success">
-                  Login
-                </button>
-              </p>
-            </div>
+              <!-- create button -->
+              <div class="field">
+                <p class="control">
+                  <button type="submit" class="button is-success">
+                    Login
+                  </button>
+                </p>
+              </div>
+            </form>
 
           </div>
         </div>
