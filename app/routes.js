@@ -18,7 +18,12 @@ module.exports = (app, passport) => {
 
   // Login page ================================================================
   app.get('/login', (req, res) => {
-    res.send('TODO');
+    res.render('login');
   });
+
+  app.post('/login', passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login'
+  }));
 
 }

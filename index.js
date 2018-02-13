@@ -4,10 +4,10 @@ const mongoose = require('mongoose');
 const fs       = require('fs');
 const https    = require('https');
 const passport = require('passport');
+const session  = require('express-session');
 
 const LocalStrategy = require('passport-local').Strategy;
 const cookieParser  = require('cookie-parser');
-const bodyParser    = require('body-parser');
 
 // Setup =======================================================================
 // Debug CLI option
@@ -17,16 +17,24 @@ if (process.argv[2] == "--debug") debug = true;
 // Express setup
 const app = express();
 
-app.use(cookieParser());
-app.use(bodyParser());
-
-// Passport setup
-app.use(session({ secret: 'UZ4*^&f14jHU@cIPF^lhLUQcivs2fD' }));
-app.use(passport.initialize());
-app.use(passport.session());
-
 // View engine
 app.set('view engine', 'ejs');
+
+// Passport Setup
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    // Todo: Real auth
+    if (debug) console.log('Login attempt: ' + username + ', ' + password);
+    if (username === "user") {
+      if (password === "pass") {
+        return done(null, { user: "user" });
+      } else {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, false, { message: 'Incorrect username.' });
+    }
+  }
+));
 
 // Routes ======================================================================
 require('./app/routes.js')(app, passport); // Load routes from routes.js
