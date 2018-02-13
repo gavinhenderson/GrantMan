@@ -1,0 +1,23 @@
+<nav style="padding-top:5px" class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item">
+      <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+    </a>
+  </div>
+  <div class="navbar-menu" id="navMenu">
+    <div class="navbar-start">
+      <a class="navbar-item">Home</a>
+      <a class="navbar-item">Projects</a>
+      <% if(loggedIn){ %>
+        <a class="navbar-item">Account</a>
+      <% } %>
+    </div>
+    <div class="navbar-end">
+      <% if(loggedIn){ %>
+        <a class="navbar-item button">Logout</a>
+      <% }else{ %>
+        <a class="navbar-item button">Login</a>
+      <% } %>
+    </div>
+  </div>
+</nav>

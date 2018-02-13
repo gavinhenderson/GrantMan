@@ -20,6 +20,9 @@ const app = express();
 // View engine
 app.set('view engine', 'ejs');
 
+//Serving static files
+app.use(express.static('public'));
+
 // Passport Setup
 passport.use(new LocalStrategy(
   function(username, password, done) {

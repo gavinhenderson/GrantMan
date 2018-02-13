@@ -12,8 +12,12 @@ module.exports = (app, passport) => {
                   + cDate.getMinutes() + ":"
                   + cDate.getSeconds();
 
+    var data = {
+      genDate: dateTime,
+      loggedIn: true
+    }
     // Pass to the template
-    res.render('index', { genDate: dateTime });
+    res.render('index',data);
   });
 
   // Login page ================================================================
