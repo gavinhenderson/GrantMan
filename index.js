@@ -31,7 +31,7 @@ passport.deserializeUser(function(id, done) {
 passport.use(new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password'
-  }, require('./app/authenticate.js')));
+  }, require('./app/authenticate.js')(db)));
 
 // Express setup
 const app = express();
@@ -56,7 +56,7 @@ app.use(passport.session());
 
 
 // Routes ======================================================================
-require('./app/routes.js')(app, passport); // Load routes from routes.js
+require('./app/routes.js')(app, passport, db); // Load routes from routes.js
 
 // Launch ======================================================================
 // Initialise the app

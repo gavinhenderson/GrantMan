@@ -1,7 +1,7 @@
 var mockProjects = require('./mockdata/projects.js')
 
 // app/routes.js
-module.exports = (app, passport) => {
+module.exports = (app, passport, db) => {
 
   // Home page =================================================================
   app.get('/',
