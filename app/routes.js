@@ -1,7 +1,7 @@
 var mockProjects = require('./mockdata/projects.js')
 
 // app/routes.js
-module.exports = (app, passport) => {
+module.exports = (app, passport, db) => {
 
   // Home page =================================================================
   app.get('/',
@@ -21,8 +21,8 @@ module.exports = (app, passport) => {
     });
 
   // Project page ==============================================================
-  app.get('/project', (req, res) => {
-    res.send("You clicked on project: "+req.query.id);
+  app.get('/project/:id', (req, res) => {
+    res.send("You clicked on project: "+req.params.id);
   });
 
   // Login page ================================================================

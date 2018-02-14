@@ -15,6 +15,22 @@ const bodyParser = require('body-parser');
 var debug = false;
 if (process.argv[2] == "--debug") debug = true;
 
+// Database setup
+var db = require('./app/database.js')(mongoose);
+
+// Setup test user
+require('./app/password.js').generateHash('password', (err, hash) => {
+  var usr = new db.model.User({
+    staffID: 12345,
+    password: hash,
+    email: 'a@b.co',
+    type: 'Dean',
+    name: 'Professor Iain Stewart',
+    school: 'School of Science and Engineering'
+  });
+  usr.save();
+});
+
 // Passport setup
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -28,7 +44,7 @@ passport.deserializeUser(function(id, done) {
 passport.use(new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password'
-  }, require('./app/authenticate.js')));
+  }, require('./app/authenticate.js')(db)));
 
 // Express setup
 const app = express();
@@ -53,7 +69,7 @@ app.use(passport.session());
 
 
 // Routes ======================================================================
-require('./app/routes.js')(app, passport); // Load routes from routes.js
+require('./app/routes.js')(app, passport, db); // Load routes from routes.js
 
 // Launch ======================================================================
 // Initialise the app

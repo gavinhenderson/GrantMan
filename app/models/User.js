@@ -1,45 +1,27 @@
-var mongoose = require('mongoose');
-var db = require('./connection');
-
-// Handle a connection error
-db.on('error', console.error.bind(console, 'connection error:'));
-
-// Set up Schema for users
-var Schema = mongoose.Schema;
-
-var userSchema = new Schema({
-	staffID: 
-		{
+// user.js - User schema
+module.exports = new require('mongoose').Schema({
+		staffID: {
 			type: Number,
 			required: true
 		},
-	password: 
-		{
+		password: {
 			type: String,
 			required: true
 		},
-	email: 
-		{
+		email: {
 			type: String,
 			required: true
 		},
-	type: 
-		{
+		type: {
 			type: String,
 			required: true
 		},
-	name: 
-		{
+		name: {
 			type: String,
 			required: true
 		},
-	school: 
-		{
+		school: {
 			type: String,
 			required: true
 		}
-});
-
-var User = mongoose.model('User', userSchema);
-
-module.exports = User;
+	});

@@ -1,13 +1,14 @@
 // app/authenticate.js
-module.exports = (username, password, done) => {
-  // Todo: Real auth
-  if (username == "user@user.com") {
-    if (password == "pass") {
-      return done(null, { name: 'Bobby Drop Tables', id: 125180, type: "RIS" });
-    } else {
-      return done(null, false, { message: 'Incorrect password.' });
-    }
-  } else {
-    return done(null, false, { message: 'Incorrect username.' });
-  }
-}
+module.exports = (db) => {
+  return (email, password, done) => {
+    db.model.User.findOne({ email: email }, (err, user) => {
+      if (err) return done(err);
+      if (!user) return done(null, false, { message: 'Incorrect username.' });
+      require('./password.js').verifyHash(password, user.password, (err, res) => {
+        if (err) return done(err);
+        if (!res) return done(null, false, { message: 'Incorrect password.' });
+        return done(null, user);
+      });
+    });
+  };
+};
