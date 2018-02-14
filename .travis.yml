@@ -15,3 +15,5 @@ notifications:
     on_failure: always # default: always
 after_success:
   - scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q -r package* public app views index.js root@grant.mhi.io:~/grantman
+services:
+  - mongodb
