@@ -21,8 +21,8 @@ module.exports = (app, passport) => {
     });
 
   // Project page ==============================================================
-  app.get('/project', (req, res) => {
-    res.send("You clicked on project: "+req.query.id);
+  app.get('/project/:id', (req, res) => {
+    res.send("You clicked on project: "+req.params.id);
   });
 
   // Login page ================================================================
