@@ -8,11 +8,27 @@ const session  = require('express-session');
 
 const LocalStrategy = require('passport-local').Strategy;
 const cookieParser  = require('cookie-parser');
+const bodyParser = require('body-parser');
 
 // Setup =======================================================================
-// Debug CLI option
+// Debug CLI option [should probably replace with node.env]
 var debug = false;
 if (process.argv[2] == "--debug") debug = true;
+
+// Passport setup
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  done(null, { name: 'Bobby Drop Tables', id: 125180 })
+});
+
+// Passport Setup
+passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password'
+  }, require('./app/authenticate.js')));
 
 // Express setup
 const app = express();
@@ -23,21 +39,18 @@ app.set('view engine', 'ejs');
 //Serving static files
 app.use(express.static('public'));
 
-// Passport Setup
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    // Todo: Real auth
-    if (debug) console.log('Login attempt: ' + username + ', ' + password);
-    if (username === "user") {
-      if (password === "pass") {
-        return done(null, { user: "user" });
-      } else {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, false, { message: 'Incorrect username.' });
-    }
-  }
-));
+// Cookie and body parsing for sessions
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(session({
+  secret: 'php is a dying language',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 // Routes ======================================================================
 require('./app/routes.js')(app, passport); // Load routes from routes.js
