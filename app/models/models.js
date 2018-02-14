@@ -2,5 +2,6 @@
 const mongoose = require('mongoose');
 
 module.exports = {
-  User: mongoose.model('User', require('./User.js'))
+  User: mongoose.model('User', require('./User.js')),
+  Project: mongoose.model('Project', require('./Project.js'))
 }

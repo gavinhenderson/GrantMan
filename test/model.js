@@ -79,4 +79,68 @@ describe("Models", function() {
 
 	});
 
+	describe("Project", function() {
+
+		it('should be invalid if there is no array of staff', function() {
+
+			// Create mock model
+			var user = new model.User();
+
+			// Valid User Model
+			user.validate(function(err) {
+				expect(err.errors.staff).to.exist;
+			});
+
+		});
+
+		it('should be invalid if there is no fileHash', function() {
+
+			// Create mock model
+			var user = new model.User();
+
+			// Valid User Model
+			user.validate(function(err) {
+				expect(err.errors.fileHash).to.exist;
+			});
+
+		});
+
+		it('should be invalid if there is no iteration', function() {
+
+			// Create mock model
+			var user = new model.User();
+
+			// Valid User Model
+			user.validate(function(err) {
+				expect(err.errors.iteration).to.exist;
+			});
+
+		});
+
+		it('should be invalid if there is no title', function() {
+
+			// Create mock model
+			var user = new model.User();
+
+			// Valid User Model
+			user.validate(function(err) {
+				expect(err.errors.title).to.exist;
+			});
+
+		});
+
+		it('should be invalid if there is no description', function() {
+
+			// Create mock model
+			var user = new model.User();
+
+			// Valid User Model
+			user.validate(function(err) {
+				expect(err.errors.description).to.exist;
+			});
+
+		});
+
+	});
+
 });
