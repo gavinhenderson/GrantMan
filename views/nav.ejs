@@ -7,15 +7,11 @@
   <div class="navbar-menu" id="navMenu">
     <div class="navbar-start">
       <a class="navbar-item">Home</a>
-      <% if(loggedIn){ %>
-        <a class="navbar-item">Projects</a>
-        <a class="navbar-item">Account</a>
-      <% } %>
+      <a class="navbar-item">Projects</a>
+      <a class="navbar-item">Account</a>
     </div>
     <div class="navbar-end">
-      <% if(loggedIn){ %>
-        <a class="navbar-item button is-primary" style="height:100%;">Logout</a>
-      <% } %>
+      <a href="/logout" class="navbar-item button is-primary" style="height:100%;">Logout</a>
     </div>
   </div>
 </nav>

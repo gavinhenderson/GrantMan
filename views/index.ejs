@@ -7,11 +7,77 @@
     <link rel="stylesheet" type="text/css" href="css/bulma-carousel.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script type="text/javascript" src="js/bulma-carousel.js"></script>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
     <title>GrantMan</title>
   </head>
 
-  <body>
-    Logged in as <%= user.name %>. <a href="/logout">Logout</a>.
+  <body class="container">
+    <% include nav %>
+
+    <nav class="panel">
+      <p class="panel-heading">
+        Projects
+      </p>
+      <div class="panel-block">
+        <p class="control has-icons-left">
+          <input class="input is-small" type="text" placeholder="search">
+          <span class="icon is-small is-left">
+            <i class="fas fa-search"></i>
+          </span>
+        </p>
+      </div>
+      <p class="panel-tabs">
+        <a id="inbox" onclick="updateCategory('inbox')">Inbox</a>
+        <a id="all" onclick="updateCategory('all')">All</a>
+        <a id="completed" onclick="updateCategory('completed')">Completed</a>
+        <a id="deleted" onclick="updateCategory('deleted')">Deleted</a>
+      </p>
+      <a class="panel-block panel-element">
+        <span class="panel-icon">
+          <i class="fas fa-book"></i>
+        </span>
+        Test
+      </a>
+    </nav>
+    <% include footer %>
   </body>
 
+  <script>
+    var projects = <%- JSON.stringify(projects); %>;
+
+    var current = "inbox";
+
+    updateCategory(current);
+
+    function removeActive(){
+      $("#all").removeClass('is-active');
+      $("#inbox").removeClass('is-active');
+      $("#completed").removeClass('is-active');
+      $("#deleted").removeClass('is-active');
+    }
+
+    function updateCategory(newCat){
+      current = newCat;
+      removeActive();
+      $("#"+newCat).addClass('is-active');
+      update();
+    }
+
+    function update(){
+      $('.panel-element').remove();
+      projects[current].forEach(function(project){
+        var html = [
+          "<a class='panel-block panel-element'>",
+          "<span class='panel-icon'>",
+          "<i class='fas fa-book'></i>",
+          "</span>",
+          "<p style='text-align:left;width:70%'>"+project.name+"</p>",
+          "<p style='text-align:right;width:30%'>"+project.status+"</p>",
+          "</a>"].join("");
+        $('.panel').append(html);
+      });
+    }
+  </script>
 </html>
