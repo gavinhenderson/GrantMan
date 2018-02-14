@@ -20,7 +20,7 @@ function update(){
   $('.panel-element').remove();
   projects[current].forEach(function(project){
     var html = [
-      "<a class='panel-block panel-element'>",
+      "<a class='panel-block panel-element' href='/project?id="+project.id+"'>",
       "<span class='panel-icon'>",
       "<i class='fas fa-book'></i>",
       "</span>",

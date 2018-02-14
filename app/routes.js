@@ -20,6 +20,11 @@ module.exports = (app, passport) => {
       }
     });
 
+  // Project page ==============================================================
+  app.get('/project', (req, res) => {
+    res.send("You clicked on project: "+req.query.id);
+  });
+
   // Login page ================================================================
   app.get('/login', (req, res) => {
     res.render('login');

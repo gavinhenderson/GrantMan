@@ -21,7 +21,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  done(null, { name: 'Bobby Drop Tables', id: 125180 })
+  done(null, { name: 'Bobby Drop Tables', id: 125180, type:"RIS" })
 });
 
 // Passport Setup
