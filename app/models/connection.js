@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 // Connect to the local mongodb instance
-mongoose.connect('mongodb://localhost/grant');
+mongoose.connect('mongodb://127.0.0.1:27017/grant');
 
 // Hold an instance of that connection to make available
 var db = mongoose.connection;
