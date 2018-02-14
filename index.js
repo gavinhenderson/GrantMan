@@ -15,6 +15,9 @@ const bodyParser = require('body-parser');
 var debug = false;
 if (process.argv[2] == "--debug") debug = true;
 
+// Database setup
+var db = require('./app/database.js')();
+
 // Passport setup
 passport.serializeUser(function(user, done) {
   done(null, user.id);
