@@ -15,11 +15,11 @@ module.exports = (mongoose) => {
   });
 
   // Register schemas
-  var User = mongoose.model('User', require('models/User.js'));
+  var models = require('./models/models.js');
 
   // Return connection and models
   return {
     connection: mongoose.connection,
-    User: User
+    model: models
   };
 }

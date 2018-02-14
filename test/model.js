@@ -1,16 +1,16 @@
 var expect = require('chai').expect;
-var UserModel = require('../app/models/User');
+var model = require('../app/models/models.js')
 
 describe("Models", function() {
 
-	describe("UserModel", function() {
+	describe("User", function() {
 
 		it('should be invalid if there is no staffID', function() {
 
 			// Create mock model
-			var user = new UserModel();
-			
-			// Valid User Model 
+			var user = new model.User();
+
+			// Valid User Model
 			user.validate(function(err) {
 				expect(err.errors.staffID).to.exist;
 			});
@@ -20,9 +20,9 @@ describe("Models", function() {
 		it('should be invalid if there is no password', function() {
 
 			// Create mock model
-			var user = new UserModel();
-			
-			// Valid User Model 
+			var user = new model.User();
+
+			// Valid User Model
 			user.validate(function(err) {
 				expect(err.errors.password).to.exist;
 			});
@@ -32,9 +32,9 @@ describe("Models", function() {
 		it('should be invalid if there is no email', function() {
 
 			// Create mock model
-			var user = new UserModel();
-			
-			// Valid User Model 
+			var user = new model.User();
+
+			// Valid User Model
 			user.validate(function(err) {
 				expect(err.errors.email).to.exist;
 			});
@@ -44,9 +44,9 @@ describe("Models", function() {
 		it('should be invalid if there is no type', function() {
 
 			// Create mock model
-			var user = new UserModel();
-			
-			// Valid User Model 
+			var user = new model.User();
+
+			// Valid User Model
 			user.validate(function(err) {
 				expect(err.errors.type).to.exist;
 			});
@@ -56,9 +56,9 @@ describe("Models", function() {
 		it('should be invalid if there is no name', function() {
 
 			// Create mock model
-			var user = new UserModel();
-			
-			// Valid User Model 
+			var user = new model.User();
+
+			// Valid User Model
 			user.validate(function(err) {
 				expect(err.errors.name).to.exist;
 			});
@@ -68,9 +68,9 @@ describe("Models", function() {
 		it('should be invalid if there is no school', function() {
 
 			// Create mock model
-			var user = new UserModel();
-			
-			// Valid User Model 
+			var user = new model.User();
+
+			// Valid User Model
 			user.validate(function(err) {
 				expect(err.errors.school).to.exist;
 			});
@@ -78,5 +78,5 @@ describe("Models", function() {
 		});
 
 	});
-	
+
 });

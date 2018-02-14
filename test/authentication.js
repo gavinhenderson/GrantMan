@@ -11,13 +11,15 @@ var mockUser = {
 }
 
 var db = {
-  User: {
-    findOne: (obj) => {
-      if (obj.email == mockUser.email) {
-        return mockUser;
+  model: {
+    User: {
+      findOne: (obj) => {
+        if (obj.email == mockUser.email) {
+          return mockUser;
+        }
       }
     },
-  },
+  }
 }
 
 // Tests =======================================================================
