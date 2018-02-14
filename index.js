@@ -33,11 +33,15 @@ require('./app/password.js').generateHash('password', (err, hash) => {
 
 // Passport setup
 passport.serializeUser(function(user, done) {
-  done(null, user.id);
+  done(null, user.staffId);
 });
 
 passport.deserializeUser(function(id, done) {
-  done(null, { name: 'Bobby Drop Tables', id: 125180, type:"RIS" })
+  db.model.User.findOne({ staffId: id }, (err, user) {
+    if (err) return done(err);
+    if (!user) return done(null, false, "User not found.");
+    return done(null, user);
+  });
 });
 
 // Passport Setup
