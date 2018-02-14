@@ -16,7 +16,7 @@ var debug = false;
 if (process.argv[2] == "--debug") debug = true;
 
 // Database setup
-var db = require('./app/database.js')();
+var db = require('./app/database.js')(mongoose);
 
 // Passport setup
 passport.serializeUser(function(user, done) {
