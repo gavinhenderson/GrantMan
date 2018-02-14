@@ -1,0 +1,32 @@
+var current = "inbox";
+
+updateCategory(current);
+
+function removeActive(){
+  $("#all").removeClass('is-active');
+  $("#inbox").removeClass('is-active');
+  $("#completed").removeClass('is-active');
+  $("#deleted").removeClass('is-active');
+}
+
+function updateCategory(newCat){
+  current = newCat;
+  removeActive();
+  $("#"+newCat).addClass('is-active');
+  update();
+}
+
+function update(){
+  $('.panel-element').remove();
+  projects[current].forEach(function(project){
+    var html = [
+      "<a class='panel-block panel-element'>",
+      "<span class='panel-icon'>",
+      "<i class='fas fa-book'></i>",
+      "</span>",
+      "<p style='text-align:left;width:70%'>"+project.name+"</p>",
+      "<p style='text-align:right;width:30%'>"+project.status+"</p>",
+      "</a>"].join("");
+    $('.panel').append(html);
+  });
+}
