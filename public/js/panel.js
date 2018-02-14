@@ -7,13 +7,16 @@ function removeActive(){
   $("#inbox").removeClass('is-active');
   $("#completed").removeClass('is-active');
   $("#deleted").removeClass('is-active');
+  $("#search").removeClass('is-active');
 }
 
 function updateCategory(newCat){
   current = newCat;
   removeActive();
   $("#"+newCat).addClass('is-active');
-  update();
+  if(current!='search'){
+    update()
+  }
 }
 
 function update(){
