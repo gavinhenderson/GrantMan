@@ -10,15 +10,15 @@ module.exports = new Schema({
 	},
 	staff: {
 		type: Array,
-		required: true
+		required: false
 	},
 	fileHash: {
 		type: String,
-		required: true
+		required: false
 	},
 	iteration: {
 		type: Number,
-		required: true
+		required: false
 	},
 	title: {
 		type: String,

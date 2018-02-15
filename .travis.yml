@@ -5,6 +5,7 @@ install:
   - npm i -g mocha mongodb
   - npm i
 script:
+  - node setupMockDB.js -d
   - npm test
 notifications:
   email: false
@@ -14,6 +15,6 @@ notifications:
     on_success: change # default: always
     on_failure: always # default: always
 after_success:
-  - scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q -r package* public app views index.js root@grant.mhi.io:~/grantman
+  - scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q -r package* public app views index.js setupMockDB.js root@grant.mhi.io:~/grantman
 services:
   - mongodb
