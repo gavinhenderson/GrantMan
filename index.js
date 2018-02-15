@@ -33,7 +33,7 @@ require('./app/password.js').generateHash('password', (err, hash) => {
 
 // Passport setup
 passport.serializeUser(function(user, done) {
-  done(null, user.staffId);
+  done(null, user.staffID);
 });
 
 passport.deserializeUser(function(id, done) {
