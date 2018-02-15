@@ -55,6 +55,8 @@
   </body>
 
   <script>
+    console.log(<%- JSON.stringify(user) %>);
+
     var projects = <%- JSON.stringify(projects); %>;
 
     function search(searchString, tabClick){
