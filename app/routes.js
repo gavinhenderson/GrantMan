@@ -40,6 +40,11 @@ module.exports = (app, passport, db) => {
     res.render('createaccount',{user:req.user})
   });
 
+  app.post('/createaccount', (req,res) => {
+    console.log(req.body);
+    res.send('Account created');
+  })
+
   // Logout ====================================================================
   app.get('/logout', (req, res) => {
     req.logout();
