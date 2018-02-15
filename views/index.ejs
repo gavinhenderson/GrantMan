@@ -11,6 +11,7 @@
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
     <title>GrantMan</title>
+    <link rel="icon" type="image/png" href="img/favicon.png">
   </head>
 
   <body class="container">
@@ -22,13 +23,13 @@
       </p>
       <div class="panel-block">
         <p class="control has-icons-left">
-          <input class="input is-small" type="text" placeholder="search">
+          <input class="input is-small" type="text" placeholder="search" id="searchBox">
           <span class="icon is-small is-left">
             <i class="fas fa-search"></i>
           </span>
         </p>
       </div>
-      <p class="panel-tabs">
+      <p class="panel-tabs" id="tabs">
         <a id="inbox" onclick="updateCategory('inbox')">Inbox</a>
         <a id="all" onclick="updateCategory('all')">All</a>
         <a id="completed" onclick="updateCategory('completed')">Completed</a>
@@ -55,6 +56,49 @@
 
   <script>
     var projects = <%- JSON.stringify(projects); %>;
+
+    function search(searchString, tabClick){
+      if(!tabClick){
+        if($('#search').length == 0 ){
+          $('#tabs').append('<a id="search" onclick="updateCategory(\'search\')">Search</a>');
+          updateCategory('search')
+        }else{
+          updateCategory('search');
+        }
+      };
+
+      $('.panel-element').remove()
+
+      var results = [];
+
+      function checkString(results, project){
+        if(project.name.toLowerCase().includes(searchString.toLowerCase())){
+          results.push(project);
+        }
+      }
+
+      for(var key in projects){
+        projects[key].forEach(project => checkString(results,project))
+      }
+
+      //console.log(JSON.stringify(results))
+
+      results.forEach(function (project){
+        var html = [
+          "<a class='panel-block panel-element' href='/project/"+project.id+"'>",
+          "<span class='panel-icon'>",
+          "<i class='fas fa-book'></i>",
+          "</span>",
+          "<p style='text-align:left;width:70%'>"+project.name+"</p>",
+          "<p style='text-align:right;width:30%'>"+project.status+"</p>",
+          "</a>"].join("");
+        $('.panel').append(html);
+      });
+    }
+
+    $('#searchBox').keyup(function(){
+      search($('#searchBox')[0].value);
+    })
   </script>
   <script src="js/panel.js"></script>
 </html>
