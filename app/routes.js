@@ -60,6 +60,11 @@ module.exports = (app, passport, db) => {
     failureRedirect: '/login'
   }));
 
+  // Create account ===========================================================
+  app.get('/createaccount', (req, res) => {
+    res.render('createaccount',{user:req.user})
+  });
+
   // Logout ====================================================================
   app.get('/logout', (req, res) => {
     req.logout();
