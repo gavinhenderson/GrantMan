@@ -7,7 +7,7 @@ module.exports = new Schema({
 	projectId: {
 		type: Number,
 		required: true
-	}
+	},
 	staff: {
 		type: Array,
 		required: true
