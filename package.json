@@ -2,9 +2,13 @@
   "name": "grantman-server",
   "version": "1.0.0",
   "description": "",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/GavinHenderson/AC31007-Team2.git"
+  },
   "main": "index.js",
   "scripts": {
-    "test": "mocha test",
+    "test": "mocha test --exit",
     "start": "node index.js --debug"
   },
   "author": "",
