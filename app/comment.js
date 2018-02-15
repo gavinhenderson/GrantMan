@@ -5,6 +5,10 @@ module.exports = (db) => {
       // Get the project
       db.model.Project.findOne({ projectId: projectId}, (err, project) => {
         // Add a comment
+        if (err) {
+          cb(err);
+          return;
+        }
         var comment = new db.model.Comment({
           comment: comment,
           projectId: projectId,
