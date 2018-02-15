@@ -11,7 +11,7 @@ if (process.argv[2] == "--drop" || process.argv[2] == "-d") {
 
 // Users =======================================================================
 var count = 0;
-function addUser(staffId, email, type, name) {
+function addUser(email, type, name) {
   require('./app/password.js').generateHash('password', (err, hash) => {
   var usr = new db.model.User({
     staffID: count++,
