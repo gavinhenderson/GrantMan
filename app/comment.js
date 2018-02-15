@@ -13,7 +13,7 @@ module.exports = (db) => {
         comment.save();
         cb();
       });
-    }
+    },
     getComments: (projectId, user, cb) => {
       db.model.Comment.find({ projectId: projectId }, (err, comments) => {
         if (err) cb(err);
