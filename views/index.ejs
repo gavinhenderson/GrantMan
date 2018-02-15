@@ -56,28 +56,35 @@
   <script>
     var projects = <%- JSON.stringify(projects); %>;
 
-    function search(searchString){
-      if($('#search').length == 0 ){
-        $('#tabs').append('<a id="search" onclick="updateCategory(\'search\')">Search</a>');
-        updateCategory('search')
-      }else{
-        updateCategory('search');
-      }
-      $('.panel-element').remove();
+    function search(searchString, tabClick){
+      if(!tabClick){
+        if($('#search').length == 0 ){
+          $('#tabs').append('<a id="search" onclick="updateCategory(\'search\')">Search</a>');
+          updateCategory('search')
+        }else{
+          updateCategory('search');
+        }
+      };
+
+      $('.panel-element').remove()
 
       var results = [];
 
-      for(var key in projects){
-        projects[key].forEach(function(project){
-          if(project.name==searchString){
-            results += project;
-          }
-        })
+      function checkString(results, project){
+        if(project.name.toLowerCase().includes(searchString.toLowerCase())){
+          results.push(project);
+        }
       }
+
+      for(var key in projects){
+        projects[key].forEach(project => checkString(results,project))
+      }
+
+      //console.log(JSON.stringify(results))
 
       results.forEach(function (project){
         var html = [
-          "<a class='panel-block panel-element' href='/project?id="+project.id+"'>",
+          "<a class='panel-block panel-element' href='/project/"+project.id+"'>",
           "<span class='panel-icon'>",
           "<i class='fas fa-book'></i>",
           "</span>",

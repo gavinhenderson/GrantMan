@@ -16,6 +16,8 @@ function updateCategory(newCat){
   $("#"+newCat).addClass('is-active');
   if(current!='search'){
     update()
+  }else{
+    search($('#searchBox')[0].value,true);
   }
 }
 
