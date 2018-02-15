@@ -60,3 +60,5 @@ addComment('Oh, hello! This is another comment', 1, 1);
 addComment('Oh why hello! Can you please give me a grant?', 3, 1);
 addComment('Ok then, let me get this approved for you.', 1, 1);
 addComment('Great work!.', 2, 1);
+
+setTimeout(() => { process.exit(0); }, 5000);
