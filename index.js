@@ -18,19 +18,6 @@ if (process.argv[2] == "--debug") debug = true;
 // Database setup
 var db = require('./app/database.js')(mongoose);
 
-// Setup test user
-require('./app/password.js').generateHash('password', (err, hash) => {
-  var usr = new db.model.User({
-    staffID: 12345,
-    password: hash,
-    email: 'a@b.co',
-    type: 'Dean',
-    name: 'Professor Iain Stewart',
-    school: 'School of Science and Engineering'
-  });
-  usr.save();
-});
-
 // Passport setup
 passport.serializeUser(function(user, done) {
   done(null, user.staffID);
