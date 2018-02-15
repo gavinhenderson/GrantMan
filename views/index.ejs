@@ -14,10 +14,10 @@
     <link rel="icon" type="image/png" href="img/favicon.png">
   </head>
 
-  <body class="container">
+  <body class="container" style="margin-bottom:50px">
     <% include nav %>
     <hr>
-    <nav class="panel">
+    <nav class="panel" style="max-width:800px; margin:auto;">
       <p class="panel-heading">
         Projects
       </p>
@@ -82,8 +82,6 @@
       for(var key in projects){
         projects[key].forEach(project => checkString(results,project))
       }
-
-      //console.log(JSON.stringify(results))
 
       results.forEach(function (project){
         var html = [
