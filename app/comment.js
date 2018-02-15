@@ -9,13 +9,12 @@ module.exports = (db) => {
           cb(err);
           return;
         }
-        var comment = new db.model.Comment({
+        var commentModel = new db.model.Comment({
           comment: comment,
+          staffID: user,
           projectId: projectId,
-          staffID: user.staffID
         });
-        comment.save();
-        cb();
+        commentModel.save(cb);
       });
     },
     getComments: (projectId, user, cb) => {
