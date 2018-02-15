@@ -3,37 +3,7 @@ var mongoose = require('mongoose');
 // Project.js - Project Schema
 var Schema = mongoose.Schema;
 
-var statusSchema = new Schema({
-	action: {
-		type: String,
-		required: true
-	},
-	staffID: {
-		type: Number,
-		required: true
-	},
-	timestamp: {
-		type: Date,
-		required: true
-	},
-});
-
-var CommentSchema = new Schema({
-	comment: {
-		type: String,
-		required: true
-	},
-	staffID: {
-		type: Number,
-		required: true
-	},
-	timestamp: {
-		type: Date,
-		required: true
-	},
-});
-
-var projectSchema = new Schema({
+module.exports = new Schema({
 	staff: {
 		type: Array,
 		required: true
@@ -54,8 +24,7 @@ var projectSchema = new Schema({
 		type: String,
 		required: true
 	},
-	status: [statusSchema],
-	comment:[CommentSchema]
+	author: {type: Number, required: true},
+	statuses: [{type: Number,}],
+	comments:[{type: Number}]
 });
-
-module.exports = projectSchema;
