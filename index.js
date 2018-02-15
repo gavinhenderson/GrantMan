@@ -37,7 +37,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  db.model.User.findOne({ staffId: id }, (err, user) {
+  db.model.User.findOne({ staffId: id }, (err, user) => {
     if (err) return done(err);
     if (!user) return done(null, false, "User not found.");
     return done(null, user);
