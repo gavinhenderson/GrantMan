@@ -65,12 +65,13 @@ module.exports = (app, passport, db) => {
 
   // Login page ================================================================
   app.get('/login', (req, res) => {
-    res.render('login');
+    res.render('login', {message: req.flash('error')});
   });
 
   app.post('/login', passport.authenticate('local', {
     successRedirect: '/',
-    failureRedirect: '/login'
+    failureRedirect: '/login',
+    failureFlash: 'Invalid username or password.'
   }));
 
   // Create account ===========================================================
@@ -80,10 +81,7 @@ module.exports = (app, passport, db) => {
 
   app.post('/createaccount', (req,res) => {
     console.log(req.body);
-    require('./account').createUser(req.body, function(user){
-      user.save();
-      res.send('Account created');
-    });
+    res.send('Account created');
   })
 
   // Logout ====================================================================

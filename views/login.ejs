@@ -28,7 +28,11 @@
 
           <!-- Card content -->
           <div class="card-content">
-
+            <% if (message.length) { %>
+            <div class="notification is-danger">
+              <p><%= message %></p>
+            </div>
+            <% } %>
             <form action="/login" method="post">
 
               <!-- Email -->

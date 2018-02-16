@@ -5,6 +5,7 @@ const fs       = require('fs');
 const https    = require('https');
 const passport = require('passport');
 const session  = require('express-session');
+const flash    = require('connect-flash')
 
 const LocalStrategy = require('passport-local').Strategy;
 const cookieParser  = require('cookie-parser');
@@ -57,6 +58,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 
 // Routes ======================================================================
