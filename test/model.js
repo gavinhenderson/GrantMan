@@ -5,74 +5,81 @@ describe("Models", function() {
 
 	describe("User", function() {
 
-		it('should be invalid if there is no staffID', function() {
+		it('should be invalid if there is no staffID', function(done) {
 
 			// Create mock model
-			var user = new model.User();
+			var user = new model.User({staffID: 1});
 
 			// Valid User Model
 			user.validate(function(err) {
-				expect(err.errors.staffID).to.exist;
+				if (err.errors.staffID) done(err.errors.staffID);
+				else done();
 			});
 
 		});
 
-		it('should be invalid if there is no password', function() {
+		it('should be invalid if there is no password', function(done) {
 
 			// Create mock model
-			var user = new model.User();
+			var user = new model.User({password: "test"});
+			// var user = new model.User();
 
 			// Valid User Model
 			user.validate(function(err) {
-				expect(err.errors.password).to.exist;
+				if (err.errors.password) done(err.errors.password);
+				else done();
 			});
 
 		});
 
-		it('should be invalid if there is no email', function() {
+		it('should be invalid if there is no email', function(done) {
 
 			// Create mock model
-			var user = new model.User();
+			var user = new model.User({email: "test@example.com"});
 
 			// Valid User Model
 			user.validate(function(err) {
-				expect(err.errors.email).to.exist;
+				if (err.errors.email) done(err.errors.email);
+				else done();
 			});
 
 		});
 
-		it('should be invalid if there is no type', function() {
+		it('should be invalid if there is no type', function(done) {
 
 			// Create mock model
-			var user = new model.User();
+			var user = new model.User({type: "test"});
 
 			// Valid User Model
 			user.validate(function(err) {
-				expect(err.errors.type).to.exist;
+				if (err.errors.type) done(err.errors.type);
+				else done();
 			});
 
 		});
 
-		it('should be invalid if there is no name', function() {
+		it('should be invalid if there is no name', function(done) {
 
 			// Create mock model
-			var user = new model.User();
+			var user = new model.User({name: "test"});
 
 			// Valid User Model
 			user.validate(function(err) {
-				expect(err.errors.name).to.exist;
+				if (err.errors.name) done(err.errors.name);
+				else done();
 			});
 
 		});
 
-		it('should be invalid if there is no school', function() {
+		it('should be invalid if there is no school', function(done) {
 
 			// Create mock model
-			var user = new model.User();
+			var user = new model.User({school: "test"});
 
 			// Valid User Model
 			user.validate(function(err) {
-				expect(err.errors.school).to.exist;
+				if (err.errors.school) done(err.errors.school);
+				else done();
 			});
 
 		});
