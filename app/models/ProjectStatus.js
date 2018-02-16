@@ -12,8 +12,8 @@ module.exports = new Schema({
 		type: Number,
 		required: true
 	},
-  projectId: {
-    type: Number,
+  project: {
+    type: Schema.Types.ObjectId,
     required: true
   },
 	timestamp: { type: Date, default: Date.now },

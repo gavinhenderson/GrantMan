@@ -42,7 +42,88 @@ describe('Projects', () => {
           assert.ok(err);
           done();
         });
-      })
-    })
+      });
+    });
   });
+
+  describe('Status update', () => {
+    it('a researcher can set the project status to waiting', done => {
+      db.model.User.findOne({ type: 'Researcher' }, (err, user) => {
+        if (err) done(err);
+        assert.ok(user);
+
+        project.updateStatus("Waiting", 1, user, done);
+      });
+    });
+    it('a RIS staff member can set the project status to waiting', done => {
+      db.model.User.findOne({ type: 'RIS' }, (err, user) => {
+        if (err) done(err);
+        assert.ok(user);
+
+        project.updateStatus("Waiting", 1, user, done);
+      });
+    });
+    it('a Dean can set the project status to waiting', done => {
+      db.model.User.findOne({ type: 'Dean' }, (err, user) => {
+        if (err) done(err);
+        assert.ok(user);
+
+        project.updateStatus("Waiting", 1, user, done);
+      });
+    });
+    it('a RIS staff member can set the project status to complete', done => {
+      db.model.User.findOne({ type: 'RIS' }, (err, user) => {
+        if (err) done(err);
+        assert.ok(user);
+
+        project.updateStatus("Complete", 1, user, done);
+      });
+    });
+    it('a Dean can set the project status to complete', done => {
+      db.model.User.findOne({ type: 'Dean' }, (err, user) => {
+        if (err) done(err);
+        assert.ok(user);
+
+        project.updateStatus("Complete", 1, user, done);
+      });
+    });
+    it('a RIS staff member can set the project status to rejected', done => {
+      db.model.User.findOne({ type: 'RIS' }, (err, user) => {
+        if (err) done(err);
+        assert.ok(user);
+
+        project.updateStatus("Rejected", 1, user, done);
+      });
+    });
+    it('a Dean can set the project status to rejected', done => {
+      db.model.User.findOne({ type: 'Dean' }, (err, user) => {
+        if (err) done(err);
+        assert.ok(user);
+
+        project.updateStatus("Rejected", 1, user, done);
+      });
+    });
+    it('a Researcher cannot set the project status to complete', done => {
+      db.model.User.findOne({ type: 'Researcher' }, (err, user) => {
+        if (err) done(err);
+        assert.ok(user);
+
+        project.updateStatus("Complete", 1, user, err => {
+          assert.ok(err);
+          done();
+        });
+      });
+    });
+    it('a Researcher cannot set the project status to rejected', done => {
+      db.model.User.findOne({ type: 'Researcher' }, (err, user) => {
+        if (err) done(err);
+        assert.ok(user);
+
+        project.updateStatus("Rejected", 1, user, err => {
+          assert.ok(err);
+          done();
+        });
+      });
+    });
+  })
 });

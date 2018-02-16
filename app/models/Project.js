@@ -29,6 +29,6 @@ module.exports = new Schema({
 		required: true
 	},
 	author: {type: Number, required: true},
-	statuses: [{type: Number,}],
+	status: {type: Schema.Types.ObjectId, ref: 'ProjectStatus'},
 	comments:[{type: Number}]
 });
