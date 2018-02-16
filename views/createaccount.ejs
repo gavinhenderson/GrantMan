@@ -17,48 +17,48 @@
   <body class="container" style="margin-bottom:50px;">
     <% include nav %><hr>
     <div class="container" style="padding:20px; max-width:600px; margin:auto;">
-
-    <div class="field">
-      <label class="label">Staff ID</label>
-      <div class="control has-icons-left has-icons-right">
-        <input class="input" type="text" placeholder="Text input">
-        <span class="icon is-small is-left">
-          <i class="fas fa-user"></i>
-        </span>
-      </div>
-    </div>
-
-    <div class="field">
-      <label class="label">Staff Position</label>
-      <div class="control">
-        <div class="select">
-          <select>
-            <option>Researcher</option>
-            <option>RIS</option>
-            <option>Dean</option>
-            <option>Associate Dean</option>
-          </select>
+    <form method="POST">
+      <div class="field">
+        <label class="label">Staff ID</label>
+        <div class="control has-icons-left has-icons-right">
+          <input class="input" type="text" name="id" placeholder="Text input" required>
+          <span class="icon is-small is-left">
+            <i class="fas fa-user"></i>
+          </span>
         </div>
       </div>
-    </div>
 
-    <div class="field">
-      <label class="label">School</label>
-      <div class="control">
-        <div class="select">
-          <select>
-            <option>Science and Engineering</option>
-            <option>Art & Design</option>
-          </select>
+      <div class="field">
+        <label class="label">Staff Position</label>
+        <div class="control">
+          <div class="select">
+            <select name="type">
+              <option>Researcher</option>
+              <option>RIS</option>
+              <option>Dean</option>
+              <option>Associate Dean</option>
+            </select>
+          </div>
         </div>
       </div>
-    </div>
+
+      <div class="field">
+        <label class="label">School</label>
+        <div class="control">
+          <div class="select">
+            <select name="school" required>
+              <option>Science and Engineering</option>
+              <option>Art & Design</option>
+            </select>
+          </div>
+        </div>
+      </div>
 
 
       <div class="field">
         <label class="label">Name</label>
         <div class="control">
-          <input class="input" type="text" placeholder="Text input">
+          <input name="name" class="input" type="text" placeholder="Text input" required>
         </div>
       </div>
 
@@ -67,7 +67,7 @@
       <div class="field">
         <label class="label">Email</label>
         <div class="control has-icons-left has-icons-right">
-          <input class="input" type="email" placeholder="Email input">
+          <input class="input" type="email" name="email" placeholder="Email input" required>
           <span class="icon is-small is-left">
             <i class="fas fa-envelope"></i>
           </span>
@@ -78,7 +78,7 @@
       <div class="field">
         <label class="label">Password</label>
         <div class="control has-icons-left has-icons-right">
-          <input class="input" type="password" placeholder="Password input">
+          <input class="input" type="password" name="password" id="password" placeholder="Password input" required>
           <span class="icon is-small is-left">
             <i class="fas fa-lock"></i>
           </span>
@@ -88,7 +88,7 @@
       <div class="field">
         <label class="label">Confirm Password</label>
         <div class="control has-icons-left has-icons-right">
-          <input class="input" type="password" placeholder="Password input">
+          <input class="input" type="password" id="confirm" placeholder="Password input" required>
           <span class="icon is-small is-left">
             <i class="fas fa-lock"></i>
           </span>
@@ -97,13 +97,10 @@
 
       <div class="field is-grouped">
         <div class="control">
-          <button class="button is-link">Submit</button>
-        </div>
-        <div class="control">
-          <button class="button is-text">Cancel</button>
+          <button class="button is-link" type="submit" id="submit" disabled>Submit</button>
         </div>
       </div>
-    </div>
+    </form>
     <% include footer %>
     <style>
       #footer {
@@ -114,4 +111,19 @@
         width:100%;
       }
     </style>
+
+    <script>
+      function checkPasswords(){
+        console.log($('#password')[0].value)
+        console.log($('#confirm')[0].value)
+        if($('#password')[0].value==$('#confirm')[0].value && $('#password')[0].value.length != 0){
+          document.getElementById("submit").disabled = false;
+        } else {
+          document.getElementById("submit").disabled = true;        }
+      }
+
+      $('#password').keyup(function(){ return checkPasswords() });
+      $('#confirm').keyup(function(){ return checkPasswords() });
+
+    </script>
   </body>
