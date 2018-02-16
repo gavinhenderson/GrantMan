@@ -32,7 +32,7 @@ module.exports = (app, passport, db) => {
 
   // Get projects ==============================================================
   app.get('/project', (req, res) => {
-    project.getProjects(req.params.id, req.user, (err, projects) => {
+    project.getProjects(req.user, (err, projects) => {
       if (err) res.send(err);
       res.send(projects);
     });
