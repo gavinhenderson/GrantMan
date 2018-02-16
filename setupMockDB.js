@@ -1,64 +1,83 @@
 const mongoose = require("mongoose");
 const db = require("./app/database.js")(mongoose);
 
+const pw = require('./app/password.js');
+
 // Remove prior ================================================================
 if (process.argv[2] == "--drop" || process.argv[2] == "-d") {
-  db.model.User.remove({});
-  db.model.Project.remove({});
-  db.model.ProjectStatus.remove({});
-  db.model.Comment.remove({});
+  db.model.User.remove({}, () => {});
+  db.model.Project.remove({}, () => {});
+  db.model.ProjectStatus.remove({}, () => {});
+  db.model.Comment.remove({}, () => {});
 }
 
 // Users =======================================================================
-var count = 0;
-function addUser(email, type, name) {
-  require('./app/password.js').generateHash('password', (err, hash) => {
-  var usr = new db.model.User({
-    staffID: count++,
+pw.generateHash('password', (err, hash) => { // RIS
+  db.model.User({
+    staffID: 1,
     password: hash,
-    email: email,
-    type: type,
-    name: name,
+    email: 'ris@dundee.ac.uk',
+    type: 'RIS',
+    name: 'Fred Gregington',
     school: 'School of Science and Engineering'
-  });
-  usr.save();
-  });
-}
-
-addUser('ris@dundee.ac.uk', 'RIS', 'Fred Gregington');
-addUser('dean@dundee.ac.uk', 'Dean', 'Professor Iain Stewart');
-addUser('researcher@dundee.ac.uk', 'Researcher', 'Greg Fredington');
+  }).save();
+});
+pw.generateHash('password', (err, hash) => { // Dean
+  new db.model.User({
+    staffID: 2,
+    password: hash,
+    email: 'dean@dundee.ac.uk',
+    type: 'Dean',
+    name: 'Professor Iain Stewart',
+    school: 'School of Science and Engineering'
+  }).save();
+});
+pw.generateHash('password', (err, hash) => { // Researcher
+  new db.model.User({
+    staffID: 3,
+    password: hash,
+    email: 'researcher@dundee.ac.uk',
+    type: 'Researcher',
+    name: 'Greg Fredington',
+    school: 'School of Science and Engineering'
+  }).save();
+});
 
 // Projects ====================================================================
-var count = 0;
-function addProject(title, description, user) {
-  var prj = new db.model.Project({
-    projectId: count++,
-    title: title,
-    description: description,
-    author: user
-  });
-  prj.save();
-}
-
-addProject('Project 1', 'Description for project 1', 3);
-addProject('Project 2', 'Description for project 2', 3);
-addProject('Project 3', 'Description for project 3', 3);
+new db.model.Project({ // Project 1
+  projectId: 1,
+  title: 'Project 1',
+  description: 'Description for project 1',
+  author: 3
+}).save();
+new db.model.Project({ // Project 2
+  projectId: 1,
+  title: 'Project 2',
+  description: 'Description for project 2',
+  author: 3
+}).save();
+new db.model.Project({ // Project 3
+  projectId: 1,
+  title: 'Project 3',
+  description: 'Description for project 3',
+  author: 3
+}).save();
 
 // Comments ====================================================================
-function addComment(comment, user, project) {
-  var comment = new db.model.Comment({
-    comment: comment,
-    projectId: project,
-    staffID: user,
-  });
-  comment.save();
-}
-
-addComment('Hello this is a comment!', 3, 1);
-addComment('Oh, hello! This is another comment', 1, 1);
-addComment('Oh why hello! Can you please give me a grant?', 3, 1);
-addComment('Ok then, let me get this approved for you.', 1, 1);
-addComment('Great work!.', 2, 1);
+new db.model.Comment({ // Researcher comment
+  comment: 'Hello this is a comment',
+  projectId: 1,
+  staffID: 3,
+}).save();
+new db.model.Comment({ // RIS comment
+  comment: 'This is another comment',
+  projectId: 1,
+  staffID: 1,
+}).save();
+new db.model.Comment({ // Dean comment
+  comment: 'Approved!',
+  projectId: 1,
+  staffID: 2,
+}).save();
 
 setTimeout(() => { process.exit(0); }, 5000);
