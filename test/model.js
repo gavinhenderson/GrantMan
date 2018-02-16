@@ -1,5 +1,5 @@
-var expect = require('chai').expect;
-var model = require('../app/models/models.js')
+var expect = require("chai").expect;
+var model = require("../app/models/models.js");
 
 describe("Models", function() {
 
@@ -88,7 +88,7 @@ describe("Models", function() {
 
 	describe("Project", function() {
 
-		it('should be invalid if there is no array of staff', function() {
+		it("should be invalid if there is no array of staff", function() {
 
 			// Create mock model
 			var user = new model.User();
@@ -100,7 +100,7 @@ describe("Models", function() {
 
 		});
 
-		it('should be invalid if there is no fileHash', function() {
+		it("should be invalid if there is no fileHash", function() {
 
 			// Create mock model
 			var user = new model.User();
@@ -112,7 +112,7 @@ describe("Models", function() {
 
 		});
 
-		it('should be invalid if there is no iteration', function() {
+		it("should be invalid if there is no iteration", function() {
 
 			// Create mock model
 			var user = new model.User();
@@ -124,7 +124,7 @@ describe("Models", function() {
 
 		});
 
-		it('should be invalid if there is no title', function() {
+		it("should be invalid if there is no title", function() {
 
 			// Create mock model
 			var user = new model.User();
@@ -136,7 +136,7 @@ describe("Models", function() {
 
 		});
 
-		it('should be invalid if there is no description', function() {
+		it("should be invalid if there is no description", function() {
 
 			// Create mock model
 			var user = new model.User();
