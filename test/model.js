@@ -91,11 +91,12 @@ describe("Models", function() {
 		it("should be invalid if there is no array of staff", function() {
 
 			// Create mock model
-			var user = new model.User();
+			var project = new model.Project({projectId: 1});
 
 			// Valid User Model
-			user.validate(function(err) {
-				expect(err.errors.staff).to.exist;
+			project.validate(function(err) {
+				if (err.errors.projectId) done(err.errors.projectId);
+				else done();
 			});
 
 		});
@@ -103,11 +104,12 @@ describe("Models", function() {
 		it("should be invalid if there is no fileHash", function() {
 
 			// Create mock model
-			var user = new model.User();
+			var project = new model.Project({fileHash: "test"});
 
 			// Valid User Model
-			user.validate(function(err) {
-				expect(err.errors.fileHash).to.exist;
+			project.validate(function(err) {
+				if (err.errors.fileHash) done(err.errors.fileHash);
+				else done();
 			});
 
 		});
@@ -115,11 +117,12 @@ describe("Models", function() {
 		it("should be invalid if there is no iteration", function() {
 
 			// Create mock model
-			var user = new model.User();
+			var project = new model.Project({iteration: 1});
 
 			// Valid User Model
-			user.validate(function(err) {
-				expect(err.errors.iteration).to.exist;
+			project.validate(function(err) {
+				if (err.errors.iteration) done(err.errors.iteration);
+				else done();
 			});
 
 		});
@@ -127,11 +130,12 @@ describe("Models", function() {
 		it("should be invalid if there is no title", function() {
 
 			// Create mock model
-			var user = new model.User();
+			var project = new model.Project({title: "test"});
 
 			// Valid User Model
-			user.validate(function(err) {
-				expect(err.errors.title).to.exist;
+			project.validate(function(err) {
+				if (err.errors.title) done(err.errors.title);
+				else done();
 			});
 
 		});
@@ -139,11 +143,12 @@ describe("Models", function() {
 		it("should be invalid if there is no description", function() {
 
 			// Create mock model
-			var user = new model.User();
+			var project = new model.Project({description: "test"});
 
 			// Valid User Model
-			user.validate(function(err) {
-				expect(err.errors.description).to.exist;
+			project.validate(function(err) {
+				if (err.errors.description) done(err.errors.description);
+				else done();
 			});
 
 		});
