@@ -1,8 +1,13 @@
 var mockProjects = require('./mockdata/projects.js');
+
+var project = require('./project.js');
 var comment = require('./comment.js');
 
 // app/routes.js
 module.exports = (app, passport, db) => {
+
+  project = project(db);
+  comment = comment(db);
 
   // Home page =================================================================
   app.get('/',
@@ -24,6 +29,14 @@ module.exports = (app, passport, db) => {
   // ###########################################################################
   // PROJECTS
   // ###########################################################################
+
+  // Get projects ==============================================================
+  app.get('/project', (req, res) => {
+    project.getProjects(req.params.id, req.user, (err, projects) => {
+      if (err) res.send(err);
+      res.send(projects);
+    });
+  });
 
   // Project page ==============================================================
   app.get('/project/:id', (req, res) => {
