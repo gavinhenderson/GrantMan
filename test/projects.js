@@ -108,7 +108,7 @@ describe('Projects', () => {
         if (err) done(err);
         assert.ok(user);
 
-        project.updateStatus("Complete", 1, user, err => {
+        project.updateStatus("Completed", 1, user, err => {
           assert.ok(err);
           done();
         });
