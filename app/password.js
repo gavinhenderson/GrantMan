@@ -1,14 +1,14 @@
 // Password helper
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 // Default options
 const options = {
-  saltRounds: 10
+	saltRounds: 10
 };
 
 module.exports = {
-  generateHash: (password, cb) => {
-    bcrypt.hash(password, options.saltRounds, cb);
-  },
-  verifyHash: bcrypt.compare
-}
+	generateHash: (password, cb) => {
+		bcrypt.hash(password, options.saltRounds, cb);
+	},
+	verifyHash: bcrypt.compare
+};

@@ -5,7 +5,7 @@ describe("Models", function() {
 
 	describe("User", function() {
 
-		it('should be invalid if there is no staffID', function(done) {
+		it("should be invalid if there is no staffID", function(done) {
 
 			// Create mock model
 			var user = new model.User({staffID: 1});
@@ -18,7 +18,7 @@ describe("Models", function() {
 
 		});
 
-		it('should be invalid if there is no password', function(done) {
+		it("should be invalid if there is no password", function(done) {
 
 			// Create mock model
 			var user = new model.User({password: "test"});
@@ -32,7 +32,7 @@ describe("Models", function() {
 
 		});
 
-		it('should be invalid if there is no email', function(done) {
+		it("should be invalid if there is no email", function(done) {
 
 			// Create mock model
 			var user = new model.User({email: "test@example.com"});
@@ -45,7 +45,7 @@ describe("Models", function() {
 
 		});
 
-		it('should be invalid if there is no type', function(done) {
+		it("should be invalid if there is no type", function(done) {
 
 			// Create mock model
 			var user = new model.User({type: "test"});
@@ -58,7 +58,7 @@ describe("Models", function() {
 
 		});
 
-		it('should be invalid if there is no name', function(done) {
+		it("should be invalid if there is no name", function(done) {
 
 			// Create mock model
 			var user = new model.User({name: "test"});
@@ -71,7 +71,7 @@ describe("Models", function() {
 
 		});
 
-		it('should be invalid if there is no school', function(done) {
+		it("should be invalid if there is no school", function(done) {
 
 			// Create mock model
 			var user = new model.User({school: "test"});

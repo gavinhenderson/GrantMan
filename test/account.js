@@ -1,7 +1,7 @@
 var assert = require("assert");
 var account = require("../app/account.js");
-var mongoose = require('mongoose');
-var db = require('../app/database.js')(mongoose);
+var mongoose = require("mongoose");
+var db = require("../app/database.js")(mongoose);
 
 var mockUser = {
 	name: "Bobby",

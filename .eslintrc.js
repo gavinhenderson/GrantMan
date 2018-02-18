@@ -4,13 +4,13 @@ module.exports = {
         "es6": true,
         "amd": true
     },
-    "extends": "eslint:recommended",
     "parserOptions": {
         "sourceType": "module"
     },
     "globals": {
       "describe": true,
-      "it": true
+      "it": true,
+      "process": true
     },
     "rules": {
         "indent": [

@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 
 // Project.js - Project Schema
 var Schema = mongoose.Schema;
@@ -29,6 +29,6 @@ module.exports = new Schema({
 		required: true
 	},
 	author: {type: Number, required: true},
-	status: {type: Schema.Types.ObjectId, ref: 'ProjectStatus'},
+	status: {type: Schema.Types.ObjectId, ref: "ProjectStatus"},
 	comments:[{type: Number}]
 });
