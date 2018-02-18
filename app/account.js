@@ -1,9 +1,11 @@
 // app/account.js
 module.exports = {
-  createUser : function(userDetails,cb){
+  createUser : function(db, userDetails, cb){
     require('./password.js').generateHash(userDetails.password, (err, hash) => {
-      const mongoose = require("mongoose");
-      const db = require("./database.js")(mongoose);
+      if (err) {
+        cb(err);
+        return;
+      }
       var newUsr = new db.model.User({
         staffID: userDetails.id,
         password: hash,
@@ -12,7 +14,7 @@ module.exports = {
         name: userDetails.name,
         school: userDetails.school
       });
-      cb(newUsr);
+      cb();
     });
   }
 }

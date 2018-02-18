@@ -80,7 +80,7 @@ module.exports = (app, passport, db) => {
   });
 
   app.post('/createaccount', (req,res) => {
-    require('./account.js').createUser(req.body,function(user){
+    require('./account.js').createUser(db, req.body, function(user){
       user.save();
     });
     res.send('Account created');
