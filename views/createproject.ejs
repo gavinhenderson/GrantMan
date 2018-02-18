@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css">
+    <link rel="stylesheet" type="text/css" href="css/bulma-carousel.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <script type="text/javascript" src="js/bulma-carousel.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <title>GrantMan</title>
+    <link rel="icon" type="image/png" href="img/favicon.png">
+  </head>
+
+  <body class="container" style="margin-bottom:70px">
+    <% include nav %><hr>
+    <form method="POST"><div class="columns" style="padding:10px; margin:auto; max-width:700px;">
+      <div class="column is-three-fifths">
+
+        <!-- Title -->
+        <div class="field">
+          <label class="label">Project Title</label>
+          <div class="control">
+            <input class="input" type="text" name="title" id="password" placeholder="Project Title" required>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="field">
+          <label class="label">Project Description</label>
+          <div class="control">
+            <textarea class="textarea" name="description" placeholder="Enter your project description" required></textarea>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="column is-two-fifths">
+        <div class="file is-boxed has-name" style="height:100%;">
+          <label class="file-label" style="margin: auto auto;">
+            <input class="file-input" type="file" accept=".zip" name="files" id="file" required>
+            <span class="file-cta">
+              <span class="file-icon">
+                <i class="fas fa-upload"></i>
+              </span>
+              <span class="file-label">
+                Choose a file…
+              </span>
+            </span>
+            <span class="file-name" id="filename">
+              No file selected
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <p class="control" style="text-align:center;">
+        <button class="button is-success">
+          Create
+        </button>
+      </p>
+    </div>
+
+    </form>
+    <% include footer %>
+    <script>
+    var file = document.getElementById("file");
+    file.onchange = function(){
+      if(file.files.length > 0){
+        document.getElementById('filename').innerHTML = 					file.files[0].name;
+      }
+    };
+
+    </script>
+  </body>

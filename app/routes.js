@@ -86,6 +86,16 @@ module.exports = (app, passport, db) => {
     res.send('Account created');
   })
 
+  // Create project ============================================================
+  app.get('/createproject', (req,res) => {
+    res.render('createproject',{user:req.user});
+  })
+
+  app.post('/createproject',(req,res) => {
+    console.log(req.body);
+    res.send(req.body);
+  });
+
   // Logout ====================================================================
   app.get('/logout', (req, res) => {
     req.logout();
