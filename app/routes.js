@@ -48,7 +48,7 @@ module.exports = (app, passport, db) => {
       titleHash: "abs",
       description: "This is a description of the project",
       author: {
-        name: "Iain Murray"
+        name: "Iain Murray",
         school: "Science and Engineering",
       },
       statusMessage: "RIS approval required",
