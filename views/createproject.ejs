@@ -37,23 +37,46 @@
 
       </div>
 
+
       <div class="column is-two-fifths">
-        <div class="file is-boxed has-name" style="height:100%;">
-          <label class="file-label" style="margin: auto auto;">
-            <input class="file-input" type="file" accept=".zip" name="files" id="file" required>
+
+        <!-- Spreadsheet -->
+        <div class="file is-boxed has-name">
+          <label class="file-label" style="margin: 0 auto;">
+            <input class="file-input" type="file" accept=".xls,.xlsx" name="spreadsheet" id="spreadsheet" required>
             <span class="file-cta">
               <span class="file-icon">
                 <i class="fas fa-upload"></i>
               </span>
               <span class="file-label">
-                Choose a file…
+                Spreadsheet Uplaod
               </span>
             </span>
-            <span class="file-name" id="filename">
+            <span class="file-name" id="spreadsheetname">
               No file selected
             </span>
           </label>
         </div>
+
+        <!-- Brief -->
+        <div class="file is-boxed has-name">
+          <label class="file-label" style="margin: 0 auto;">
+            <input class="file-input" type="file" accept=".doc,.docx" name="brief" id="brief" required>
+            <span class="file-cta">
+              <span class="file-icon">
+                <i class="fas fa-upload"></i>
+              </span>
+              <span class="file-label">
+                Brief Upload
+              </span>
+            </span>
+            <span class="file-name" id="briefname">
+              No file selected
+            </span>
+          </label>
+        </div>
+
+
       </div>
     </div>
 
@@ -67,11 +90,18 @@
 
     </form>
     <% include footer %>
+
     <script>
-    var file = document.getElementById("file");
-    file.onchange = function(){
-      if(file.files.length > 0){
-        document.getElementById('filename').innerHTML = 					file.files[0].name;
+    var brief = document.getElementById("brief");
+    var spreadsheet = document.getElementById("spreadsheet");
+    brief.onchange = function(){
+      if(brief.files.length > 0){
+        document.getElementById('breifname').innerHTML = brief.files[0].name;
+      }
+    };
+    spreadsheet.onchange = function(){
+      if(spreadsheet.files.length > 0){
+        document.getElementById('spreadsheetname').innerHTML = spreadsheet.files[0].name;
       }
     };
 

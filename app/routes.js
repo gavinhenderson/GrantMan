@@ -40,7 +40,42 @@ module.exports = (app, passport, db) => {
 
 	// Project page ==============================================================
 	app.get("/project/:id", (req, res) => {
-		res.send("You clicked on project: "+req.params.id);
+    // /public/files/[id]/[projec title hash]/brief.doc
+    // /public/files/[id]/[projec title hash]/spreadsheet.xls
+    var testProject = {
+      projectId: req.params.id,
+      title: "Practice Project",
+      titleHash: "abs",
+      description: "This is a description of the project",
+      author: {
+        name: "Iain Murray"
+        school: "Science and Engineering",
+      },
+      statusMessage: "RIS approval required",
+      statuses: [
+        {
+          editor: {
+            name: "Timmy",
+            type: "Dean"
+          },
+          statusMessage: "Researcher ammendment required",
+          timestamp: "21/21/21",
+          comment: ""
+        },
+        {
+          editor: {
+            name: "Johnny",
+            type: "AssocDean"
+          },
+          statusMessage: "RIS approval required",
+          timestamp: "21/21/21",
+          comment: "Looks good"
+        }
+      ],
+    }
+
+    res.render("project",{ project: testProject });
+		//res.send("You clicked on project: "+req.params.id);
 	});
 
 	// Comments ==================================================================
