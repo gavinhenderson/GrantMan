@@ -5,6 +5,7 @@ const fs       = require("fs");
 const https    = require("https");
 const passport = require("passport");
 const session  = require("express-session");
+const mstore   = require("connect-mongodb-session")(session);
 const flash    = require("connect-flash");
 
 const LocalStrategy = require("passport-local").Strategy;
@@ -41,6 +42,19 @@ passport.use(new LocalStrategy({
 // Express setup
 const app = express();
 
+// Store setup
+var store = new mstore(
+	{
+	  uri: 'mongodb://localhost:27017/grantman_sessions',
+	  collection: 'mySessions'
+	});
+
+// Catch errors
+store.on('error', function(error) {
+	assert.ifError(error);
+	assert.ok(false);
+});
+
 // View engine
 app.set("view engine", "ejs");
 
@@ -52,6 +66,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
+	store: store,
 	secret: "php is a dying language",
 	resave: false,
 	saveUninitialized: false
