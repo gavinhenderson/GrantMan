@@ -8,18 +8,6 @@ module.exports = new Schema({
 		type: Number,
 		required: true
 	},
-	staff: {
-		type: Array,
-		required: false
-	},
-	fileHash: {
-		type: String,
-		required: false
-	},
-	iteration: {
-		type: Number,
-		required: false
-	},
 	title: {
 		type: String,
 		required: true
@@ -29,6 +17,16 @@ module.exports = new Schema({
 		required: true
 	},
 	author: {type: Number, required: true},
-	status: {type: Schema.Types.ObjectId, ref: "ProjectStatus"},
-	comments:[{type: Number}]
+	statusMessage: {type: String, required: false},
+	statuses: [
+		{
+			editor: {type: Number}, // Dean set the project status to Researcher ammendement required
+			timestamp: {type: Date, default: Date.now},
+			statusMessage: {
+				type: String,
+				enum: ['RIS approval', 'Researcher amendment', 'Researcher approval', 'Dean approval', 'Associate Dean approval', 'Project complete']
+			},
+			comment: {type: String}
+		}
+	]
 });
