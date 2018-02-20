@@ -4,16 +4,27 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 module.exports = new Schema({
-	action: {
+	statusMessage: {
 		type: String,
-		required: true
+		enum: [
+			"RIS approval"
+		, "Researcher amendment"
+		, "Researcher approval"
+		, "Dean approval"
+		, "Associate Dean approval"
+		, "Project approved"
+		]
 	},
-	staffID: {
+	editor: {
 		type: Number,
 		required: true
 	},
-	project: {
-		type: Schema.Types.ObjectId,
+	comment: {
+		type: String,
+		required: false
+	},
+	projectId: {
+		type: Number,
 		required: true
 	},
 	timestamp: { type: Date, default: Date.now },

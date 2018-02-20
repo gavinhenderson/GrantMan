@@ -14,6 +14,7 @@ module.exports = new require("mongoose").Schema({
 	},
 	type: {
 		type: String,
+		enum: ["RIS", "Researcher", "Dean", "Associate Dean"],
 		required: true
 	},
 	name: {

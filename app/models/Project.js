@@ -17,16 +17,6 @@ module.exports = new Schema({
 		required: true
 	},
 	author: {type: Number, required: true},
-	statusMessage: {type: String, required: false},
-	statuses: [
-		{
-			editor: {type: Number}, // Dean set the project status to Researcher ammendement required
-			timestamp: {type: Date, default: Date.now},
-			statusMessage: {
-				type: String,
-				enum: ['RIS approval', 'Researcher amendment', 'Researcher approval', 'Dean approval', 'Associate Dean approval', 'Project complete']
-			},
-			comment: {type: String}
-		}
-	]
+	status: {type: Schema.ObjectId, ref: "ProjectStatus"},
+	statuses: [{type: Schema.ObjectId, ref: "ProjectStatus"}]
 });
