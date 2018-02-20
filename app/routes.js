@@ -1,7 +1,6 @@
 var mockProjects = require("./mockdata/projects.js");
 
 var project = require("./project.js");
-var comment = require("./comment.js");
 
 // app/routes.js
 module.exports = (app, passport, db) => {
@@ -52,18 +51,12 @@ module.exports = (app, passport, db) => {
 		//res.send("You clicked on project: "+req.params.id);
 	});
 
-	// Comments ==================================================================
-	app.get("/project/:id/comments", (req, res) => {
-		comment.getComments(req.params.id, req.user, (err, comments) => {
-			if (err) res.send(err);
-			res.send(comments);
-		});
-	});
-
-	app.post("/project/:id/comments", (req, res) => {
-		if (!req.body.comment) res.send("Error: A comment body is required");
-		comment.postComment(req.params.id, req.body.comment, req.user, () => {
-			res.send("Success.");
+	// Status ====================================================================
+	app.post("/project/:id/status", (req, res) => {
+		if (!req.body.action) { res.send("Error: A new status is required"); return; }
+		project.updateStatus(req.body.action, req.body.comment, req.params.id, req.user, (err) => {
+			if (err) { res.send(err); return; }
+			res.redirect("/project/" + req.params.id);
 		});
 	});
 
