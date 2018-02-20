@@ -2,22 +2,51 @@
 const permissions = require('./permission.js');
 module.exports = (db) => {
 	return {
+		getProject: (projectId, cb) => {
+			db.model.Project.findOne({ projectId: projectId })
+				.populate({
+					path: "author",
+					select: "name type"
+				})
+				.populate({
+					path: "statuses",
+					populate: {
+						path: "editor",
+						select: "name type"
+					}
+				})
+				.populate({
+					path: "status",
+					populate: {
+						path: "editor",
+						select: "name type"
+					}
+				})
+				.exec((err, project) => {
+					if (err) return cb(err);
+					cb(null, project);
+				});
+		},
 		getProjects: (user, cb) => {
 			// Check if user exists
 			if (user.type == "Researcher") {
 				db.model.Project.find({ author: user._id })
 					.populate({
+						path: "author",
+						select: "name type"
+					})
+					.populate({
 						path: "statuses",
 						populate: {
 							path: "editor",
-							select: "name"
+							select: "name type"
 						}
 					})
 					.populate({
 						path: "status",
 						populate: {
 							path: "editor",
-							select: "name"
+							select: "name type"
 						}
 					})
 					.exec((err, projects) => {
@@ -26,17 +55,21 @@ module.exports = (db) => {
 			} else {
 				db.model.Project.find({ })
 					.populate({
+						path: "author",
+						select: "name type"
+					})
+					.populate({
 						path: "statuses",
 						populate: {
 							path: "editor",
-							select: "name"
+							select: "name type"
 						}
 					})
 					.populate({
 						path: "status",
 						populate: {
 							path: "editor",
-							select: "name"
+							select: "name type"
 						}
 					})
 					.exec((err, projects) => {

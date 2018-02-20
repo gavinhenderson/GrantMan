@@ -51,7 +51,7 @@
     <p>A <font color="red"><%= status.editor.type %> (<%= status.editor.name %>)</font>
       set the status to <font color="blue">'<%= status.statusMessage %>'</font>
       at <font color="green"><%= status.timestamp %></font></p>
-    <% if(status.comment.length!=0){ %>
+    <% if(status.comment && status.comment.length!=0){ %>
     <p><i><%= status.comment %></i></p>
     <% } %>
     <hr>

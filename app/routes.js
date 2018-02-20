@@ -14,12 +14,15 @@ module.exports = (app, passport, db) => {
 		(req, res) => {
 			console.log(req.user);
 			if (req.user) {
-				// Render the index
-				var data = {
-					user: req.user,
-					projects: mockProjects
-				};
-				res.render("index", data);
+				project.getProjects(req.user, (err, projects) => {
+					if (err) { res.send(err); return; }
+					// Render the index
+					var data = {
+						user: req.user,
+						projects: projects
+					};
+					res.render("index", data);
+				});
 			} else {
 				// Redirect to login
 				res.redirect("/login");
@@ -42,39 +45,10 @@ module.exports = (app, passport, db) => {
 	app.get("/project/:id", (req, res) => {
     // /public/files/[id]/[projec title hash]/brief.doc
     // /public/files/[id]/[projec title hash]/spreadsheet.xls
-    var testProject = {
-      projectId: req.params.id,
-      title: "Practice Project",
-      titleHash: "abs",
-      description: "This is a description of the project This is a description of the project This is a description of the project This is a description of the project This is a description of the project This is a description of the project This is a description of the project This is a description of the project This is a description of the project This is a description of the project This is a description of the project This is a description of the project This is a description of the project This is a description of the project",
-      author: {
-        name: "Iain Murray",
-        school: "Science and Engineering",
-      },
-      statusMessage: "Researcher approval",
-      statuses: [
-        {
-          editor: {
-            name: "Timmy",
-            type: "Dean"
-          },
-          statusMessage: "Researcher ammendment required",
-          timestamp: "21/21/21",
-          comment: "This is a very long coment to see what comments look like on the webpage when the are very long like this comment which is designed to be very long"
-        },
-        {
-          editor: {
-            name: "Johnny",
-            type: "AssocDean"
-          },
-          statusMessage: "RIS approval required",
-          timestamp: "21/21/21",
-          comment: "Looks good"
-        }
-      ],
-    }
-
-    res.render("project",{ user: req.user, project: testProject });
+    project.getProject(req.params.id, (err, proj) => {
+			if (err) { res.send(err); return; }
+			res.render("project", { user: req.user, project: proj });
+		});
 		//res.send("You clicked on project: "+req.params.id);
 	});
 
