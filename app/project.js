@@ -4,26 +4,21 @@ module.exports = (db) => {
 	return {
 		getProjects: (user, cb) => {
 			// Check if user exists
-			db.model.User.findOne({ staffID: user.staffID }, (err, usr) => {
-				if (err) return cb(err);
-				if (usr === null) return cb(new Error("User does not exist"));
-
-				if (user.type == "Researcher") {
-					db.model.Project.find({ author: user.staffID })
-						.populate("statuses")
-						.populate("status")
-						.exec((err, projects) => {
-							cb(null, projects);
-						});
-				} else {
-					db.model.Project.find({ })
-						.populate("statuses")
-						.populate("status")
-						.exec((err, projects) => {
-							cb(null, projects);
-						});
-				}
-			});
+			if (user.type == "Researcher") {
+				db.model.Project.find({ author: user._id })
+					.populate("statuses")
+					.populate("status")
+					.exec((err, projects) => {
+						cb(null, projects);
+					});
+			} else {
+				db.model.Project.find({ })
+					.populate("statuses")
+					.populate("status")
+					.exec((err, projects) => {
+						cb(null, projects);
+					});
+			}
 		},
 		updateStatus: (action, comment, projectId, user, cb) => {
 			// Check status change is valid
@@ -40,9 +35,9 @@ module.exports = (db) => {
 					// Create the entity
 					var nStatus = new db.model.ProjectStatus({
 						statusMessage: action,
-						editor: user.staffID,
+						editor: user._id,
 						comment: comment,
-						projectId: project.projectId,
+						projectId: project._id,
 					});
 					// Save to the database
 					nStatus.save(err => {
