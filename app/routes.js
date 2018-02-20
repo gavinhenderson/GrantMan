@@ -6,7 +6,6 @@ var project = require("./project.js");
 module.exports = (app, passport, db) => {
 
 	project = project(db);
-	comment = comment(db);
 
 	// Home page =================================================================
 	app.get("/",
