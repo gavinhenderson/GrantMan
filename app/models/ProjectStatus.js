@@ -16,16 +16,16 @@ module.exports = new Schema({
 		]
 	},
 	editor: {
-		type: Number,
-		required: true
+		type: Schema.ObjectId,
+		ref: "User"
 	},
 	comment: {
 		type: String,
 		required: false
 	},
 	projectId: {
-		type: Number,
-		required: true
+		type: Schema.ObjectId,
+		ref: "User"
 	},
 	timestamp: { type: Date, default: Date.now },
 });
