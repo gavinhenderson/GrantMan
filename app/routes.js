@@ -127,7 +127,6 @@ module.exports = (app, passport, db) => {
 	});
 
 	app.post("/createproject",(req,res) => {
-		console.log(req.body);
 		res.send(req.body);
 	});
 
