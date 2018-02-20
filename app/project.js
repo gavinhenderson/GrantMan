@@ -6,15 +6,39 @@ module.exports = (db) => {
 			// Check if user exists
 			if (user.type == "Researcher") {
 				db.model.Project.find({ author: user._id })
-					.populate("statuses")
-					.populate("status")
+					.populate({
+						path: "statuses",
+						populate: {
+							path: "editor",
+							select: "name"
+						}
+					})
+					.populate({
+						path: "status",
+						populate: {
+							path: "editor",
+							select: "name"
+						}
+					})
 					.exec((err, projects) => {
 						cb(null, projects);
 					});
 			} else {
 				db.model.Project.find({ })
-					.populate("statuses")
-					.populate("status")
+					.populate({
+						path: "statuses",
+						populate: {
+							path: "editor",
+							select: "name"
+						}
+					})
+					.populate({
+						path: "status",
+						populate: {
+							path: "editor",
+							select: "name"
+						}
+					})
 					.exec((err, projects) => {
 						cb(null, projects);
 					});
