@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const db = require("./app/database.js")(mongoose);
 
 const pw = require("./app/password.js");
+const pj = require("./app/project.js")(db);
 
 // Remove prior ================================================================
 if (process.argv[2] == "--drop" || process.argv[2] == "-d") {
@@ -44,40 +45,36 @@ pw.generateHash("password", (err, hash) => { // Researcher
 });
 
 // Projects ====================================================================
+var editor = {
+	staffID: 1,
+	type: "Researcher"
+}
 new db.model.Project({ // Project 1
 	projectId: 1,
 	title: "Project 1",
 	description: "Description for project 1",
 	author: 3
-}).save();
+}).save((err) => {
+	if (err) console.log(err);
+	pj.updateStatus("RIS approval", null, 1, editor, () => {});
+});
 new db.model.Project({ // Project 2
-	projectId: 1,
+	projectId: 2,
 	title: "Project 2",
 	description: "Description for project 2",
 	author: 3
-}).save();
+}).save((err) => {
+	if (err) console.log(err);
+	pj.updateStatus("RIS approval", null, 2, editor, () => {});
+});
 new db.model.Project({ // Project 3
-	projectId: 1,
+	projectId: 3,
 	title: "Project 3",
 	description: "Description for project 3",
 	author: 3
-}).save();
-
-// Comments ====================================================================
-new db.model.Comment({ // Researcher comment
-	comment: "Hello this is a comment",
-	projectId: 1,
-	staffID: 3,
-}).save();
-new db.model.Comment({ // RIS comment
-	comment: "This is another comment",
-	projectId: 1,
-	staffID: 1,
-}).save();
-new db.model.Comment({ // Dean comment
-	comment: "Approved!",
-	projectId: 1,
-	staffID: 2,
-}).save();
+}).save((err) => {
+	if (err) console.log(err);
+	pj.updateStatus("RIS approval", null, 3, editor, () => {});
+});
 
 setTimeout(() => { process.exit(0); }, 5000);
