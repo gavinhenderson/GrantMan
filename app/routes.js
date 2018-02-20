@@ -46,12 +46,12 @@ module.exports = (app, passport, db) => {
       projectId: req.params.id,
       title: "Practice Project",
       titleHash: "abs",
-      description: "This is a description of the project",
+      description: "This is a description of the project This is a description of the project This is a description of the project This is a description of the project This is a description of the project This is a description of the project This is a description of the project This is a description of the project This is a description of the project This is a description of the project This is a description of the project This is a description of the project This is a description of the project This is a description of the project",
       author: {
         name: "Iain Murray",
         school: "Science and Engineering",
       },
-      statusMessage: "RIS approval required",
+      statusMessage: "Researcher approval",
       statuses: [
         {
           editor: {
@@ -60,7 +60,7 @@ module.exports = (app, passport, db) => {
           },
           statusMessage: "Researcher ammendment required",
           timestamp: "21/21/21",
-          comment: ""
+          comment: "This is a very long coment to see what comments look like on the webpage when the are very long like this comment which is designed to be very long"
         },
         {
           editor: {
@@ -74,7 +74,7 @@ module.exports = (app, passport, db) => {
       ],
     }
 
-    res.render("project",{ project: testProject });
+    res.render("project",{ user: req.user, project: testProject });
 		//res.send("You clicked on project: "+req.params.id);
 	});
 

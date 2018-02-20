@@ -1,1 +1,142 @@
-This is project: <%= project.id %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css">
+    <link rel="stylesheet" type="text/css" href="/css/bulma-carousel.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <script type="text/javascript" src="/js/bulma-carousel.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <title>GrantMan</title>
+    <link rel="icon" type="/image/png" href="img/favicon.png">
+  </head>
+
+  <body class="container" style="margin-bottom:60px;">
+  <% include nav %><hr>
+
+  <div class="tile is-ancestor" style="padding:10px">
+  <div class="tile is-parent is-9">
+    <div class="tile is-child box">
+      <p class="title"><%= project.title %></p>
+      <p class="subtitle"><%= project.author.name %></p>
+      <p><%= project.description %></p>
+    </div>
+  </div>
+  <div class="tile is-parent is-3">
+    <div class="tile is-child box">
+      <p class="title">Downloads</p>
+      <p style="margin-bottom:20px"><a class="button is-success" style="margin-left:10px">
+        <span class="icon is-small">
+          <i class="fas fa-download"></i>
+        </span>
+        <span>Spreadsheet</span>
+      </a></p>
+      <p><a class="button is-success"  style="margin-left:10px">
+        <span class="icon is-small">
+          <i class="fas fa-download"></i>
+        </span>
+        <span>Project Brief</span>
+      </a></p>
+    </div>
+  </div>
+  </div>
+
+  <div style="padding:10px;">
+  <h3 class="title is-4">History</h3><hr>
+
+  <% project.statuses.forEach(function(status){ %>
+    <p>A <font color="red"><%= status.editor.type %> (<%= status.editor.name %>)</font>
+      set the status to <font color="blue">'<%= status.statusMessage %>'</font>
+      at <font color="green"><%= status.timestamp %></font></p>
+    <% if(status.comment.length!=0){ %>
+    <p><i><%= status.comment %></i></p>
+    <% } %>
+    <hr>
+  <% }); %>
+  </div>
+
+  <% if(
+    (user.type=="RIS" && project.statusMessage=="RIS approval")||
+    (user.type=="Researcher" && (project.statusMessage == "Researcher amendment" || project.statusMessage == "Researcher approval"))||
+    (user.type=="Dean" && project.statusMessage == "Dean approval")||
+    (user.type=="AssDean" && project.statusMessage== "AssDean approval")
+  ){%>
+
+  <div style="padding:10px" class="columns">
+    <div class="column is-three-quarter">
+      <label class="label">Comment Box</label>
+      <div class="control" style="margin-bottom: 10px;">
+        <textarea class="textarea" placeholder="Leave a comment"></textarea>
+      </div>
+      <a class="button is-success">
+        <span class="icon is-small">
+          <i class="fas fa-thumbs-up"></i>
+        </span>
+        <span>Approve</span>
+      </a>
+      <a class="button is-danger">
+        <span class="icon is-small">
+          <i class="fas fa-thumbs-down"></i>
+        </span>
+        <span>Reject</span>
+      </a>
+    </div>
+    <div class="column is-one-quarter">
+      <div class="tile is-ancestor">
+        <div class="tile is-parent is-12">
+          <div class="tile is-child box">
+            <p class="title">Upload</p>
+            <div class="file has-name" style="margin-bottom:10px;">
+              <label class="file-label">
+                <input class="file-input" type="file" name="spreadsheet" id="spreadsheet" accept=".xls,.xlsx">
+                <span class="file-cta">
+                  <span class="file-icon">
+                    <i class="fas fa-upload"></i>
+                  </span>
+                  <span class="file-label" id="spreadsheetlabel">
+                    Choose a spreadsheet
+                  </span>
+                </span>
+              </label>
+            </div>
+            <div class="file has-name">
+              <label class="file-label">
+                <input class="file-input" type="file" name="brief" id="brief" accept=".doc,.docx">
+                <span class="file-cta">
+                  <span class="file-icon">
+                    <i class="fas fa-upload"></i>
+                  </span>
+                  <span class="file-label" id="brieflabel">
+                    Choose a brief
+                  </span>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% } %>
+
+  <% include footer %>
+  <script>
+  var brief = document.getElementById("brief");
+  var spreadsheet = document.getElementById("spreadsheet");
+  brief.onchange = function(){
+    if(brief.files.length > 0){
+      document.getElementById('brieflabel').innerHTML = brief.files[0].name;
+    }
+  };
+  spreadsheet.onchange = function(){
+    if(spreadsheet.files.length > 0){
+      document.getElementById('spreadsheetlabel').innerHTML = spreadsheet.files[0].name;
+    }
+  };
+  </script>
+  </body>
+</html>
