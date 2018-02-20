@@ -93,6 +93,12 @@ module.exports = (app, passport, db) => {
 	});
 
 	app.post("/createproject",(req,res) => {
+		project.createProject(req.user, req.body.title, req.body.description, function(project){
+			project.save();
+		});
+
+
+
 		res.send(req.body);
 	});
 

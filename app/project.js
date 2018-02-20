@@ -108,5 +108,19 @@ module.exports = (db) => {
 					});
 				});
 		},
+
+		createProject: (user, title, description, cb) => {
+			//Project ID
+
+			var project = new db.model.Project({
+				projectId: 4,
+				title: title,
+				description: description,
+				author: user._id,
+			});
+
+			cb(project);
+
+		}
 	};
 };
