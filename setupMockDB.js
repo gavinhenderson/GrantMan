@@ -47,6 +47,16 @@ pw.generateHash("password", (err, hash) => { // Researcher
 	});
 	u3.save(err => makeProjects(i++));
 });
+pw.generateHash("password", (err, hash) => { // Dean
+	new db.model.User({
+		staffID: 4,
+		password: hash,
+		email: "adean@dundee.ac.uk",
+		type: "Associate Dean",
+		name: "Professor Stewart Iain",
+		school: "School of Science and Engineering"
+	}).save();
+});
 
 // Projects ====================================================================
 function makeProjects(i) {
