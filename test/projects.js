@@ -34,95 +34,119 @@ describe("Projects", () => {
 				});
 			});
 		});
-		it("should error when given a non-existant user", done => {
-			db.model.User.findOne({}, (err, user) => {
-				user.staffID = -1; // Negative numbers should not be supported
-				project.getProjects(user, (err) => {
-					assert.ok(err);
-					done();
-				});
-			});
-		});
 	});
 
 	describe("Status update", () => {
-		it("a researcher can set the project status to waiting", done => {
-			db.model.User.findOne({ type: "Researcher" }, (err, user) => {
+		// Helper function
+		var testValid = (action, type, done) => {
+			db.model.User.findOne({ type: type }, (err, user) => {
 				if (err) done(err);
 				assert.ok(user);
 
-				project.updateStatus("Waiting", 1, user, done);
+				project.updateStatus(action, null, 1, user, done);
 			});
-		});
-		it("a RIS staff member can set the project status to waiting", done => {
-			db.model.User.findOne({ type: "RIS" }, (err, user) => {
+		};
+		var testInvalid = (action, type, done) => {
+			db.model.User.findOne({ type: type }, (err, user) => {
 				if (err) done(err);
 				assert.ok(user);
 
-				project.updateStatus("Waiting", 1, user, done);
-			});
-		});
-		it("a Dean can set the project status to waiting", done => {
-			db.model.User.findOne({ type: "Dean" }, (err, user) => {
-				if (err) done(err);
-				assert.ok(user);
-
-				project.updateStatus("Waiting", 1, user, done);
-			});
-		});
-		it("a RIS staff member can set the project status to complete", done => {
-			db.model.User.findOne({ type: "RIS" }, (err, user) => {
-				if (err) done(err);
-				assert.ok(user);
-
-				project.updateStatus("Complete", 1, user, done);
-			});
-		});
-		it("a Dean can set the project status to complete", done => {
-			db.model.User.findOne({ type: "Dean" }, (err, user) => {
-				if (err) done(err);
-				assert.ok(user);
-
-				project.updateStatus("Complete", 1, user, done);
-			});
-		});
-		it("a RIS staff member can set the project status to rejected", done => {
-			db.model.User.findOne({ type: "RIS" }, (err, user) => {
-				if (err) done(err);
-				assert.ok(user);
-
-				project.updateStatus("Rejected", 1, user, done);
-			});
-		});
-		it("a Dean can set the project status to rejected", done => {
-			db.model.User.findOne({ type: "Dean" }, (err, user) => {
-				if (err) done(err);
-				assert.ok(user);
-
-				project.updateStatus("Rejected", 1, user, done);
-			});
-		});
-		it("a Researcher cannot set the project status to complete", done => {
-			db.model.User.findOne({ type: "Researcher" }, (err, user) => {
-				if (err) done(err);
-				assert.ok(user);
-
-				project.updateStatus("Completed", 1, user, err => {
+				project.updateStatus(action, null, 1, user, err => {
 					assert.ok(err);
 					done();
 				});
 			});
-		});
-		it("a Researcher cannot set the project status to rejected", done => {
-			db.model.User.findOne({ type: "Researcher" }, (err, user) => {
-				if (err) done(err);
-				assert.ok(user);
+		}
 
-				project.updateStatus("Rejected", 1, user, err => {
-					assert.ok(err);
-					done();
-				});
+		describe("RIS approval", () => {
+			it("a researcher can set the project status to RIS approval", done => {
+				testValid("RIS approval", "Researcher", done);
+			});
+			it("RIS cannot set the project status to RIS approval", done => {
+				testInvalid("RIS approval", "RIS", done)
+			});
+			it("Associate Dean cannot set the project status to RIS approval", done => {
+				testInvalid("RIS approval", "Associate Dean", done)
+			});
+			it("Dean cannot set the project status to RIS approval", done => {
+				testInvalid("RIS approval", "Dean", done)
 			});
 		});
+
+		describe("Associate Dean approval", () => {
+			it("a researcher can set the project status to " + "Associate Dean approval", done => {
+				testValid("Associate Dean approval", "Researcher", done);
+			});
+			it("RIS cannot set the project status to " + "Associate Dean approval", done => {
+				testInvalid("Associate Dean approval", "RIS", done)
+			});
+			it("Associate Dean cannot set the project status to " + "Associate Dean approval", done => {
+				testInvalid("Associate Dean approval", "Associate Dean", done)
+			});
+			it("Dean cannot set the project status to " + "Associate Dean approval", done => {
+				testInvalid("Associate Dean approval", "Dean", done)
+			});
+		});
+
+		describe("Researcher approval", () => {
+			it("a researcher cannot set the project status to " + "Researcher approval", done => {
+				testInvalid("Researcher approval", "Researcher", done);
+			});
+			it("RIS can set the project status to " + "Researcher approval", done => {
+				testValid("Researcher approval", "RIS", done)
+			});
+			it("Associate Dean cannot set the project status to " + "Researcher approval", done => {
+				testInvalid("Researcher approval", "Associate Dean", done)
+			});
+			it("Dean cannot set the project status to " + "Researcher approval", done => {
+				testInvalid("Researcher approval", "Dean", done)
+			});
+		});
+
+		describe("Researcher amendment", () => {
+			it("a researcher cannot set the project status to " + "Researcher amendment", done => {
+				testInvalid("Researcher amendment", "Researcher", done);
+			});
+			it("RIS can set the project status to " + "Researcher amendment", done => {
+				testValid("Researcher amendment", "RIS", done)
+			});
+			it("Associate Dean can set the project status to " + "Researcher amendment", done => {
+				testValid("Researcher amendment", "Associate Dean", done)
+			});
+			it("Dean can set the project status to " + "Researcher amendment", done => {
+				testValid("Researcher amendment", "Dean", done)
+			});
+		});
+
+		describe("Dean approval", () => {
+			it("a researcher cannot set the project status to " + "Dean approval", done => {
+				testInvalid("Dean approval", "Researcher", done);
+			});
+			it("RIS cannot set the project status to " + "Dean approval", done => {
+				testInvalid("Dean approval", "RIS", done)
+			});
+			it("Associate Dean can set the project status to " + "Dean approval", done => {
+				testValid("Dean approval", "Associate Dean", done)
+			});
+			it("Dean cannot set the project status to " + "Dean approval", done => {
+				testInvalid("Dean approval", "Dean", done)
+			});
+		});
+
+		describe("Project approved", () => {
+			it("a researcher cannot set the project status to " + "Project approved", done => {
+				testInvalid("Project approved", "Researcher", done);
+			});
+			it("RIS cannot set the project status to " + "Project approved", done => {
+				testInvalid("Project approved", "RIS", done)
+			});
+			it("Associate Dean cannot set the project status to " + "Project approved", done => {
+				testInvalid("Project approved", "Associate Dean", done)
+			});
+			it("Dean can set the project status to " + "Project approved", done => {
+				testValid("Project approved", "Dean", done)
+			});
+		});
+
 	});
 });
