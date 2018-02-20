@@ -23,7 +23,7 @@ module.exports = new Schema({
 		type: String,
 		required: false
 	},
-	projectId: {
+	project: {
 		type: Schema.ObjectId,
 		ref: "User"
 	},
