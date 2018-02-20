@@ -9,72 +9,81 @@ if (process.argv[2] == "--drop" || process.argv[2] == "-d") {
 	db.model.User.remove({}, () => {});
 	db.model.Project.remove({}, () => {});
 	db.model.ProjectStatus.remove({}, () => {});
-	db.model.Comment.remove({}, () => {});
 }
 
 // Users =======================================================================
+var u1, u2, u3, i = 0;
+console.log("Populating users");
 pw.generateHash("password", (err, hash) => { // RIS
-	db.model.User({
+	u1 = db.model.User({
 		staffID: 1,
 		password: hash,
 		email: "ris@dundee.ac.uk",
 		type: "RIS",
 		name: "Fred Gregington",
 		school: "School of Science and Engineering"
-	}).save();
+	});
+	u1.save(err => makeProjects(i++));
 });
 pw.generateHash("password", (err, hash) => { // Dean
-	new db.model.User({
+	u2 = new db.model.User({
 		staffID: 2,
 		password: hash,
 		email: "dean@dundee.ac.uk",
 		type: "Dean",
 		name: "Professor Iain Stewart",
 		school: "School of Science and Engineering"
-	}).save();
+	});
+	u2.save(err => makeProjects(i++));
 });
 pw.generateHash("password", (err, hash) => { // Researcher
-	new db.model.User({
+	u3 = new db.model.User({
 		staffID: 3,
 		password: hash,
 		email: "researcher@dundee.ac.uk",
 		type: "Researcher",
 		name: "Greg Fredington",
 		school: "School of Science and Engineering"
-	}).save();
+	});
+	u3.save(err => makeProjects(i++));
 });
 
 // Projects ====================================================================
-var editor = {
-	staffID: 1,
-	type: "Researcher"
-}
-new db.model.Project({ // Project 1
-	projectId: 1,
-	title: "Project 1",
-	description: "Description for project 1",
-	author: 3
-}).save((err) => {
-	if (err) console.log(err);
-	pj.updateStatus("RIS approval", null, 1, editor, () => {});
-});
-new db.model.Project({ // Project 2
-	projectId: 2,
-	title: "Project 2",
-	description: "Description for project 2",
-	author: 3
-}).save((err) => {
-	if (err) console.log(err);
-	pj.updateStatus("RIS approval", null, 2, editor, () => {});
-});
-new db.model.Project({ // Project 3
-	projectId: 3,
-	title: "Project 3",
-	description: "Description for project 3",
-	author: 3
-}).save((err) => {
-	if (err) console.log(err);
-	pj.updateStatus("RIS approval", null, 3, editor, () => {});
-});
+function makeProjects(i) {
+	if (i < 2) return;
 
+	console.log("Populating projects");
+
+	var setStatus = id => {
+		pj.updateStatus("RIS approval", null, id, u3, (err) => {
+			if (err) console.log(err);
+			else console.log("Set status of project " + id);
+		});
+	}
+
+	var p1, p2, p3;
+	p1 = new db.model.Project({ // Project 1
+		projectId: 1,
+		title: "Project 1",
+		description: "Description for project 1",
+		author: u3._id
+	});
+	p1.save((err) => setStatus(1));
+	p2 = new db.model.Project({ // Project 2
+		projectId: 2,
+		title: "Project 2",
+		description: "Description for project 2",
+		author: u3._id
+	});
+	p2.save((err) => setStatus(2));
+	p3 = new db.model.Project({ // Project 3
+		projectId: 3,
+		title: "Project 3",
+		description: "Description for project 3",
+		author: u3._id
+	});
+	p3.save((err) => setStatus(3));
+}
+
+// Close DB after 5 seconds
 setTimeout(() => { process.exit(0); }, 5000);
