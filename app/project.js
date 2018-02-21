@@ -6,7 +6,7 @@ module.exports = (db) => {
 			db.model.Project.findOne({ projectId: projectId })
 				.populate({
 					path: "author",
-					select: "name type"
+					select: "name type school"
 				})
 				.populate({
 					path: "statuses",

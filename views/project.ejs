@@ -59,10 +59,17 @@
   </div>
 
   <% if(
-    (user.type=="RIS" && project.statusMessage=="RIS approval")||
-    (user.type=="Researcher" && (project.statusMessage == "Researcher amendment" || project.statusMessage == "Researcher approval"))||
-    (user.type=="Dean" && project.statusMessage == "Dean approval")||
-    (user.type=="AssDean" && project.statusMessage== "AssDean approval")
+    ((user.type=="RIS" && project.status.statusMessage=="RIS approval")||
+
+    ((user.type=="Researcher" && (project.status.statusMessage == "Researcher amendment" ||
+          project.status.statusMessage == "Researcher approval"))&&
+          user.staffID == project.author.staffID)||
+
+    (user.type=="Dean" && project.status.statusMessage == "Dean approval")||
+
+    (user.type=="Associate Dean" && project.status.statusMessage== "Associate Dean approval"))&&
+
+    (user.school == project.author.school)
   ){%>
 
   <div style="padding:10px" class="columns">
@@ -84,6 +91,9 @@
         <span>Reject</span>
       </a>
     </div>
+
+    <% if(project.status.statusMessage == "RIS approval" ||
+          project.status.statusMessage == "Researcher amendment"){ %>
     <div class="column is-one-quarter">
       <div class="tile is-ancestor">
         <div class="tile is-parent is-12">
@@ -119,6 +129,8 @@
         </div>
       </div>
     </div>
+
+    <% } %>
   </div>
 
   <% } %>
