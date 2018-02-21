@@ -112,14 +112,22 @@ module.exports = (db) => {
 		createProject: (user, title, description, cb) => {
 			//Project ID
 
-			var project = new db.model.Project({
-				projectId: 4,
-				title: title,
-				description: description,
-				author: user._id,
+			db.model.Project.find({}, ['projectId'], {sort: {projectId: -1}}, (err, projects) => {
+
+				var newId = 1;
+				if(projects[0]) newId = projects[0].projectId + 1;
+
+				var project = new db.model.Project({
+					'projectId': newId,
+					'title': title,
+					'description': description,
+					'author': user._id,
+				});
+
+				cb(project);
+
 			});
 
-			cb(project);
 
 		}
 	};
