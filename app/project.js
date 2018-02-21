@@ -30,7 +30,7 @@ module.exports = (db) => {
 		getProjects: (user, cb) => {
 			// Check if user exists
 			if (user.type == "Researcher") {
-				db.model.Project.find({ author: user._id, school: user.school })
+				db.model.Project.find({ author: user._id })
 					.populate({
 						path: "author",
 						select: "name type school"
