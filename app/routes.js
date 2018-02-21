@@ -120,10 +120,15 @@ module.exports = (app, passport, db) => {
 	});
 
 	app.post("/createproject",(req,res) => {
-		project.createProject(req.user, req.body.title, req.body.description, function(project){
-			project.save((err)=>{
-				require('./files.js')(req.body.spreadsheet,req.body.brief,project._id);
-				res.redirect('/project/'+project.projectId);
+		project.createProject(req.user, req.body.title, req.body.description, function(newProject){
+			newProject.save((err) => {
+
+				console.log(newProject);
+
+				project.updateStatus('RIS approval', null, newProject.projectId, req.user, (err) => {
+					if(err) console.log(err);
+					res.redirect("/project/" + newProject.projectId);
+				});
 			});
 		});
 	});
