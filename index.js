@@ -8,9 +8,11 @@ const session  = require("express-session");
 const mstore   = require("connect-mongodb-session")(session);
 const flash    = require("connect-flash");
 
+
 const LocalStrategy = require("passport-local").Strategy;
 const cookieParser  = require("cookie-parser");
-const bodyParser = require("body-parser");
+const bodyParser    = require("body-parser");
+const fileUpload    = require('express-fileupload');
 
 // Setup =======================================================================
 // Debug CLI option [should probably replace with node.env]
@@ -74,6 +76,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+app.use(fileUpload());
+
 
 
 // Routes ======================================================================
