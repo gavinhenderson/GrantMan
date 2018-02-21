@@ -130,8 +130,8 @@ module.exports = (app, passport, db) => {
 					console.log(req.files);
 					require('./files.js')(req.files.spreadsheet, req.files.brief, newProject._id, (err)=>{
 						if(err) console.log(err);
+						res.redirect("/project/" + newProject.projectId);
 					});
-					res.redirect("/project/" + newProject.projectId);
 				});
 			});
 		});
