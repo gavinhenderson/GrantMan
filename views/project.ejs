@@ -72,19 +72,47 @@
     (user.school == project.author.school)
   ){%>
 
+  <form id="statusForm" action="status" method="post">
+
+  <div id="modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Confirm Password</p>
+        <button onclick="closemodal()" class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="field">
+          <label class="label">Password</label>
+          <div class="control has-icons-left">
+            <input class="input" name="password" type="password" placeholder="Enter your Password">
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </div>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button type="submit" class="button is-success">Confirm</button>
+        <button class="button" onclick="closemodal()">Cancel</button>
+      </footer>
+    </div>
+  </div>
+
+
   <div style="padding:10px" class="columns">
     <div class="column is-three-quarter">
       <label class="label">Comment Box</label>
       <div class="control" style="margin-bottom: 10px;">
-        <textarea class="textarea" placeholder="Leave a comment"></textarea>
+        <textarea class="textarea" name="comment" placeholder="Leave a comment"></textarea>
       </div>
-      <a class="button is-success">
+      <a onclick="showmodal('accept')" class="button is-success">
         <span class="icon is-small">
           <i class="fas fa-thumbs-up"></i>
         </span>
         <span>Approve</span>
       </a>
-      <a class="button is-danger">
+      <a onclick="showmodal('reject')" class="button is-danger">
         <span class="icon is-small">
           <i class="fas fa-thumbs-down"></i>
         </span>
@@ -129,13 +157,10 @@
         </div>
       </div>
     </div>
-
     <% } %>
   </div>
-
-  <% } %>
-
-  <% include footer %>
+  <input type="hidden" name="action" value="accept" id="action"></input>
+  </form>
   <script>
   var brief = document.getElementById("brief");
   var spreadsheet = document.getElementById("spreadsheet");
@@ -149,6 +174,32 @@
       document.getElementById('spreadsheetlabel').innerHTML = spreadsheet.files[0].name;
     }
   };
+  </script>
+
+
+  <% } %>
+
+  <% include footer %>
+  <script>
+
+
+  var postURL = window.location.href
+  if(postURL[length-1]=="/"){
+    postURL.substring(0, postURL.length - 1)
+  }
+  postURL += "/status"
+  console.log(postURL)
+
+  $('#statusForm').attr('action',postURL);
+
+  function showmodal(action){
+    $('#action').val(action);
+    $('#modal').addClass('is-active');
+  }
+
+  function closemodal(){
+    $('#modal').removeClass('is-active');
+  }
   </script>
   </body>
 </html>

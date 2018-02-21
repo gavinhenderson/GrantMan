@@ -47,16 +47,43 @@ module.exports = (app, passport, db) => {
 			if (err) { res.send(err); return; }
 			res.render("project", { user: req.user, project: proj });
 		});
-		//res.send("You clicked on project: "+req.params.id);
 	});
 
 	// Status ====================================================================
 	app.post("/project/:id/status", (req, res) => {
-		if (!req.body.action) { res.send("Error: A new status is required"); return; }
-		project.updateStatus(req.body.action, req.body.comment, req.params.id, req.user, (err) => {
-			if (err) { res.send(err); return; }
-			res.redirect("/project/" + req.params.id);
-		});
+
+    var actions = {
+      Researcher: {
+        'accept': "Associate Dean approval",
+        'reject': "RIS approval"
+      },
+      RIS: {
+        'accept':"Researcher approval",
+        'reject': "Researcher amendment"
+      },
+      "Associate Dean": {
+        'accept':"Dean approval",
+        'reject':"Researcher amendment"
+      },
+      Dean: {
+        'accept':"Project approved",
+        'reject':"Researcher amendment"
+      }
+    }
+
+    require('./password.js').verifyHash(req.body.password, req.user.password, (err,user) => {
+      if(!err && res){
+        if (!req.body.action) { res.send("Error: A new status is required"); return; }
+        /*console.log(actions)
+        console.log(actions[user.type])
+        console.log(actions[user.type][req.body.action])*/
+        var action = actions[req.user.type][req.body.action];
+    		project.updateStatus(action, req.body.comment, req.params.id, req.user, (err) => {
+    			if (err) { res.send(err); return; }
+    			res.redirect("/project/" + req.params.id);
+    		});
+      }
+    });
 	});
 
 
