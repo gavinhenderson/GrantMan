@@ -31,9 +31,8 @@
       </div>
       <p class="panel-tabs" id="tabs">
         <a id="inbox" onclick="updateCategory('inbox')">Inbox</a>
-        <a id="all" onclick="updateCategory('all')">All</a>
         <a id="completed" onclick="updateCategory('completed')">Completed</a>
-        <a id="deleted" onclick="updateCategory('deleted')">Deleted</a>
+        <a id="all" onclick="updateCategory('all')">All</a>
       </p>
       <a class="panel-block panel-element">
         <span class="panel-icon">
@@ -46,9 +45,32 @@
   </body>
 
   <script>
-    console.log(<%- JSON.stringify(user) %>);
+    console.log(<%- JSON.stringify(projects) %>);
 
-    var projects = <%- JSON.stringify(projects); %>;
+    var projects = {
+      all: [],
+      completed: [],
+      inbox: []
+    }
+
+    projects.all = <%- JSON.stringify(projects) %>
+
+    //this looks awful
+    projects.all.forEach((project) => {
+      if(project.author.school == "<%- user.type %>"){
+        if(project.status.statusMessage == "Project approved"){ projects.completed.push(project) }
+        else if("<%- user.type %>" == "Researcher" && project.author.name == "<%- user.name %>"){
+          if(project.status.statusMessage == "Researcher amendment" || project.status.statusMessage == "Researcher approval"){
+            projects.inbox.push(project)
+          }
+        }
+        else if("<%- user.type %>" == "RIS" && project.status.statusMessage == "RIS approval"){ projects.inbox.push(project) }
+        else if("<%- user.type %>" == "Associate Dean" && project.status.satatusMessage=="Associate Dean approval") {
+          projects.inbox.push(project)
+        }
+        else if("<%- user.type %>" == "Dean" && project.status.statusMessage=="Dean approval"){ projects.inbox.push(project)}
+      }
+    })
 
     function search(searchString, tabClick){
       if(!tabClick){
@@ -71,17 +93,17 @@
       }
 
       for(var key in projects){
-        projects[key].forEach(project => checkString(results,project))
+        projects[all].forEach(project => checkString(results,project))
       }
 
       results.forEach(function (project){
         var html = [
-          "<a class='panel-block panel-element' href='/project/"+project.id+"'>",
+          "<a class='panel-block panel-element' href='/project/"+project.projectId+"'>",
           "<span class='panel-icon'>",
           "<i class='fas fa-book'></i>",
           "</span>",
-          "<p style='text-align:left;width:70%'>"+project.name+"</p>",
-          "<p style='text-align:right;width:30%'>"+project.status+"</p>",
+          "<p style='text-align:left;width:60%'>"+project.title+"</p>",
+          "<p style='text-align:right;width:40%'>"+project.status.statusMessage+" required</p>",
           "</a>"].join("");
         $('.panel').append(html);
       });
