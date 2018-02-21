@@ -121,12 +121,11 @@ module.exports = (app, passport, db) => {
 
 	app.post("/createproject",(req,res) => {
 		project.createProject(req.user, req.body.title, req.body.description, function(project){
-			project.save();
+			project.save((err)=>{
+				require('./files.js')(req.body.spreadsheet,req.body.brief,project._id);
+				res.redirect('/project/'+project.projectId);
+			});
 		});
-
-
-
-		res.send(req.body);
 	});
 
 	// Logout ====================================================================
