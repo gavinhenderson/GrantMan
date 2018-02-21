@@ -82,9 +82,7 @@
 
     <div class="field">
       <p class="control" style="text-align:center;">
-        <button class="button is-success">
-          Create
-        </button>
+        <input type="submit" class="button is-success" value="Create">
       </p>
     </div>
 
@@ -96,7 +94,7 @@
     var spreadsheet = document.getElementById("spreadsheet");
     brief.onchange = function(){
       if(brief.files.length > 0){
-        document.getElementById('breifname').innerHTML = brief.files[0].name;
+        document.getElementById('briefname').innerHTML = brief.files[0].name;
       }
     };
     spreadsheet.onchange = function(){
