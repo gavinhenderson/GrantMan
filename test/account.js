@@ -12,6 +12,10 @@ var mockUser = {
 	email: "bobby@dundee.ac.uk"
 };
 
+var failUser = {
+  name: "Fail"
+}
+
 describe("Accounts",function(){
 	it("Valid account creates without error",function(done){
 		account.createUser(db, mockUser, function(err){
@@ -19,4 +23,11 @@ describe("Accounts",function(){
 			done(err);
 		});
 	});
+  it("Invalid account creates with error",function(done){
+    //Doesnt give all required fields
+    account.createUser(db, failUser, function(err){
+      assert.ok(err);
+      done()
+    })
+  })
 });
