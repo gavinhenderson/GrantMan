@@ -125,14 +125,13 @@ describe("Models", function() {
 	});
 
 	describe("Project", function() {
-/**
-// TODO: Rewrite project tests
-		it("should be invalid if there is no array of staff", function() {
+
+		it("should force projectId as a required type", function(done) {
 
 			// Create mock model
 			var project = new model.Project({projectId: 1});
 
-			// Valid User Model
+			// Valid Project Model
 			project.validate(function(err) {
 				if (err.errors.projectId) done(err.errors.projectId);
 				else done();
@@ -140,38 +139,12 @@ describe("Models", function() {
 
 		});
 
-		it("should be invalid if there is no fileHash", function() {
+		it("should force title as a required type", function(done) {
 
 			// Create mock model
-			var project = new model.Project({fileHash: "test"});
+			var project = new model.Project({title: "Test Project"});
 
-			// Valid User Model
-			project.validate(function(err) {
-				if (err.errors.fileHash) done(err.errors.fileHash);
-				else done();
-			});
-
-		});
-
-		it("should be invalid if there is no iteration", function() {
-
-			// Create mock model
-			var project = new model.Project({iteration: 1});
-
-			// Valid User Model
-			project.validate(function(err) {
-				if (err.errors.iteration) done(err.errors.iteration);
-				else done();
-			});
-
-		});
-
-		it("should be invalid if there is no title", function() {
-
-			// Create mock model
-			var project = new model.Project({title: "test"});
-
-			// Valid User Model
+			// Valid Project Model
 			project.validate(function(err) {
 				if (err.errors.title) done(err.errors.title);
 				else done();
@@ -179,19 +152,114 @@ describe("Models", function() {
 
 		});
 
-		it("should be invalid if there is no description", function() {
+		it("should force description as a required type", function(done) {
 
 			// Create mock model
-			var project = new model.Project({description: "test"});
+			var project = new model.Project({description: "Test Description"});
 
-			// Valid User Model
+			// Valid Project Model
 			project.validate(function(err) {
 				if (err.errors.description) done(err.errors.description);
 				else done();
 			});
 
 		});
-**/
+
+	});
+
+	describe('ProjectStatus', function() {
+		
+		it("should force type as an enumerator value [RIS approval]", function(done) {
+
+			// Create mock model
+			var projectStatus = new model.ProjectStatus({statusMessage: "RIS approval"});
+
+			// Valid User Model
+			projectStatus.validate(function(err) {
+				if (err) done(err.errors.statusMessage);
+				else done();
+			});
+
+		});
+
+		it("should force statusMessage as an enumerator value [Researcher amendment]", function(done) {
+
+			// Create mock model
+			var projectStatus = new model.ProjectStatus({statusMessage: "Researcher amendment"});
+
+			// Valid ProjectStatus Model
+			projectStatus.validate(function(err) {
+				if (err) done(err.errors.statusMessage);
+				else done();
+			});
+
+		});
+
+		it("should force statusMessage as an enumerator value [Researcher approval]", function(done) {
+
+			// Create mock model
+			var projectStatus = new model.ProjectStatus({statusMessage: "Researcher approval"});
+
+			// Valid ProjectStatus Model
+			projectStatus.validate(function(err) {
+				if (err) done(err.errors.statusMessage);
+				else done();
+			});
+
+		});
+
+		it("should force statusMessage as an enumerator value [Dean approval]", function(done) {
+
+			// Create mock model
+			var projectStatus = new model.ProjectStatus({statusMessage: "Researcher approval"});
+
+			// Valid ProjectStatus Model
+			projectStatus.validate(function(err) {
+				if (err) done(err.errors.statusMessage);
+				else done();
+			});
+
+		});
+
+		it("should force statusMessage as an enumerator value [Associate Dean approval]", function(done) {
+
+			// Create mock model
+			var projectStatus = new model.ProjectStatus({statusMessage: "Associate Dean approval"});
+
+			// Valid ProjectStatus Model
+			projectStatus.validate(function(err) {
+				if (err) done(err.errors.statusMessage);
+				else done();
+			});
+
+		});
+
+		it("should force statusMessage as an enumerator value [Project approved]", function(done) {
+
+			// Create mock model
+			var projectStatus = new model.ProjectStatus({statusMessage: "Project approved"});
+
+			// Valid ProjectStatus Model
+			projectStatus.validate(function(err) {
+				if (err) done(err.errors.statusMessage);
+				else done();
+			});
+
+		});
+
+		it("should not allow values not in the enumerator", function(done) {
+
+			// Create mock model
+			var projectStatus = new model.ProjectStatus({statusMessage: "Not A statusMessage"});
+
+			// Valid projectStatus Model
+			projectStatus.validate(function(err) {
+				if (err) done();
+				else done(err.errors.statusMessage);
+			});
+
+		});
+
 	});
 
 });
