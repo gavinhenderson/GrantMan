@@ -14,7 +14,7 @@ if (process.argv[2] == "--drop" || process.argv[2] == "-d") {
 	//Remove folders
 	//Taken from a stack stackoverflow
 	//https://stackoverflow.com/questions/27072866/how-to-remove-all-files-from-directory-without-removing-directory-in-node-js
-	const directory = 'public/files';
+	//const directory = 'public/files';
 
 	/*fs.readdir(directory, (err, files) => {
 	  if (err) throw err;
