@@ -5,7 +5,7 @@ describe("Models", function() {
 
 	describe("User", function() {
 
-		it("should be invalid if there is no staffID", function(done) {
+		it("should force staffID as a required type", function(done) {
 
 			// Create mock model
 			var user = new model.User({staffID: 1});
@@ -18,11 +18,10 @@ describe("Models", function() {
 
 		});
 
-		it("should be invalid if there is no password", function(done) {
+		it("should force password as a required type", function(done) {
 
 			// Create mock model
-			var user = new model.User({password: "test"});
-			// var user = new model.User();
+			var user = new model.User({password: "password"});
 
 			// Valid User Model
 			user.validate(function(err) {
@@ -32,37 +31,75 @@ describe("Models", function() {
 
 		});
 
-		it("should be invalid if there is no email", function(done) {
+		it("should force type as an enumerator value [RIS]", function(done) {
 
 			// Create mock model
-			var user = new model.User({email: "test@example.com"});
+			var user = new model.User({type: "RIS"});
 
 			// Valid User Model
 			user.validate(function(err) {
-				if (err.errors.email) done(err.errors.email);
+				if (err.errors.type) done(err.errors.type);
 				else done();
 			});
 
 		});
 
-		// TODO: FIX
-		// it("should be invalid if there is no type", function(done) {
-		//
-		// 	// Create mock model
-		// 	var user = new model.User({type: "test"});
-		//
-		// 	// Valid User Model
-		// 	user.validate(function(err) {
-		// 		if (err.errors.type) done(err.errors.type);
-		// 		else done();
-		// 	});
-		//
-		// });
-
-		it("should be invalid if there is no name", function(done) {
+		it("should force type as an enumerator value [Researcher]", function(done) {
 
 			// Create mock model
-			var user = new model.User({name: "test"});
+			var user = new model.User({type: "Researcher"});
+
+			// Valid User Model
+			user.validate(function(err) {
+				if (err.errors.type) done(err.errors.type);
+				else done();
+			});
+
+		});
+
+		it("should force type as an enumerator value [Dean]", function(done) {
+
+			// Create mock model
+			var user = new model.User({type: "Dean"});
+
+			// Valid User Model
+			user.validate(function(err) {
+				if (err.errors.type) done(err.errors.type);
+				else done();
+			});
+
+		});
+
+		it("should force type as an enumerator value [Associate Dean]", function(done) {
+
+			// Create mock model
+			var user = new model.User({type: "Associate Dean"});
+
+			// Valid User Model
+			user.validate(function(err) {
+				if (err.errors.type) done(err.errors.type);
+				else done();
+			});
+
+		});
+
+		it("should not allow values not in the enumerator", function(done) {
+
+			// Create mock model
+			var user = new model.User({type: "Not A Type"});
+
+			// Valid User Model
+			user.validate(function(err) {
+				if (err.errors.type) done();
+				else done(err.errors.type);
+			});
+
+		});
+
+		it("should force name as a required type", function(done) {
+
+			// Create mock model
+			var user = new model.User({name: "John Doe"});
 
 			// Valid User Model
 			user.validate(function(err) {
@@ -72,10 +109,10 @@ describe("Models", function() {
 
 		});
 
-		it("should be invalid if there is no school", function(done) {
+		it("should force school as a required type", function(done) {
 
 			// Create mock model
-			var user = new model.User({school: "test"});
+			var user = new model.User({school: "School of Rock"});
 
 			// Valid User Model
 			user.validate(function(err) {
