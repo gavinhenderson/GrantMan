@@ -14,170 +14,170 @@
     <link rel="icon" type="/image/png" href="img/favicon.png">
   </head>
 
-  <body class="container" style="margin-bottom:60px;">
+  <body style="margin-bottom:60px;">
   <% include nav %><hr>
-
-  <div class="tile is-ancestor" style="padding:10px">
-  <div class="tile is-parent is-9">
-    <div class="tile is-child box">
-      <p class="title"><%= project.title %></p>
-      <p class="subtitle"><%= project.author.name %></p>
-      <p><%= project.description %></p>
-    </div>
-  </div>
-  <div class="tile is-parent is-3">
-    <div class="tile is-child box">
-      <p class="title">Downloads</p>
-      <p style="margin-bottom:20px"><a href="/files/<%-project._id%>/spreadsheet.xls" class="button is-success" style="margin-left:10px">
-        <span class="icon is-small">
-          <i class="fas fa-download"></i>
-        </span>
-        <span>Spreadsheet</span>
-      </a></p>
-      <p><a href="/files/<%-project._id%>/brief.doc"class="button is-success"  style="margin-left:10px">
-        <span class="icon is-small">
-          <i class="fas fa-download"></i>
-        </span>
-        <span>Project Brief</span>
-      </a></p>
-    </div>
-  </div>
-  </div>
-
-  <div style="padding:10px;">
-  <h3 class="title is-4">History</h3><hr>
-
-  <% project.statuses.forEach(function(status){ %>
-    <p>A <font color="red"><%= status.editor.type %> (<%= status.editor.name %>)</font>
-      set the status to <font color="blue">'<%= status.statusMessage %>'</font>
-      at <font color="green"><%= status.timestamp %></font></p>
-    <% if(status.comment && status.comment.length!=0){ %>
-    <p><i><%= status.comment %></i></p>
-    <% } %>
-    <hr>
-  <% }); %>
-  </div>
-
-  <% if(
-    ((user.type=="RIS" && project.status.statusMessage=="RIS approval")||
-
-    ((user.type=="Researcher" && (project.status.statusMessage == "Researcher amendment" ||
-          project.status.statusMessage == "Researcher approval"))&&
-          user.staffID == project.author.staffID)||
-
-    (user.type=="Dean" && project.status.statusMessage == "Dean approval")||
-
-    (user.type=="Associate Dean" && project.status.statusMessage== "Associate Dean approval"))&&
-
-    (user.school == project.author.school)
-  ){%>
-
-  <form encType="multipart/form-data" id="statusForm" action="status" method="post">
-
-  <div id="modal" class="modal">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">Confirm Password</p>
-        <button onclick="closemodal()" class="delete" aria-label="close"></button>
-      </header>
-      <section class="modal-card-body">
-        <div class="field">
-          <label class="label">Password</label>
-          <div class="control has-icons-left">
-            <input class="input" name="password" type="password" placeholder="Enter your Password">
-            <span class="icon is-small is-left">
-              <i class="fas fa-lock"></i>
-            </span>
-          </div>
-        </div>
-      </section>
-      <footer class="modal-card-foot">
-        <button type="submit" class="button is-success">Confirm</button>
-        <button class="button" onclick="closemodal()">Cancel</button>
-      </footer>
-    </div>
-  </div>
-
-
-  <div style="padding:10px" class="columns">
-    <div class="column is-three-quarter">
-      <label class="label">Comment Box</label>
-      <div class="control" style="margin-bottom: 10px;">
-        <textarea class="textarea" name="comment" placeholder="Leave a comment"></textarea>
-      </div>
-      <a onclick="showmodal('accept')" class="button is-success">
-        <span class="icon is-small">
-          <i class="fas fa-thumbs-up"></i>
-        </span>
-        <span>Approve</span>
-      </a>
-      <a onclick="showmodal('reject')" class="button is-danger">
-        <span class="icon is-small">
-          <i class="fas fa-thumbs-down"></i>
-        </span>
-        <span>Reject</span>
-      </a>
-    </div>
-
-    <% if(project.status.statusMessage == "RIS approval" ||
-          project.status.statusMessage == "Researcher amendment"){ %>
-    <div class="column is-one-quarter">
-      <div class="tile is-ancestor">
-        <div class="tile is-parent is-12">
-          <div class="tile is-child box">
-            <p class="title">Upload</p>
-            <div class="file has-name" style="margin-bottom:10px;">
-              <label class="file-label">
-                <input class="file-input" type="file" name="spreadsheet" id="spreadsheet" accept=".xls,.xlsx">
-                <span class="file-cta">
-                  <span class="file-icon">
-                    <i class="fas fa-upload"></i>
-                  </span>
-                  <span class="file-label" id="spreadsheetlabel">
-                    Choose a spreadsheet
-                  </span>
-                </span>
-              </label>
-            </div>
-            <div class="file has-name">
-              <label class="file-label">
-                <input class="file-input" type="file" name="brief" id="brief" accept=".doc,.docx">
-                <span class="file-cta">
-                  <span class="file-icon">
-                    <i class="fas fa-upload"></i>
-                  </span>
-                  <span class="file-label" id="brieflabel">
-                    Choose a brief
-                  </span>
-                </span>
-              </label>
-            </div>
-          </div>
-        </div>
+  <div class="container">
+    <div class="tile is-ancestor" style="padding:10px">
+    <div class="tile is-parent is-9">
+      <div class="tile is-child box">
+        <p class="title"><%= project.title %></p>
+        <p class="subtitle"><%= project.author.name %></p>
+        <p><%= project.description %></p>
       </div>
     </div>
-    <% } %>
-  </div>
-  <input type="hidden" name="action" value="accept" id="action"></input>
-  </form>
-  <script>
-  var brief = document.getElementById("brief");
-  var spreadsheet = document.getElementById("spreadsheet");
-  brief.onchange = function(){
-    if(brief.files.length > 0){
-      document.getElementById('brieflabel').innerHTML = brief.files[0].name;
-    }
-  };
-  spreadsheet.onchange = function(){
-    if(spreadsheet.files.length > 0){
-      document.getElementById('spreadsheetlabel').innerHTML = spreadsheet.files[0].name;
-    }
-  };
-  </script>
+    <div class="tile is-parent is-3">
+      <div class="tile is-child box">
+        <p class="title">Downloads</p>
+        <p style="margin-bottom:20px"><a href="/files/<%-project._id%>/spreadsheet.xls" class="button is-success" style="margin-left:10px">
+          <span class="icon is-small">
+            <i class="fas fa-download"></i>
+          </span>
+          <span>Spreadsheet</span>
+        </a></p>
+        <p><a href="/files/<%-project._id%>/brief.doc"class="button is-success"  style="margin-left:10px">
+          <span class="icon is-small">
+            <i class="fas fa-download"></i>
+          </span>
+          <span>Project Brief</span>
+        </a></p>
+      </div>
+    </div>
+    </div>
 
+    <div style="padding:10px;">
+    <h3 class="title is-4">History</h3><hr>
+
+    <% project.statuses.forEach(function(status){ %>
+      <p>A <font color="red"><%= status.editor.type %> (<%= status.editor.name %>)</font>
+        set the status to <font color="blue">'<%= status.statusMessage %>'</font>
+        at <font color="green"><%= status.timestamp %></font></p>
+      <% if(status.comment && status.comment.length!=0){ %>
+      <p><i><%= status.comment %></i></p>
+      <% } %>
+      <hr>
+    <% }); %>
+    </div>
+
+    <% if(
+      ((user.type=="RIS" && project.status.statusMessage=="RIS approval")||
+
+      ((user.type=="Researcher" && (project.status.statusMessage == "Researcher amendment" ||
+            project.status.statusMessage == "Researcher approval"))&&
+            user.staffID == project.author.staffID)||
+
+      (user.type=="Dean" && project.status.statusMessage == "Dean approval")||
+
+      (user.type=="Associate Dean" && project.status.statusMessage== "Associate Dean approval"))&&
+
+      (user.school == project.author.school)
+    ){%>
+
+    <form encType="multipart/form-data" id="statusForm" action="status" method="post">
+
+    <div id="modal" class="modal">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Confirm Password</p>
+          <button onclick="closemodal()" class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+          <div class="field">
+            <label class="label">Password</label>
+            <div class="control has-icons-left">
+              <input class="input" name="password" type="password" placeholder="Enter your Password">
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
+            </div>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button type="submit" class="button is-success">Confirm</button>
+          <button class="button" onclick="closemodal()">Cancel</button>
+        </footer>
+      </div>
+    </div>
+
+
+    <div style="padding:10px" class="columns">
+      <div class="column is-three-quarter">
+        <label class="label">Comment Box</label>
+        <div class="control" style="margin-bottom: 10px;">
+          <textarea class="textarea" name="comment" placeholder="Leave a comment"></textarea>
+        </div>
+        <a onclick="showmodal('accept')" class="button is-success">
+          <span class="icon is-small">
+            <i class="fas fa-thumbs-up"></i>
+          </span>
+          <span>Approve</span>
+        </a>
+        <a onclick="showmodal('reject')" class="button is-danger">
+          <span class="icon is-small">
+            <i class="fas fa-thumbs-down"></i>
+          </span>
+          <span>Reject</span>
+        </a>
+      </div>
+
+      <% if(project.status.statusMessage == "RIS approval" ||
+            project.status.statusMessage == "Researcher amendment"){ %>
+      <div class="column is-one-quarter">
+        <div class="tile is-ancestor">
+          <div class="tile is-parent is-12">
+            <div class="tile is-child box">
+              <p class="title">Upload</p>
+              <div class="file has-name" style="margin-bottom:10px;">
+                <label class="file-label">
+                  <input class="file-input" type="file" name="spreadsheet" id="spreadsheet" accept=".xls,.xlsx">
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label" id="spreadsheetlabel">
+                      Choose a spreadsheet
+                    </span>
+                  </span>
+                </label>
+              </div>
+              <div class="file has-name">
+                <label class="file-label">
+                  <input class="file-input" type="file" name="brief" id="brief" accept=".doc,.docx">
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label" id="brieflabel">
+                      Choose a brief
+                    </span>
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% } %>
+    </div>
+    <input type="hidden" name="action" value="accept" id="action"></input>
+    </form>
+    <script>
+    var brief = document.getElementById("brief");
+    var spreadsheet = document.getElementById("spreadsheet");
+    brief.onchange = function(){
+      if(brief.files.length > 0){
+        document.getElementById('brieflabel').innerHTML = brief.files[0].name;
+      }
+    };
+    spreadsheet.onchange = function(){
+      if(spreadsheet.files.length > 0){
+        document.getElementById('spreadsheetlabel').innerHTML = spreadsheet.files[0].name;
+      }
+    };
+    </script>
 
   <% } %>
+  </div>
 
   <% include footer %>
   <script>

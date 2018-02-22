@@ -14,33 +14,36 @@
     <link rel="icon" type="image/png" href="img/favicon.png">
   </head>
 
-  <body class="container" style="margin-bottom:50px">
+  <body style="margin-bottom:50px">
     <% include nav %>
     <hr>
-    <nav class="panel" style="max-width:800px; margin:auto;">
-      <p class="panel-heading">
-        Projects
-      </p>
-      <div class="panel-block">
-        <p class="control has-icons-left">
-          <input class="input is-small" type="text" placeholder="search" id="searchBox">
-          <span class="icon is-small is-left">
-            <i class="fas fa-search"></i>
-          </span>
+
+    <div class="container">
+      <nav class="panel" style="max-width:800px; margin:auto;">
+        <p class="panel-heading">
+          Projects
         </p>
-      </div>
-      <p class="panel-tabs" id="tabs">
-        <a id="inbox" onclick="updateCategory('inbox')">Inbox</a>
-        <a id="completed" onclick="updateCategory('completed')">Completed</a>
-        <a id="all" onclick="updateCategory('all')">All</a>
-      </p>
-      <a class="panel-block panel-element">
-        <span class="panel-icon">
-          <i class="fas fa-book"></i>
-        </span>
-        Test
-      </a>
-    </nav>
+        <div class="panel-block">
+          <p class="control has-icons-left">
+            <input class="input is-small" type="text" placeholder="search" id="searchBox">
+            <span class="icon is-small is-left">
+              <i class="fas fa-search"></i>
+            </span>
+          </p>
+        </div>
+        <p class="panel-tabs" id="tabs">
+          <a id="inbox" onclick="updateCategory('inbox')">Inbox</a>
+          <a id="completed" onclick="updateCategory('completed')">Completed</a>
+          <a id="all" onclick="updateCategory('all')">All</a>
+        </p>
+        <a class="panel-block panel-element">
+          <span class="panel-icon">
+            <i class="fas fa-book"></i>
+          </span>
+          Test
+        </a>
+      </nav>
+    </div>
     <% include footer %>
   </body>
 
