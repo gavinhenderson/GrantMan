@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const db = require("./app/database.js")(mongoose);
 const fs = require("fs");
-const path = require('path');
 
 const pw = require("./app/password.js");
 const pj = require("./app/project.js")(db);
@@ -17,19 +16,18 @@ if (process.argv[2] == "--drop" || process.argv[2] == "-d") {
 	//https://stackoverflow.com/questions/27072866/how-to-remove-all-files-from-directory-without-removing-directory-in-node-js
 	const directory = 'public/files';
 
-	fs.readdir(directory, (err, files) => {
+	/*fs.readdir(directory, (err, files) => {
 	  if (err) throw err;
 	  for(const folder of files) {
 			//Taken from stack stackoverflow
 			//https://stackoverflow.com/questions/18052762/remove-directory-which-is-not-empty
 	    fs.readdirSync(directory+"/"+folder).forEach(function(file, index){
 	      var curPath = directory +"/" + folder + "/" + file;
-				// delete file
-	    	fs.unlinkSync(curPath);
+	    	fs.unlinkSync(curPath); // delete file
 	    });
-	    fs.rmdirSync(directory+"/"+folder);
+	    fs.rmdirSync(directory+"/"+folder); //delete dir
 		}
-	});
+	});*/
 }
 
 // Users =======================================================================
