@@ -1,59 +1,31 @@
 const fs = require('fs');
 
-//saves or creates files
-module.exports = (spreadsheet, doc, objectid, cb) => {
-  var exists = fs.existsSync("public/files/"+objectid);
+function replaceFile(filePath, file, cb) {
+  fs.exists(filePath, (exists) => {
+    // Delete the file if it exists
+    console.log(filePath);
+    if (exists) {
+      fs.unlink(filePath, (err) => {
+        if (err) return cb(err);
 
-  if(!exists){
-    fs.mkdirSync("public/files/"+objectid);
-  }
-
-  //Only run if spreadsheet != null
-  if(spreadsheet){
-
-    //Delete file if it exists
-    if(fs.existsSync("public/files/"+objectid+"/spreadsheet.xls")){
-      fs.unlinkSync("public/files/"+objectid+"/spreadsheet.xls")
-    }
-
-    //save spreadsheet
-    spreadsheet.mv("public/files/"+objectid+"/spreadsheet.xls", err => {
-      //give callback error
-      if(err){
-        cb(err);
-      }
-
-      //only run if doc is given
-      if(doc){
-
-        //delete doc if it exists
-        if(fs.existsSync("public/files/"+objectid+"/brief.doc")){
-          fs.unlinkSync("public/files/"+objectid+"/brief.doc")
-        }
-
-        //save brief
-        doc.mv("public/files/"+objectid+"/brief.doc", err => {
-          cb(err);
-        });
-      }else{
-        cb();
-      }
-    });
-  }else{
-    //only run if doc is given
-    if(doc){
-
-      //delete doc if it exists
-      if(fs.existsSync("public/files/"+objectid+"/brief.doc")){
-        fs.unlinkSync("public/files/"+objectid+"/brief.doc")
-      }
-
-      //save brief
-      doc.mv("public/files/"+objectid+"/brief.doc", err => {
-        cb(err);
+        file.mv(filePath, cb);
       });
-    }else{
-      cb();
+    } else {
+      file.mv(filePath, cb);
     }
+  });
+}
+
+const basePath = "public/files/";
+
+//saves or creates files
+module.exports = (fileName, file, objectId, cb) => {
+  var objBasePath = basePath + objectId;
+
+  // Make the obj folder if non existant
+  if(!fs.existsSync(objBasePath)){
+    fs.mkdirSync(objBasePath);
   }
+
+  replaceFile(objBasePath + "/" + fileName, file, cb);
 }

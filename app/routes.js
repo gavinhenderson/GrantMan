@@ -1,6 +1,7 @@
 var mockProjects = require("./mockdata/projects.js");
 
 var project = require("./project.js");
+var saveFile = require("./files.js");
 
 // app/routes.js
 module.exports = (app, passport, db) => {
@@ -77,14 +78,26 @@ module.exports = (app, passport, db) => {
         var action = actions[req.user.type][req.body.action];
     		project.updateStatus(action, req.body.comment, req.params.id, req.user, (err) => {
     			if (err) { res.send(err); return; }
-					if(req.body.spreadsheet!=null || req.body.brief!=null){
-						console.log(req.files);
-						require('./files.js')(req.files.spreadsheet, req.files.brief, req.params.id, (err)=>{
-							if(err) console.log(err);
-							res.redirect("/project/" + req.params.id);
-						})
 
-					}
+					db.model.Project.findOne({ projectId: req.params.id }, (err, proj) => {
+						if (err) { res.send(err); return; }
+
+						// Update the spreadsheet
+						if (req.files.spreadsheet) {
+							saveFile("spreadsheet.xls", req.files.spreadsheet, proj._id, (err) => {
+								if (err) console.log(err);
+							});
+						}
+
+						// Update brief
+						if (req.files.brief) {
+							saveFile("brief.doc", req.files.brief, proj._id, (err) => {
+								if (err) console.log(err);
+							});
+						}
+
+						res.redirect("/project/" + req.params.id);
+					});
     		});
       }
     });
@@ -129,10 +142,9 @@ module.exports = (app, passport, db) => {
 
 				project.updateStatus('RIS approval', null, newProject.projectId, req.user, (err) => {
 					if(err) console.log(err);
-					require('./files.js')(req.files.spreadsheet, req.files.brief, newProject._id, (err)=>{
-						if(err) console.log(err);
-						res.redirect("/project/" + newProject.projectId);
-					});
+					saveFile("spreadsheet.xls",req.files.spreadsheet,newProject._id,console.log)
+					saveFile("brief.doc",req.files.brief,newProject._id,console.log)
+					res.redirect("/project/"+newProject.projectId);
 				});
 			});
 		});
