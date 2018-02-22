@@ -45,8 +45,6 @@
   </body>
 
   <script>
-    console.log("<%- user.name %>");
-
     var projects = {
       all: [],
       completed: [],
@@ -57,20 +55,32 @@
 
     //this looks awful
     projects.all.forEach((project) => {
-      if(project.author.school == "<%- user.type %>"){
-        if(project.status.statusMessage == "Project approved"){ projects.completed.push(project) }
+      if(project.author.school == "<%- user.school %>"){
+        if(project.status.statusMessage == "Project approved"){
+          projects.completed.push(project)
+
+        }
         else if("<%- user.type %>" == "Researcher" && project.author.name == "<%- user.name %>"){
           if(project.status.statusMessage == "Researcher amendment" || project.status.statusMessage == "Researcher approval"){
             projects.inbox.push(project)
           }
         }
-        else if("<%- user.type %>" == "RIS" && project.status.statusMessage == "RIS approval"){ projects.inbox.push(project) }
+        else if("<%- user.type %>" == "RIS" && project.status.statusMessage == "RIS approval"){
+          projects.inbox.push(project)
+
+        }
         else if("<%- user.type %>" == "Associate Dean" && project.status.satatusMessage=="Associate Dean approval") {
           projects.inbox.push(project)
+
         }
-        else if("<%- user.type %>" == "Dean" && project.status.statusMessage=="Dean approval"){ projects.inbox.push(project)}
+        else if("<%- user.type %>" == "Dean" && project.status.statusMessage=="Dean approval"){
+          projects.inbox.push(project)
+
+        }
       }
     })
+
+    //console.log(JSON.stringify(projects))
 
     function search(searchString, tabClick){
       if(!tabClick){
