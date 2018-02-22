@@ -74,13 +74,17 @@ module.exports = (app, passport, db) => {
     require('./password.js').verifyHash(req.body.password, req.user.password, (err,user) => {
       if(!err && res){
         if (!req.body.action) { res.send("Error: A new status is required"); return; }
-        /*console.log(actions)
-        console.log(actions[user.type])
-        console.log(actions[user.type][req.body.action])*/
         var action = actions[req.user.type][req.body.action];
     		project.updateStatus(action, req.body.comment, req.params.id, req.user, (err) => {
     			if (err) { res.send(err); return; }
-    			res.redirect("/project/" + req.params.id);
+					if(req.body.spreadsheet!=null || req.body.brief!=null){
+						console.log(req.files);
+						require('./files.js')(req.files.spreadsheet, req.files.brief, req.params.id, (err)=>{
+							if(err) console.log(err);
+							res.redirect("/project/" + req.params.id);
+						})
+
+					}
     		});
       }
     });
@@ -123,11 +127,8 @@ module.exports = (app, passport, db) => {
 		project.createProject(req.user, req.body.title, req.body.description, function(newProject){
 			newProject.save((err) => {
 
-				console.log(newProject);
-
 				project.updateStatus('RIS approval', null, newProject.projectId, req.user, (err) => {
 					if(err) console.log(err);
-					console.log(req.files);
 					require('./files.js')(req.files.spreadsheet, req.files.brief, newProject._id, (err)=>{
 						if(err) console.log(err);
 						res.redirect("/project/" + newProject.projectId);

@@ -10,11 +10,12 @@ module.exports = (spreadsheet, doc, objectid, cb) => {
 
   //Only run if spreadsheet != null
   if(spreadsheet){
-    //fs.writeFileSync("public/files/"+objectid+"/spreadsheet.xls",spreadsheet);
     spreadsheet.mv("public/files/"+objectid+"/spreadsheet.xls", err => {
       //only run if doc != null
+      if(err){
+        cb(err);
+      }
       if(doc){
-        //fs.writeFileSync("public/files/"+objectid+"/brief.doc",doc);
         doc.mv("public/files/"+objectid+"/brief.doc", err => {
           cb(err);
         });

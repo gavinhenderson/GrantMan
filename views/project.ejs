@@ -28,13 +28,13 @@
   <div class="tile is-parent is-3">
     <div class="tile is-child box">
       <p class="title">Downloads</p>
-      <p style="margin-bottom:20px"><a class="button is-success" style="margin-left:10px">
+      <p style="margin-bottom:20px"><a href="/files/<%-project._id%>/spreadsheet.xls" class="button is-success" style="margin-left:10px">
         <span class="icon is-small">
           <i class="fas fa-download"></i>
         </span>
         <span>Spreadsheet</span>
       </a></p>
-      <p><a class="button is-success"  style="margin-left:10px">
+      <p><a href="/files/<%-project._id%>/brief.doc"class="button is-success"  style="margin-left:10px">
         <span class="icon is-small">
           <i class="fas fa-download"></i>
         </span>
@@ -72,7 +72,7 @@
     (user.school == project.author.school)
   ){%>
 
-  <form id="statusForm" action="status" method="post">
+  <form encType="multipart/form-data" id="statusForm" action="status" method="post">
 
   <div id="modal" class="modal">
     <div class="modal-background"></div>
@@ -181,6 +181,9 @@
 
   <% include footer %>
   <script>
+
+  console.log("<%- user.staffID %>");
+  console.log("<%- project.author.staffID %>");
 
 
   var postURL = window.location.href
