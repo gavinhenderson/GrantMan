@@ -72,8 +72,8 @@ module.exports = (app, passport, db) => {
       }
     }
 
-    require('./password.js').verifyHash(req.body.password, req.user.password, (err,user) => {
-      if(!err && res){
+    require('./password.js').verifyHash(req.body.password, req.user.password, (err,result) => {
+      if(!err && result){
         if (!req.body.action) { res.send("Error: A new status is required"); return; }
         var action = actions[req.user.type][req.body.action];
     		project.updateStatus(action, req.body.comment, req.params.id, req.user, (err) => {
@@ -99,7 +99,9 @@ module.exports = (app, passport, db) => {
 						res.redirect("/project/" + req.params.id);
 					});
     		});
-      }
+      } else {
+				res.send("Password invalid");
+			}
     });
 	});
 
