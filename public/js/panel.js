@@ -24,13 +24,17 @@ function update(){
 	$(".panel-element").remove();
 	if (projects[current].length > 0) {
 		projects[current].forEach(function(project){
+			var statusMessage = project.status.statusMessage;
+			if(statusMessage != "Project approved"){
+			  statusMessage += " required";
+			}
 			var html = [
 				"<a class='panel-block panel-element' href='/project/"+project.projectId+"'>",
 				"<span class='panel-icon'>",
 				"<i class='fas fa-book'></i>",
 				"</span>",
 				"<p style='text-align:left;width:60%'>"+project.title+"</p>",
-				"<p style='text-align:right;width:40%'>"+project.status.statusMessage+" required</p>",
+				"<p style='text-align:right;width:40%'>"+statusMessage+" required</p>",
 				"</a>"].join("");
 			$(".panel").append(html);
 		});
