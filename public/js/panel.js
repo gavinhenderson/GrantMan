@@ -34,7 +34,7 @@ function update(){
 				"<i class='fas fa-book'></i>",
 				"</span>",
 				"<p style='text-align:left;width:60%'>"+project.title+"</p>",
-				"<p style='text-align:right;width:40%'>"+statusMessage+" required</p>",
+				"<p style='text-align:right;width:40%'>"+statusMessage+"</p>",
 				"</a>"].join("");
 			$(".panel").append(html);
 		});
