@@ -77,8 +77,8 @@ module.exports = (app, passport, db) => {
 		}
     }
 
-    require('./password.js').verifyHash(req.body.password, req.user.password, (err,user) => {
-      if(!err && res){
+    require('./password.js').verifyHash(req.body.password, req.user.password, (err,result) => {
+      if(!err && result){
         if (!req.body.action) { res.send("Error: A new status is required"); return; }
         var action = actions[req.body.previousMessage][req.body.action];
     		project.updateStatus(action, req.body.comment, req.params.id, req.user, (err) => {
@@ -87,24 +87,35 @@ module.exports = (app, passport, db) => {
 					db.model.Project.findOne({ projectId: req.params.id }, (err, proj) => {
 						if (err) { res.send(err); return; }
 
+						var exp = 0;
+						var cb = () => {
+							exp--;
+							if (exp == 0)
+								res.redirect("/project/" + req.params.id);
+						};
+
 						// Update the spreadsheet
 						if (req.files.spreadsheet) {
+							exp++;
 							saveFile("spreadsheet.xls", req.files.spreadsheet, proj._id, (err) => {
 								if (err) console.log(err);
+								cb();
 							});
 						}
 
 						// Update brief
 						if (req.files.brief) {
+							exp++;
 							saveFile("brief.doc", req.files.brief, proj._id, (err) => {
 								if (err) console.log(err);
+								cb();
 							});
 						}
-
-						res.redirect("/project/" + req.params.id);
 					});
     		});
-      }
+      } else {
+				res.send("Password invalid");
+			}
     });
 	});
 

@@ -94,7 +94,7 @@
         </section>
         <footer class="modal-card-foot">
           <button type="submit" class="button is-success">Confirm</button>
-          <button class="button" onclick="closemodal()">Cancel</button>
+          <button type="button" class="button" onclick="closemodal()">Cancel</button>
         </footer>
       </div>
     </div>
@@ -185,14 +185,6 @@
 
   console.log("<%- user.staffID %>");
   console.log("<%- project.author.staffID %>");
-
-
-  var postURL = window.location.href
-  if(postURL[length-1]=="/"){
-    postURL.substring(0, postURL.length - 1)
-  }
-  postURL += "/status"
-  console.log(postURL)
 
   $('#statusForm').attr('action',postURL);
 
