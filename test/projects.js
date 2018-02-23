@@ -37,7 +37,8 @@ describe("Projects", () => {
 	});
 
 	describe("Status update", () => {
-		// Helper function
+		// Helper functions ========================================================
+		// Test if a member of a given user type can perform a given action
 		var testValid = (action, type, done) => {
 			db.model.User.findOne({ type: type }, (err, user) => {
 				if (err) done(err);
@@ -46,6 +47,7 @@ describe("Projects", () => {
 				project.updateStatus(action, null, 1, user, done);
 			});
 		};
+		// Ensure that a member of a given user type cannot perform a given action
 		var testInvalid = (action, type, done) => {
 			db.model.User.findOne({ type: type }, (err, user) => {
 				if (err) done(err);
@@ -74,76 +76,76 @@ describe("Projects", () => {
 		});
 
 		describe("Associate Dean approval", () => {
-			it("a researcher can set the project status to " + "Associate Dean approval", done => {
+			it("a researcher can set the project status to Associate Dean approval", done => {
 				testValid("Associate Dean approval", "Researcher", done);
 			});
-			it("RIS cannot set the project status to " + "Associate Dean approval", done => {
+			it("RIS cannot set the project status to Associate Dean approval", done => {
 				testInvalid("Associate Dean approval", "RIS", done)
 			});
-			it("Associate Dean cannot set the project status to " + "Associate Dean approval", done => {
+			it("Associate Dean cannot set the project status to Associate Dean approval", done => {
 				testInvalid("Associate Dean approval", "Associate Dean", done)
 			});
-			it("Dean cannot set the project status to " + "Associate Dean approval", done => {
+			it("Dean cannot set the project status to Associate Dean approval", done => {
 				testInvalid("Associate Dean approval", "Dean", done)
 			});
 		});
 
 		describe("Researcher approval", () => {
-			it("a researcher cannot set the project status to " + "Researcher approval", done => {
+			it("a researcher cannot set the project status to Researcher approval", done => {
 				testInvalid("Researcher approval", "Researcher", done);
 			});
-			it("RIS can set the project status to " + "Researcher approval", done => {
+			it("RIS can set the project status to Researcher approval", done => {
 				testValid("Researcher approval", "RIS", done)
 			});
-			it("Associate Dean cannot set the project status to " + "Researcher approval", done => {
+			it("Associate Dean cannot set the project status to Researcher approval", done => {
 				testInvalid("Researcher approval", "Associate Dean", done)
 			});
-			it("Dean cannot set the project status to " + "Researcher approval", done => {
+			it("Dean cannot set the project status to Researcher approval", done => {
 				testInvalid("Researcher approval", "Dean", done)
 			});
 		});
 
 		describe("Researcher amendment", () => {
-			it("a researcher cannot set the project status to " + "Researcher amendment", done => {
+			it("a researcher cannot set the project status to Researcher amendment", done => {
 				testInvalid("Researcher amendment", "Researcher", done);
 			});
-			it("RIS can set the project status to " + "Researcher amendment", done => {
+			it("RIS can set the project status to Researcher amendment", done => {
 				testValid("Researcher amendment", "RIS", done)
 			});
-			it("Associate Dean can set the project status to " + "Researcher amendment", done => {
+			it("Associate Dean can set the project status to Researcher amendment", done => {
 				testValid("Researcher amendment", "Associate Dean", done)
 			});
-			it("Dean can set the project status to " + "Researcher amendment", done => {
+			it("Dean can set the project status to Researcher amendment", done => {
 				testValid("Researcher amendment", "Dean", done)
 			});
 		});
 
 		describe("Dean approval", () => {
-			it("a researcher cannot set the project status to " + "Dean approval", done => {
+			it("a researcher cannot set the project status to Dean approval", done => {
 				testInvalid("Dean approval", "Researcher", done);
 			});
-			it("RIS cannot set the project status to " + "Dean approval", done => {
+			it("RIS cannot set the project status to Dean approval", done => {
 				testInvalid("Dean approval", "RIS", done)
 			});
-			it("Associate Dean can set the project status to " + "Dean approval", done => {
+			it("Associate Dean can set the project status to Dean approval", done => {
 				testValid("Dean approval", "Associate Dean", done)
 			});
-			it("Dean cannot set the project status to " + "Dean approval", done => {
+			it("Dean cannot set the project status to Dean approval", done => {
 				testInvalid("Dean approval", "Dean", done)
 			});
 		});
 
 		describe("Project approved", () => {
-			it("a researcher cannot set the project status to " + "Project approved", done => {
+			it("a researcher cannot set the project status to Project approved", done => {
 				testInvalid("Project approved", "Researcher", done);
 			});
-			it("RIS cannot set the project status to " + "Project approved", done => {
+			it("RIS cannot set the project status to Project approved", done => {
 				testInvalid("Project approved", "RIS", done)
 			});
-			it("Associate Dean cannot set the project status to " + "Project approved", done => {
+			it("Associate Dean cannot set the project status to Project approved", done => {
 				testInvalid("Project approved", "Associate Dean", done)
 			});
-			it("Dean can set the project status to " + "Project approved", done => {
+			it("Dean can set the project status to Project approved", done => {
 				testValid("Project approved", "Dean", done)
 			});
 		});

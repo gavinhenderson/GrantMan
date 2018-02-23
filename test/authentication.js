@@ -12,7 +12,7 @@ describe("Authentication", () => {
 	describe("Password bcrypt", () => {
 		it("should generate a digest from a string input", done => {
 			password.generateHash("password", (err, hash) => {
-				assert.ok(hash);
+				assert.ok(hash, "the hash is given");
 				done(err);
 			});
 		});
@@ -20,7 +20,7 @@ describe("Authentication", () => {
 		it ("should verify if a password matches a hash/salt", done => {
 			password.generateHash("password", (err, hash) => {
 				password.verifyHash("password", hash, (err, res) => {
-					assert.ok(res);
+					assert.ok(res, "the password is correct");
 					done(err);
 				});
 			});
@@ -32,7 +32,7 @@ describe("Authentication", () => {
 		it("should login when provided valid details", done => {
 			authenticate("researcher@dundee.ac.uk", "password", (err, user) => {
 				// If user is not false, then authentication passed
-				assert.ok(user);
+				assert.ok(user, "a user is given");
 				done(err);
 			});
 		});
@@ -40,7 +40,7 @@ describe("Authentication", () => {
 		it("should not login when incorrect username provided", done => {
 			authenticate("nonexistant@dundee.ac.uk", "password", (err, user) => {
 				// If user is false, then authentication passed
-				assert.ok(!user);
+				assert.ok(!user, "an invalid login attempt was unsucessful");
 				done();
 			});
 		});
@@ -48,7 +48,7 @@ describe("Authentication", () => {
 		it("should not login when incorrect password provided", done => {
 			authenticate("researcher@dundee.ac.uk", "notapassword", (err, user) => {
 				// If user is false, then authentication passed
-				assert.ok(!user);
+				assert.ok(!user, "an invalid login attempt was unsucessful");
 				done();
 			});
 		});
