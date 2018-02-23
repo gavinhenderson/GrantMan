@@ -52,30 +52,35 @@ module.exports = (app, passport, db) => {
 
 	// Status ====================================================================
 	app.post("/project/:id/status", (req, res) => {
-
+	console.log("req.body");
+	console.log(req.body);
     var actions = {
-      Researcher: {
-        'accept': "Associate Dean approval",
-        'reject': "RIS approval"
-      },
-      RIS: {
-        'accept':"Researcher approval",
-        'reject': "Researcher amendment"
-      },
-      "Associate Dean": {
-        'accept':"Dean approval",
-        'reject':"Researcher amendment"
-      },
-      Dean: {
-        'accept':"Project approved",
-        'reject':"Researcher amendment"
-      }
+		"Researcher amendment": {
+			'accept': "RIS approval",
+			'reject': "Researcher amendment"
+		},
+		"Researcher approval": {
+			'accept': "Associate Dean approval",
+			'reject': "RIS approval"
+		},
+		"RIS approval": {
+			'accept':"Researcher approval",
+			'reject': "Researcher amendment"
+		},
+		"Associate Dean approval": {
+			'accept':"Dean approval",
+			'reject':"Researcher amendment"
+		},
+		"Dean approval": {
+			'accept':"Project approved",
+			'reject':"Researcher amendment"
+		}
     }
 
     require('./password.js').verifyHash(req.body.password, req.user.password, (err,result) => {
       if(!err && result){
         if (!req.body.action) { res.send("Error: A new status is required"); return; }
-        var action = actions[req.user.type][req.body.action];
+        var action = actions[req.body.previousMessage][req.body.action];
     		project.updateStatus(action, req.body.comment, req.params.id, req.user, (err) => {
     			if (err) { res.send(err); return; }
 

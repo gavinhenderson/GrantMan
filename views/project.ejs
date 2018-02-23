@@ -159,7 +159,8 @@
       </div>
       <% } %>
     </div>
-    <input type="hidden" name="action" value="accept" id="action"></input>
+    <input type="hidden" name="action" value="" id="action"></input>
+    <input type="hidden" name="previousMessage" value="<%-project.status.statusMessage%>">
     </form>
     <script>
     var brief = document.getElementById("brief");
