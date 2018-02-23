@@ -14,7 +14,13 @@ module.exports = {
 				name: userDetails.name,
 				school: userDetails.school
 			});
-			cb();
+			newUsr.validate((err) => {
+				if (err) return cb(err);
+
+				newUsr.save(err => {
+					cb(err);
+				})
+			});
 		});
 	}
 };

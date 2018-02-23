@@ -125,10 +125,10 @@ module.exports = (app, passport, db) => {
 	});
 
 	app.post("/createaccount", (req,res) => {
-		require("./account.js").createUser(db, req.body, function(user){
-			user.save();
+		require("./account.js").createUser(db, req.body, (err) => {
+			if (err) { res.send(err); return; }
+			res.send("Account created");
 		});
-		res.send("Account created");
 	});
 
 	// Create project ============================================================
