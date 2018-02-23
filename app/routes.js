@@ -88,7 +88,8 @@ module.exports = (app, passport, db) => {
 						if (err) { res.send(err); return; }
 
 						// Update the spreadsheet
-						if (!req.files) {
+
+						if (req.files != null) {
 							if (req.files.spreadsheet) {
 								saveFile("spreadsheet.xls", req.files.spreadsheet, proj._id, (err) => {
 									if (err) console.log(err);
