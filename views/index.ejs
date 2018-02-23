@@ -100,14 +100,14 @@
       var results = [];
 
       function checkString(results, project){
-        if(project.name.toLowerCase().includes(searchString.toLowerCase())){
+        if(project.title.toLowerCase().includes(searchString.toLowerCase())){
           results.push(project);
         }
       }
 
-      for(var key in projects){
-        projects[all].forEach(project => checkString(results,project))
-      }
+        projects['all'].forEach( (project) => {
+          checkString(results,project);
+        });
 
       results.forEach(function (project){
         var html = [
