@@ -112,7 +112,7 @@
           </span>
           <span>Approve</span>
         </a>
-        <% if(user.type != "Researcher"){ %>
+        <% if(user.type != "Researcher" && project.status.statusMessage == "Researcher ammendment"){ %>
         <a onclick="showmodal('reject')" class="button is-danger">
           <span class="icon is-small">
             <i class="fas fa-thumbs-down"></i>
