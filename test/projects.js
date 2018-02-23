@@ -58,20 +58,20 @@ describe("Projects", () => {
 					done();
 				});
 			});
-		}
+		};
 
 		describe("RIS approval", () => {
 			it("a researcher can set the project status to RIS approval", done => {
 				testValid("RIS approval", "Researcher", done);
 			});
 			it("RIS cannot set the project status to RIS approval", done => {
-				testInvalid("RIS approval", "RIS", done)
+				testInvalid("RIS approval", "RIS", done);
 			});
 			it("Associate Dean cannot set the project status to RIS approval", done => {
-				testInvalid("RIS approval", "Associate Dean", done)
+				testInvalid("RIS approval", "Associate Dean", done);
 			});
 			it("Dean cannot set the project status to RIS approval", done => {
-				testInvalid("RIS approval", "Dean", done)
+				testInvalid("RIS approval", "Dean", done);
 			});
 		});
 
@@ -80,13 +80,13 @@ describe("Projects", () => {
 				testValid("Associate Dean approval", "Researcher", done);
 			});
 			it("RIS cannot set the project status to Associate Dean approval", done => {
-				testInvalid("Associate Dean approval", "RIS", done)
+				testInvalid("Associate Dean approval", "RIS", done);
 			});
 			it("Associate Dean cannot set the project status to Associate Dean approval", done => {
-				testInvalid("Associate Dean approval", "Associate Dean", done)
+				testInvalid("Associate Dean approval", "Associate Dean", done);
 			});
 			it("Dean cannot set the project status to Associate Dean approval", done => {
-				testInvalid("Associate Dean approval", "Dean", done)
+				testInvalid("Associate Dean approval", "Dean", done);
 			});
 		});
 
@@ -95,13 +95,13 @@ describe("Projects", () => {
 				testInvalid("Researcher approval", "Researcher", done);
 			});
 			it("RIS can set the project status to Researcher approval", done => {
-				testValid("Researcher approval", "RIS", done)
+				testValid("Researcher approval", "RIS", done);
 			});
 			it("Associate Dean cannot set the project status to Researcher approval", done => {
-				testInvalid("Researcher approval", "Associate Dean", done)
+				testInvalid("Researcher approval", "Associate Dean", done);
 			});
 			it("Dean cannot set the project status to Researcher approval", done => {
-				testInvalid("Researcher approval", "Dean", done)
+				testInvalid("Researcher approval", "Dean", done);
 			});
 		});
 
@@ -110,13 +110,13 @@ describe("Projects", () => {
 				testInvalid("Researcher amendment", "Researcher", done);
 			});
 			it("RIS can set the project status to Researcher amendment", done => {
-				testValid("Researcher amendment", "RIS", done)
+				testValid("Researcher amendment", "RIS", done);
 			});
 			it("Associate Dean can set the project status to Researcher amendment", done => {
-				testValid("Researcher amendment", "Associate Dean", done)
+				testValid("Researcher amendment", "Associate Dean", done);
 			});
 			it("Dean can set the project status to Researcher amendment", done => {
-				testValid("Researcher amendment", "Dean", done)
+				testValid("Researcher amendment", "Dean", done);
 			});
 		});
 
@@ -125,13 +125,13 @@ describe("Projects", () => {
 				testInvalid("Dean approval", "Researcher", done);
 			});
 			it("RIS cannot set the project status to Dean approval", done => {
-				testInvalid("Dean approval", "RIS", done)
+				testInvalid("Dean approval", "RIS", done);
 			});
 			it("Associate Dean can set the project status to Dean approval", done => {
-				testValid("Dean approval", "Associate Dean", done)
+				testValid("Dean approval", "Associate Dean", done);
 			});
 			it("Dean cannot set the project status to Dean approval", done => {
-				testInvalid("Dean approval", "Dean", done)
+				testInvalid("Dean approval", "Dean", done);
 			});
 		});
 
@@ -140,13 +140,13 @@ describe("Projects", () => {
 				testInvalid("Project approved", "Researcher", done);
 			});
 			it("RIS cannot set the project status to Project approved", done => {
-				testInvalid("Project approved", "RIS", done)
+				testInvalid("Project approved", "RIS", done);
 			});
 			it("Associate Dean cannot set the project status to Project approved", done => {
-				testInvalid("Project approved", "Associate Dean", done)
+				testInvalid("Project approved", "Associate Dean", done);
 			});
 			it("Dean can set the project status to Project approved", done => {
-				testValid("Project approved", "Dean", done)
+				testValid("Project approved", "Dean", done);
 			});
 		});
 

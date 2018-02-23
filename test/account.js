@@ -13,8 +13,8 @@ var mockUser = {
 };
 
 var failUser = {
-  name: "Fail"
-}
+	name: "Fail"
+};
 
 describe("Accounts",function(){
 	it("Valid account creates without error",function(done){
@@ -23,11 +23,11 @@ describe("Accounts",function(){
 			done(err);
 		});
 	});
-  it("Invalid account creates with error",function(done){
-    //Doesnt give all required fields
-    account.createUser(db, failUser, function(err){
-      assert.ok(err, "an invalid user is not created");
-      done()
-    })
-  })
+	it("Invalid account creates with error",function(done){
+		//Doesnt give all required fields
+		account.createUser(db, failUser, function(err){
+			assert.ok(err, "an invalid user is not created");
+			done();
+		});
+	});
 });

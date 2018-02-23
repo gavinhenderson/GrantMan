@@ -42,9 +42,9 @@ module.exports = (app, passport, db) => {
 
 	// Project page ==============================================================
 	app.get("/project/:id", (req, res) => {
-    // /public/files/[id]/[projec title hash]/brief.doc
-    // /public/files/[id]/[projec title hash]/spreadsheet.xls
-    project.getProject(req.params.id, (err, proj) => {
+		// /public/files/[id]/[projec title hash]/brief.doc
+		// /public/files/[id]/[projec title hash]/spreadsheet.xls
+		project.getProject(req.params.id, (err, proj) => {
 			if (err) { res.send(err); return; }
 			res.render("project", { user: req.user, project: proj });
 		});
@@ -52,35 +52,35 @@ module.exports = (app, passport, db) => {
 
 	// Status ====================================================================
 	app.post("/project/:id/status", (req, res) => {
-	console.log("req.body");
-	console.log(req.body);
-    var actions = {
-		"Researcher amendment": {
-			'accept': "RIS approval",
-			'reject': "Researcher amendment"
-		},
-		"Researcher approval": {
-			'accept': "Associate Dean approval",
-			'reject': "RIS approval"
-		},
-		"RIS approval": {
-			'accept':"Researcher approval",
-			'reject': "Researcher amendment"
-		},
-		"Associate Dean approval": {
-			'accept':"Dean approval",
-			'reject':"Researcher amendment"
-		},
-		"Dean approval": {
-			'accept':"Project approved",
-			'reject':"Researcher amendment"
-		}
-    }
+		console.log("req.body");
+		console.log(req.body);
+		var actions = {
+			"Researcher amendment": {
+				"accept": "RIS approval",
+				"reject": "Researcher amendment"
+			},
+			"Researcher approval": {
+				"accept": "Associate Dean approval",
+				"reject": "RIS approval"
+			},
+			"RIS approval": {
+				"accept":"Researcher approval",
+				"reject": "Researcher amendment"
+			},
+			"Associate Dean approval": {
+				"accept":"Dean approval",
+				"reject":"Researcher amendment"
+			},
+			"Dean approval": {
+				"accept":"Project approved",
+				"reject":"Researcher amendment"
+			}
+		};
 
-    require('./password.js').verifyHash(req.body.password, req.user.password, (err,result) => {
-      if(!err && result){
-        if (!req.body.action) { res.send("Error: A new status is required"); return; }
-        var action = actions[req.body.previousMessage][req.body.action];
+		require("./password.js").verifyHash(req.body.password, req.user.password, (err,result) => {
+			if(!err && result){
+				if (!req.body.action) { res.send("Error: A new status is required"); return; }
+				var action = actions[req.body.previousMessage][req.body.action];
     		project.updateStatus(action, req.body.comment, req.params.id, req.user, (err) => {
     			if (err) { res.send(err); return; }
 
@@ -108,10 +108,10 @@ module.exports = (app, passport, db) => {
 
 					});
     		});
-      } else {
+			} else {
 				res.send("Password invalid");
 			}
-    });
+		});
 	});
 
 
@@ -151,10 +151,10 @@ module.exports = (app, passport, db) => {
 		project.createProject(req.user, req.body.title, req.body.description, function(newProject){
 			newProject.save((err) => {
 
-				project.updateStatus('RIS approval', null, newProject.projectId, req.user, (err) => {
+				project.updateStatus("RIS approval", null, newProject.projectId, req.user, (err) => {
 					if(err) console.log(err);
-					saveFile("spreadsheet.xls",req.files.spreadsheet,newProject._id,console.log)
-					saveFile("brief.doc",req.files.brief,newProject._id,console.log)
+					saveFile("spreadsheet.xls",req.files.spreadsheet,newProject._id,console.log);
+					saveFile("brief.doc",req.files.brief,newProject._id,console.log);
 					res.redirect("/project/"+newProject.projectId);
 				});
 			});

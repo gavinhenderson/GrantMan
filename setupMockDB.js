@@ -88,7 +88,7 @@ function makeProjects(i) {
 			if (err) console.log(err);
 			else console.log("Set status of project " + id);
 		});
-	}
+	};
 
 	var p1, p2, p3;
 	p1 = new db.model.Project({ // Project 1

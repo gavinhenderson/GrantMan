@@ -8,11 +8,11 @@ module.exports = new Schema({
 		type: String,
 		enum: [
 			"RIS approval"
-		, "Researcher amendment"
-		, "Researcher approval"
-		, "Dean approval"
-		, "Associate Dean approval"
-		, "Project approved"
+			, "Researcher amendment"
+			, "Researcher approval"
+			, "Dean approval"
+			, "Associate Dean approval"
+			, "Project approved"
 		]
 	},
 	editor: {

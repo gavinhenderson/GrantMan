@@ -12,7 +12,7 @@ const flash    = require("connect-flash");
 const LocalStrategy = require("passport-local").Strategy;
 const cookieParser  = require("cookie-parser");
 const bodyParser    = require("body-parser");
-const fileUpload    = require('express-fileupload');
+const fileUpload    = require("express-fileupload");
 
 // Setup =======================================================================
 // Debug CLI option [should probably replace with node.env]
@@ -47,12 +47,12 @@ const app = express();
 // Store setup
 var store = new mstore(
 	{
-	  uri: 'mongodb://localhost:27017/grantman_sessions',
-	  collection: 'mySessions'
+	  uri: "mongodb://localhost:27017/grantman_sessions",
+	  collection: "mySessions"
 	});
 
 // Catch errors
-store.on('error', function(error) {
+store.on("error", function(error) {
 	assert.ifError(error);
 	assert.ok(false);
 });

@@ -1,5 +1,5 @@
 // app/project.js
-const permissions = require('./permission.js');
+const permissions = require("./permission.js");
 module.exports = (db) => {
 	return {
 		getProject: (projectId, cb) => {
@@ -85,43 +85,43 @@ module.exports = (db) => {
 
 			// Get the project
 			db.model.Project.findOne({ projectId: projectId }, (err, project) => {
-					if (err) return cb(err);
-					if (!project)
-						return cb(new Error("No project exists with ID" + projectId));
+				if (err) return cb(err);
+				if (!project)
+					return cb(new Error("No project exists with ID" + projectId));
 
-					// Create the entity
-					var nStatus = new db.model.ProjectStatus({
-						statusMessage: action,
-						editor: user._id,
-						comment: comment,
-						projectId: project._id,
-					});
+				// Create the entity
+				var nStatus = new db.model.ProjectStatus({
+					statusMessage: action,
+					editor: user._id,
+					comment: comment,
+					projectId: project._id,
+				});
 					// Save to the database
-					nStatus.save(err => {
+				nStatus.save(err => {
+					if (err) return cb(err);
+					project.status = nStatus._id;
+					project.statuses.push(nStatus._id);
+					project.save(err => {
 						if (err) return cb(err);
-						project.status = nStatus._id;
-						project.statuses.push(nStatus._id);
-						project.save(err => {
-							if (err) return cb(err);
-							cb();
-						});
+						cb();
 					});
 				});
+			});
 		},
 
 		createProject: (user, title, description, cb) => {
 			//Project ID
 
-			db.model.Project.find({}, ['projectId'], {sort: {projectId: -1}}, (err, projects) => {
+			db.model.Project.find({}, ["projectId"], {sort: {projectId: -1}}, (err, projects) => {
 
 				var newId = 1;
 				if(projects[0]) newId = projects[0].projectId + 1;
 
 				var project = new db.model.Project({
-					'projectId': newId,
-					'title': title,
-					'description': description,
-					'author': user._id,
+					"projectId": newId,
+					"title": title,
+					"description": description,
+					"author": user._id,
 				});
 
 				cb(project);

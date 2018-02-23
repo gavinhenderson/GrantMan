@@ -167,7 +167,7 @@ describe("Models", function() {
 
 	});
 
-	describe('ProjectStatus', function() {
+	describe("ProjectStatus", function() {
 		
 		it("should force type as an enumerator value [RIS approval]", function(done) {
 

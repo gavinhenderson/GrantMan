@@ -19,7 +19,7 @@ module.exports = {
 
 				newUsr.save(err => {
 					cb(err);
-				})
+				});
 			});
 		});
 	}
