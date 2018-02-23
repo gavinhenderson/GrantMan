@@ -101,23 +101,27 @@
       var results = [];
 
       function checkString(results, project){
-        if(project.name.toLowerCase().includes(searchString.toLowerCase())){
+        if(project.title.toLowerCase().includes(searchString.toLowerCase())){
           results.push(project);
         }
       }
 
-      for(var key in projects){
-        projects[all].forEach(project => checkString(results,project))
-      }
+        projects['all'].forEach( (project) => {
+          checkString(results,project);
+        });
 
       results.forEach(function (project){
+        var statusMessage = project.status.statusMessage;
+        if(statusMessage != "Project approved"){
+          statusMessage += " required";
+        }
         var html = [
           "<a class='panel-block panel-element' href='/project/"+project.projectId+"/'>",
           "<span class='panel-icon'>",
           "<i class='fas fa-book'></i>",
           "</span>",
           "<p style='text-align:left;width:60%'>"+project.title+"</p>",
-          "<p style='text-align:right;width:40%'>"+project.status.statusMessage+" required</p>",
+          "<p style='text-align:right;width:40%'>"+statusMessage+"</p>",
           "</a>"].join("");
         $('.panel').append(html);
       });

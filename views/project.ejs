@@ -112,12 +112,15 @@
           </span>
           <span>Approve</span>
         </a>
+        <% if(user.type != "Researcher"){ %>
         <a onclick="showmodal('reject')" class="button is-danger">
           <span class="icon is-small">
             <i class="fas fa-thumbs-down"></i>
           </span>
           <span>Reject</span>
         </a>
+        <% } %>
+
       </div>
 
       <% if(project.status.statusMessage == "RIS approval" ||
