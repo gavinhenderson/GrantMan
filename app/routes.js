@@ -138,7 +138,7 @@ module.exports = (app, passport, db) => {
 	app.post("/createaccount", (req,res) => {
 		require("./account.js").createUser(db, req.body, (err) => {
 			if (err) { res.send(err); return; }
-			res.send("Account created");
+			res.redirect("/");
 		});
 	});
 
