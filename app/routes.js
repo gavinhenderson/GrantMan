@@ -82,21 +82,30 @@ module.exports = (app, passport, db) => {
 					db.model.Project.findOne({ projectId: req.params.id }, (err, proj) => {
 						if (err) { res.send(err); return; }
 
+						var exp = 0;
+						var cb = () => {
+							exp--;
+							if (exp == 0)
+								res.redirect("/project/" + req.params.id);
+						};
+
 						// Update the spreadsheet
 						if (req.files.spreadsheet) {
+							exp++;
 							saveFile("spreadsheet.xls", req.files.spreadsheet, proj._id, (err) => {
 								if (err) console.log(err);
+								cb();
 							});
 						}
 
 						// Update brief
 						if (req.files.brief) {
+							exp++;
 							saveFile("brief.doc", req.files.brief, proj._id, (err) => {
 								if (err) console.log(err);
+								cb();
 							});
 						}
-
-						res.redirect("/project/" + req.params.id);
 					});
     		});
       } else {
