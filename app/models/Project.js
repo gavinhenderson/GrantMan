@@ -16,6 +16,7 @@ module.exports = new Schema({
 		type: String,
 		required: true
 	},
+	subscribers: [{type: Schema.ObjectId, ref: "User"}],
 	author: {type: Schema.ObjectId, ref: "User"},
 	status: {type: Schema.ObjectId, ref: "ProjectStatus"},
 	statuses: [{type: Schema.ObjectId, ref: "ProjectStatus"}]
