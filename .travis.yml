@@ -7,6 +7,9 @@ install:
 script:
   - node setupMockDB.js -d
   - npm test
+branches:
+  only:
+    - master
 notifications:
   email: false
   slack:
