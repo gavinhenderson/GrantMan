@@ -9,6 +9,10 @@ module.exports = (db) => {
 					select: "staffID name type school"
 				})
 				.populate({
+					path: "subscribers",
+					select: "name _id type"
+				})
+				.populate({
 					path: "statuses",
 					populate: {
 						path: "editor",
@@ -36,6 +40,10 @@ module.exports = (db) => {
 						select: "name type school"
 					})
 					.populate({
+						path: "subscribers",
+						select: "name _id"
+					})
+					.populate({
 						path: "statuses",
 						populate: {
 							path: "editor",
@@ -57,6 +65,10 @@ module.exports = (db) => {
 					.populate({
 						path: "author",
 						select: "name type school"
+					})
+					.populate({
+						path: "subscribers",
+						select: "name _id type"
 					})
 					.populate({
 						path: "statuses",
@@ -122,6 +134,7 @@ module.exports = (db) => {
 					"title": title,
 					"description": description,
 					"author": user._id,
+					"subscribers": [ user._id ]
 				});
 
 				cb(project);

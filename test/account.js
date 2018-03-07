@@ -18,14 +18,14 @@ var failUser = {
 
 describe("Accounts",function(){
 	it("Valid account creates without error",function(done){
-		account.createUser(db, mockUser, function(err){
+		account.createUser(db, mockUser, err => {
 			assert.ok(!err, "a valid user is created");
 			done(err);
 		});
 	});
 	it("Invalid account creates with error",function(done){
 		//Doesnt give all required fields
-		account.createUser(db, failUser, function(err){
+		account.createUser(db, failUser, err => {
 			assert.ok(err, "an invalid user is not created");
 			done();
 		});
