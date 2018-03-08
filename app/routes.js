@@ -7,9 +7,9 @@ var mailServer = require("./mailServer.js");
 
 // app/routes.js
 module.exports = (app, passport, db, mail) => {
-	subscribe = subscribe(db);
 	project = project(db);
-	mailServer = mailServer(mail)
+	mailServer = mailServer(mail);
+	subscribe = subscribe(db, mailServer);
 
 	// Home page =================================================================
 	app.get("/",
@@ -103,7 +103,7 @@ module.exports = (app, passport, db, mail) => {
 			if(!err && result){
 				if (!req.body.action) { res.send("Error: A new status is required"); return; }
 				var action = actions[req.body.previousMessage][req.body.action];
-    		project.updateStatus(action, req.body.comment, req.params.id, req.user, (err) => {
+    		project.updateStatus(action, req.body.comment, req.params.id, req.user, (err, nStatus) => {
     			if (err) { res.send(err); return; }
 
 					db.model.Project.findOne({ projectId: req.params.id }, (err, proj) => {
@@ -126,7 +126,11 @@ module.exports = (app, passport, db, mail) => {
 							}
 						}
 
+						subscribe.notify(req.params.id, err=>{
+							if(err) console.log(err);
+						})
 						res.redirect("/project/" + req.params.id);
+
 
 					});
     		});

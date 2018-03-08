@@ -1,4 +1,4 @@
-module.exports = (db) => {
+module.exports = (db, mailServer) => {
   return {
     getSubscribers: (projectId, cb) => {
       db.model.Project.findOne({ _id: projectId })
@@ -41,5 +41,39 @@ module.exports = (db) => {
         })
       })
     },
+    notify: (projectId, cb)=>{
+      db.model.Project.findOne( { projectId: projectId })
+        .populate({
+          path: "subscribers",
+          select: "_id name type email"
+        })
+        .populate({
+          path: "statuses",
+          populate: {
+            path: "editor",
+            select: "name type"
+          }
+        })
+        .populate({
+          path: "status",
+          populate: {
+            path: "editor",
+            select: "name type"
+          }
+        })
+        .populate({
+          path: "author",
+          select: "name type school"
+        })
+        .exec((err,project)=>{
+          if(err){ cb(err); return; }
+          project.subscribers.forEach(current=>{
+            mailServer.sendEmail("Status Change", current.email, "statusChange", {
+              'project': project,
+              'user': current
+            }, cb);
+          })
+        })
+    }
   }
 }
