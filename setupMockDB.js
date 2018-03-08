@@ -17,10 +17,9 @@ var i=0;
 var makeUserAync = (newUser, makeProj, cb) => {
 	cu.createUser(db, newUser, (err,user)=>{
 		if(err) console.log(err);
-		newUser._id = user.id;
 		console.log(newUser.email+" has been created")
 		if(makeProj) { makeProjects(cb); }
-		else { cb() }
+		else { cb(user._id) }
 	})
 }
 
@@ -86,9 +85,11 @@ cu.createUser(db, u4, (err,user) => {
 	u4._id = user._id;
 })*/
 
-makeUserAync(u1, true, ()=>{
+makeUserAync(u3, false, (id)=>{
+	u3._id = id;
+	console.log(id)
 	makeUserAync(u2, true,()=>{
-		makeUserAync(u3, false, ()=>{
+		makeUserAync(u1, true, ()=>{
 			makeUserAync(u4, false, ()=>{
 				process.exit(0);
 			})
