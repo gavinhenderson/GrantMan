@@ -6,6 +6,7 @@ module.exports = (mail) => {
 
       ejs.renderFile(__dirname + "/../views/"+template+".ejs", templateData, (err, data)=> {
         if(err) console.log(err);
+        console.log("mail send to "+to)
 
         let mailOptions = {
           from: '"Grant Man Notify" <grant.man.notify@gmail.com>', // sender address
@@ -17,8 +18,9 @@ module.exports = (mail) => {
         // send mail with defined transport object
         mail.sendMail(mailOptions, (error, info) => {
            if (error) {
-               return console.log(error);
+             console.log(error);
            }
+           cb()
         });
       })
     }

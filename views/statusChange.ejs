@@ -1,0 +1,12 @@
+<html>
+
+<p>Dear <%- user.name %>,</p>
+<br/>
+<p>There has been and update too '<%- project.title %>'. The change was: <p>
+<br/>
+<p><%- project.status.editor.name %> set the status of the projected to <%- project.status.statusMessage %> <% if(project.status.comment){ %> with comment '<%- project.status.comment %>' <% } %></p>
+<br/>
+<p>From</p>
+<p>The GrantMan Team</p>
+
+</html>
