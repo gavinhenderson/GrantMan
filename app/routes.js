@@ -2,11 +2,11 @@ var mockProjects = require("./mockdata/projects.js");
 
 var project = require("./project.js");
 var saveFile = require("./files.js");
+var subsrive = require("./subscribe.js");
 
 // app/routes.js
 module.exports = (app, passport, db) => {
-	var subscribe = require("./subscribe.js")(db);
-
+	subscribe = subscribe(db);
 	project = project(db);
 
 	// Home page =================================================================
