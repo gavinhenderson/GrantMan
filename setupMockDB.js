@@ -12,9 +12,19 @@ if (process.argv[2] == "--drop" || process.argv[2] == "-d") {
 	db.model.ProjectStatus.remove({}, () => {});
 }
 
+var i=0;
+
+var makeUserAync = (newUser, makeProj, cb) => {
+	cu.createUser(db, newUser, (err,user)=>{
+		if(err) console.log(err);
+		newUser._id = user.id;
+		console.log(newUser.email+" has been created")
+		if(makeProj) { makeProjects(cb); }
+		else { cb() }
+	})
+}
+
 // Users =======================================================================
-var u1, u2, u3, u4, i = 0;
-console.log("Populating users");
 u1 = {
 	id: 1,
 	password: "password",
@@ -24,11 +34,12 @@ u1 = {
 	school: "School of Science and Engineering"
 };
 
-cu.createUser(db, u1, (err, user)=>{
+
+/*cu.createUser(db, u1, (err, user)=>{
 	if(err) console.log(err);
 	u1._id = user._id;
 	makeProjects(i++)
-});
+});*/
 
 u2 = {
 	id: 2,
@@ -39,11 +50,12 @@ u2 = {
 	school: "School of Science and Engineering"
 };
 
+/*
 cu.createUser(db, u2, (err,user)=>{
 	if(err) console.log(err);
 	u2._id = user._id;
 	makeProjects(i++);
-})
+})*/
 
 u3 = {
 	id: 3,
@@ -53,12 +65,12 @@ u3 = {
 	name: "Greg Fredington",
 	school: "School of Science and Engineering"
 };
-
+/*
 cu.createUser(db, u3, (err,user)=>{
 	if(err) console.log(err);
 	u3._id = user._id;
 	makeProjects(i++);
-})
+})*/
 
 u4 = {
 	id: 4,
@@ -68,22 +80,31 @@ u4 = {
 	name: "Professor Stewart Iain",
 	school: "School of Science and Engineering"
 };
-
+/*
 cu.createUser(db, u4, (err,user) => {
 	if(err) console.log(err);
 	u4._id = user._id;
+})*/
+
+makeUserAync(u1, true, ()=>{
+	makeUserAync(u2, true,()=>{
+		makeUserAync(u3, false, ()=>{
+			makeUserAync(u4, false, ()=>{
+				process.exit(0);
+			})
+		})
+	})
 })
 
 // Projects ====================================================================
-function makeProjects(i) {
-	if (i < 2) return;
-
+function makeProjects(cb) {
 	console.log("Populating projects");
 
-	var setStatus = id => {
+	var setStatus = (id,cb) => {
 		pj.updateStatus("RIS approval", null, id, u3, (err) => {
 			if (err) console.log(err);
 			else console.log("Set status of project " + id);
+			if(cb) cb();
 		});
 	};
 
@@ -104,6 +125,7 @@ function makeProjects(i) {
 	pj.createProject(u3,p1.title,p1.description, (project)=>{
 		project.save((err, proj) => {
 			if(err) console.log(err)
+			console.log(proj.title+ " has been created")
 			setStatus(project.projectId);
 			pj.createProject(u3,p2.title,p2.description, (project)=>{
 				project.save((err, proj) => {
@@ -112,7 +134,7 @@ function makeProjects(i) {
 					pj.createProject(u3,p3.title,p3.description, (project)=>{
 						project.save((err, proj) => {
 							if(err) console.log(err)
-							setStatus(project.projectId);
+							setStatus(project.projectId, cb);
 						});
 					})
 				});
@@ -120,6 +142,3 @@ function makeProjects(i) {
 		});
 	});
 }
-
-// Close DB after 5 seconds
-setTimeout(() => { process.exit(0); }, 5000);
