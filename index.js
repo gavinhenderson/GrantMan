@@ -8,11 +8,11 @@ const session  = require("express-session");
 const mstore   = require("connect-mongodb-session")(session);
 const flash    = require("connect-flash");
 
-
 const LocalStrategy = require("passport-local").Strategy;
 const cookieParser  = require("cookie-parser");
 const bodyParser    = require("body-parser");
 const fileUpload    = require("express-fileupload");
+const nodemailer 		= require("nodemailer");
 
 // Setup =======================================================================
 // Debug CLI option [should probably replace with node.env]
@@ -78,10 +78,19 @@ app.use(passport.session());
 app.use(flash());
 app.use(fileUpload());
 
-
+// create reusable transporter object using the default SMTP transport
+var mail = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+        user: "grantman.no.reply@gmail.com", // generated ethereal user
+        pass: "mangrant1997" // generated ethereal password
+    }
+});
 
 // Routes ======================================================================
-require("./app/routes.js")(app, passport, db); // Load routes from routes.js
+require("./app/routes.js")(app, passport, db, mail); // Load routes from routes.js
 
 // Launch ======================================================================
 // Initialise the app

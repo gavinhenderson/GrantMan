@@ -3,11 +3,13 @@ var mockProjects = require("./mockdata/projects.js");
 var project = require("./project.js");
 var saveFile = require("./files.js");
 var subscribe = require("./subscribe.js");
+var mailServer = require("./mailServer.js");
 
 // app/routes.js
-module.exports = (app, passport, db) => {
+module.exports = (app, passport, db, mail) => {
 	subscribe = subscribe(db);
 	project = project(db);
+	mailServer = mailServer(mail)
 
 	// Home page =================================================================
 	app.get("/",
