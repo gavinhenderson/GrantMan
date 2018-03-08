@@ -1,0 +1,12 @@
+
+.hover-success:hover {
+  background-color: #23d160;
+  border-color: transparent;
+  color: #fff;
+}
+
+.hover-danger:hover {
+  background-color: #ff3860;
+  border-color: transparent;
+  color: #fff;
+}

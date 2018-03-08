@@ -5,6 +5,7 @@ var saveFile = require("./files.js");
 
 // app/routes.js
 module.exports = (app, passport, db) => {
+	var subscribe = require("./subscribe.js")(db);
 
 	project = project(db);
 
@@ -49,6 +50,25 @@ module.exports = (app, passport, db) => {
 			res.render("project", { user: req.user, project: proj });
 		});
 	});
+
+	// Subscription route ========================================================
+	app.post("/project/:id/subscribe", (req,res)=>{
+		project.getProject(req.params.id, (err, proj)=>{
+			subscribe.addSubscriber(proj._id, req.user._id, (err)=>{
+				if(err) console.log(err);
+				res.redirect("/project/"+req.params.id);
+			})
+		})
+	})
+
+	app.post("/project/:id/unsubscribe", (req,res)=>{
+		project.getProject(req.params.id, (err, proj)=>{
+			subscribe.removeSubscriber(proj._id, req.user._id, (err)=>{
+				if(err) console.log(err);
+				res.redirect("/project/"+req.params.id);
+			})
+		})
+	})
 
 	// Status ====================================================================
 	app.post("/project/:id/status", (req, res) => {

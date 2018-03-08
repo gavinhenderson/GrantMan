@@ -40,10 +40,6 @@ module.exports = (db) => {
 						select: "name type school"
 					})
 					.populate({
-						path: "subscribers",
-						select: "name _id"
-					})
-					.populate({
 						path: "statuses",
 						populate: {
 							path: "editor",

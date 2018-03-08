@@ -1,3 +1,16 @@
+<%
+  //figure out if the user is a subscriber
+  var subscriber = false;
+
+  console.log(project.subscribers)
+  project.subscribers.forEach(subscribee => {
+    console.log(subscribee._id)
+    console.log(user._id)
+    if(subscribee._id.toHexString() == user._id.toHexString()){ subscriber = true; }
+  })
+  console.log(subscriber)
+%>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -5,6 +18,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css">
     <link rel="stylesheet" type="text/css" href="/css/bulma-carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/project.css">
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script type="text/javascript" src="/js/bulma-carousel.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -20,8 +34,34 @@
     <div class="tile is-ancestor" style="padding:10px">
     <div class="tile is-parent is-9">
       <div class="tile is-child box">
-        <p class="title"><%= project.title %></p>
-        <p class="subtitle"><%= project.author.name %></p>
+        <div class="columns">
+          <div class="column is-four-fifths">
+            <p class="title"><%= project.title %></p>
+            <p class="subtitle"><%= project.author.name %></p>
+          </div>
+
+          <% if(!subscriber){ %>
+          <form method="post" action="/project/<%- project.projectId %>/subscribe" id="subscribe"></form>
+          <div class="column">
+            <p style="float:right;"><a onclick="document.getElementById('subscribe').submit();" class="button hover-success" style="margin-left:10px">
+              <span class="icon is-small">
+                <i class="fas fa-envelope"></i>
+              </span>
+              <span>Subscribe</span>
+            </a></p>
+          </div>
+          <% } else { %>
+          <form method="post" action="/project/<%- project.projectId %>/unsubscribe" id="unsubscribe"></form>
+          <div class="column">
+            <p style="float:right;"><a onclick="document.getElementById('unsubscribe').submit();" class="button hover-danger" style="margin-left:10px">
+              <span class="icon is-small">
+                <i class="fas fa-envelope"></i>
+              </span>
+              <span>Unsubscribe</span>
+            </a></p>
+          </div>
+          <% } %>
+        </div>
         <p><%= project.description %></p>
       </div>
     </div>
@@ -185,10 +225,6 @@
 
   <% include footer %>
   <script>
-
-  console.log("<%- user.staffID %>");
-  console.log("<%- project.author.staffID %>");
-
 
   var postURL = window.location.href
   if(postURL.endsWith('/')){
