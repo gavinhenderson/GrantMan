@@ -19,25 +19,20 @@ describe('Subscriptions',()=>{
         })
         .exec((err,project) => {
           assert.equal(project.subscribers.length, 1, "There should be 1 subscriber");
-          assert.equal(project.author._id, project.subscribers[0]._id, "The author should be the only subscriber");
+          assert.deepEqual(project.author._id, project.subscribers[0]._id, "The author should be the only subscriber");
           done(err);
         });
     });
 
     it('Add Subscriptions', done => {
       db.model.User.findOne({ email : "ris@dundee.ac.uk" }, (err,user) => {
-        db.model.Project.findOne({ title: "Project 2" })
-          .populate({
-            path: "subscribers",
-            select: "name"
-          })
-          .exec((err,project) => {
-            subscribe.addSubscriber(project._id, user._id, (addErr) => {
-              subscribe.getSubscribers(project._id, (err, subscribers) => {
-                assert.equals(subscribers.length, 2, "Checking a subscriber is added");
-                done(addErr);
-              });
+        db.model.Project.findOne({ title: "Project 2" }, (err,project) => {
+          subscribe.addSubscriber(project._id, user._id, (err) => {
+            subscribe.getSubscribers(project._id, (err, subscribers) => {
+              assert.equal(subscribers.length, 2, "Checking a subscriber is added");
+              done(err);
             });
+          });
         });
       });
     });
@@ -52,7 +47,7 @@ describe('Subscriptions',()=>{
           subscribe.removeSubscriber(project._id, project.author._id, (err)=>{
             subscribe.getSubscribers(project._id, (err, subscribers)=>{
               assert.equal(subscribers.length, 1, "Checking a subscriber is removed");
-              assert.equal.notEqual(subscribers[0]._id, project.author._id, "Checking the only person left isnt the removed person");
+              assert.notDeepEqual(subscribers[0]._id, project.author._id, "Checking the only person left isnt the removed person");
               done(err);
             })
           });
@@ -62,25 +57,26 @@ describe('Subscriptions',()=>{
   });
 
   describe('Error tests', done => {
+    var fakeID = mongoose.Types.ObjectId('4edd40c86762e0fb12000003')
 
     it('Check error is thrown when given an invalid id to get', done => {
-      subscribe.getSubscribers("00000000", (err, subscribers)=>{
+      subscribe.getSubscribers(fakeID, (err, subscribers)=>{
         assert.equal(err, "Invalid id");
-        done(err);
+        done();
       })
     })
 
     it('Check error is thrown when given invalid ids to add', done => {
-      subscribe.addSubscriber("000","000",(err)=>{
+      subscribe.addSubscriber(fakeID,fakeID,(err)=>{
         assert.equal(err, "Invalid id");
-        done(err);
+        done();
       })
     })
 
     it('Check error is thrown when given an invalid id to remove', done => {
-      subscribe.removeSubscriber("000","000",(err)=>{
+      subscribe.removeSubscriber(fakeID,fakeID,(err)=>{
         assert.equal(err, "Invalid id");
-        done(err);
+        done();
       })
     })
   })
