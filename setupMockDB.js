@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const db = require("./app/database.js")(mongoose);
 const fs = require("fs");
-
+const cu = require('./app/account.js'); //createuser
 const pw = require("./app/password.js");
 const pj = require("./app/project.js")(db);
 
@@ -10,72 +10,69 @@ if (process.argv[2] == "--drop" || process.argv[2] == "-d") {
 	db.model.User.remove({}, () => {});
 	db.model.Project.remove({}, () => {});
 	db.model.ProjectStatus.remove({}, () => {});
-
-	//Remove folders
-	//Taken from a stack stackoverflow
-	//https://stackoverflow.com/questions/27072866/how-to-remove-all-files-from-directory-without-removing-directory-in-node-js
-	//const directory = 'public/files';
-
-	/*fs.readdir(directory, (err, files) => {
-	  if (err) throw err;
-	  for(const folder of files) {
-			//Taken from stack stackoverflow
-			//https://stackoverflow.com/questions/18052762/remove-directory-which-is-not-empty
-	    fs.readdirSync(directory+"/"+folder).forEach(function(file, index){
-	      var curPath = directory +"/" + folder + "/" + file;
-	    	fs.unlinkSync(curPath); // delete file
-	    });
-	    fs.rmdirSync(directory+"/"+folder); //delete dir
-		}
-	});*/
 }
 
 // Users =======================================================================
-var u1, u2, u3, i = 0;
+var u1, u2, u3, u4, i = 0;
 console.log("Populating users");
-pw.generateHash("password", (err, hash) => { // RIS
-	u1 = db.model.User({
-		staffID: 1,
-		password: hash,
-		email: "ris@dundee.ac.uk",
-		type: "RIS",
-		name: "Fred Gregington",
-		school: "School of Science and Engineering"
-	});
-	u1.save(err => makeProjects(i++));
+u1 = {
+	id: 1,
+	password: "password",
+	email: "ris@dundee.ac.uk",
+	type: "RIS",
+	name: "Fred Gregington",
+	school: "School of Science and Engineering"
+};
+
+cu.createUser(db, u1, (err, user)=>{
+	if(err) console.log(err);
+	u1._id = user._id;
+	makeProjects(i++)
 });
-pw.generateHash("password", (err, hash) => { // Dean
-	u2 = new db.model.User({
-		staffID: 2,
-		password: hash,
-		email: "dean@dundee.ac.uk",
-		type: "Dean",
-		name: "Professor Iain Stewart",
-		school: "School of Science and Engineering"
-	});
-	u2.save(err => makeProjects(i++));
-});
-pw.generateHash("password", (err, hash) => { // Researcher
-	u3 = new db.model.User({
-		staffID: 3,
-		password: hash,
-		email: "researcher@dundee.ac.uk",
-		type: "Researcher",
-		name: "Greg Fredington",
-		school: "School of Science and Engineering"
-	});
-	u3.save(err => makeProjects(i++));
-});
-pw.generateHash("password", (err, hash) => { // Dean
-	new db.model.User({
-		staffID: 4,
-		password: hash,
-		email: "adean@dundee.ac.uk",
-		type: "Associate Dean",
-		name: "Professor Stewart Iain",
-		school: "School of Science and Engineering"
-	}).save();
-});
+
+u2 = {
+	id: 2,
+	password: "password",
+	email: "dean@dundee.ac.uk",
+	type: "Dean",
+	name: "Professor Iain Stewart",
+	school: "School of Science and Engineering"
+};
+
+cu.createUser(db, u2, (err,user)=>{
+	if(err) console.log(err);
+	u2._id = user._id;
+	makeProjects(i++);
+})
+
+u3 = {
+	id: 3,
+	password: "password",
+	email: "researcher@dundee.ac.uk",
+	type: "Researcher",
+	name: "Greg Fredington",
+	school: "School of Science and Engineering"
+};
+
+cu.createUser(db, u3, (err,user)=>{
+	if(err) console.log(err);
+	u3._id = user._id;
+	makeProjects(i++);
+})
+
+u4 = {
+	id: 4,
+	password: "password",
+	email: "adean@dundee.ac.uk",
+	type: "Associate Dean",
+	name: "Professor Stewart Iain",
+	school: "School of Science and Engineering"
+};
+
+cu.createUser(db, u4, (err,user) => {
+	if(err) console.log(err);
+	u4._id = user._id;
+})
 
 // Projects ====================================================================
 function makeProjects(i) {
@@ -91,27 +88,37 @@ function makeProjects(i) {
 	};
 
 	var p1, p2, p3;
-	p1 = new db.model.Project({ // Project 1
-		projectId: 1,
+	p1 = { // Project 1
 		title: "Project 1",
 		description: "Description for project 1",
-		author: u3._id
-	});
-	p1.save((err) => setStatus(1));
-	p2 = new db.model.Project({ // Project 2
-		projectId: 2,
+	};
+	p2 = { // Project 2
 		title: "Project 2",
 		description: "Description for project 2",
-		author: u3._id
-	});
-	p2.save((err) => setStatus(2));
-	p3 = new db.model.Project({ // Project 3
-		projectId: 3,
+	};
+	p3 = { // Project 3
 		title: "Project 3",
 		description: "Description for project 3",
-		author: u3._id
+	};
+
+	pj.createProject(u3,p1.title,p1.description, (project)=>{
+		project.save((err, proj) => {
+			if(err) console.log(err)
+			setStatus(project.projectId);
+			pj.createProject(u3,p2.title,p2.description, (project)=>{
+				project.save((err, proj) => {
+					if(err) console.log(err)
+					setStatus(project.projectId);
+					pj.createProject(u3,p3.title,p3.description, (project)=>{
+						project.save((err, proj) => {
+							if(err) console.log(err)
+							setStatus(project.projectId);
+						});
+					})
+				});
+			})
+		});
 	});
-	p3.save((err) => setStatus(3));
 }
 
 // Close DB after 5 seconds

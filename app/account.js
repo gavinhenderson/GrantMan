@@ -17,8 +17,8 @@ module.exports = {
 			newUsr.validate((err) => {
 				if (err) return cb(err);
 
-				newUsr.save(err => {
-					cb(err);
+				newUsr.save((err,user) => {
+					cb(err, user);
 				});
 			});
 		});
