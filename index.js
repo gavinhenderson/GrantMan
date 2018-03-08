@@ -90,7 +90,7 @@ var mail = nodemailer.createTransport({
 });
 
 // Routes ======================================================================
-require("./app/routes.js")(app, passport, db, mail); // Load routes from routes.js
+require("./app/routes/routes.js")(app, passport, db, mail); // Load routes from routes.js
 
 // Launch ======================================================================
 // Initialise the app

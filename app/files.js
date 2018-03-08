@@ -3,7 +3,6 @@ const fs = require("fs");
 function replaceFile(filePath, file, cb) {
 	fs.exists(filePath, (exists) => {
 		// Delete the file if it exists
-		console.log(filePath);
 		if (exists) {
 			fs.unlink(filePath, (err) => {
 				if (err) return cb(err);

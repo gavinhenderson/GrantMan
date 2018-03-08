@@ -6,7 +6,6 @@ module.exports = (mail) => {
 
       ejs.renderFile(__dirname + "/../views/"+template+".ejs", templateData, (err, data)=> {
         if(err) console.log(err);
-        console.log("mail send to "+to)
 
         let mailOptions = {
           from: '"Grant Man Notify" <grant.man.notify@gmail.com>', // sender address
