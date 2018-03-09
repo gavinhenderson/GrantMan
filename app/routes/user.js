@@ -1,4 +1,4 @@
-module.exports = (app, project, passport) => {
+module.exports = (app, project, passport, account) => {
 
   //Webpage entry point
   app.get("/",(req, res) => {
@@ -37,7 +37,7 @@ module.exports = (app, project, passport) => {
 
   //Create account logic
 	app.post("/createaccount", (req,res) => {
-		require("./account.js").createUser(db, req.body, (err) => {
+		account.createUser(req.body, (err) => {
 			if (err) { res.send(err); return; }
 			res.redirect("/");
 		});
@@ -48,5 +48,18 @@ module.exports = (app, project, passport) => {
 		req.logout();
 		res.redirect("/login");
 	});
+
+  // Change password page
+  app.get("/changepassword", (req, res) => {
+  		res.render("changepassword", {user:req.user});
+  });
+
+  // Change password logic
+  app.post("/changepassword", (req, res) => {
+  		account.changePassword(req, (err) => {
+  			if (err) {res.send(err); return; }
+  			res.redirect("/changepassword");
+  		});
+  });
 
 }
