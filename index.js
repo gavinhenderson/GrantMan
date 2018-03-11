@@ -7,6 +7,8 @@ const passport = require("passport");
 const session  = require("express-session");
 const mstore   = require("connect-mongodb-session")(session);
 const flash    = require("connect-flash");
+const env 		 = require('dotenv').config();
+
 
 const LocalStrategy = require("passport-local").Strategy;
 const cookieParser  = require("cookie-parser");
@@ -84,8 +86,8 @@ var mail = nodemailer.createTransport({
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-        user: "***REMOVED***", // generated ethereal user
-        pass: "***REMOVED***" // generated ethereal password
+        user: process.env.EMAIL || "test@test.com", // generated ethereal user
+        pass: process.env.PASSWORD || "password"// generated ethereal password
     }
 });
 
