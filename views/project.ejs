@@ -30,6 +30,32 @@
 
   <body style="margin-bottom:60px;">
   <% include nav %><hr>
+    <div id="help-modal" class="modal">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Help</p>
+          <button onclick="closemodal()" class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+         <b>Viewing Projects</b> <br>
+         This is the project view page. The project's title, author and description are shown at the top of the page. <br>
+         The history of the project is also shown, displaying any status changes made to the project. <br> <br>
+
+         <b>Subscribing/Unsubscribing to a Project</b> <br>
+         To Subscribe to a project, simply click the 'Subscribe' button. <br>
+         If you are already subscribed and wish to unsubscribe, simply click the 'Unsubscribe' button. <br> <br>
+
+         <b>Downloading a Project</b> <br>
+         To download a project, simply use the buttons listed under the 'Downloads' header <br> <br>
+
+         <b>Approving/Rejecting a Project</b><br>
+         If you have sufficient privileges, you will be able to approve or reject a project. <br>
+         To do so, simply leave a comment in the comment box, upload any relevant files under the 'Upload' heading and click 'Approve' or 'Reject' <br>
+        </section>
+      </div>
+    </div>
+
   <div class="container">
     <div class="tile is-ancestor" style="padding:10px">
     <div class="tile is-parent is-9">

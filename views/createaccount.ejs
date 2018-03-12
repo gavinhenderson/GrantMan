@@ -16,6 +16,22 @@
 
   <body style="margin-bottom:50px;">
     <% include nav %><hr>
+      <div id="help-modal" class="modal">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Help</p>
+          <button onclick="closemodal()" class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+         <b>Creating an Account</b> <br>
+         To create an account, simply enter the relevant details into the fields. All fields are required so please ensure you have entered details in
+         all of the fields provided. <br>
+         When data has been entered in all of the fields, simply click 'Submit' and the account will be created. <br>
+        </section>
+      </div>
+    </div>
+
     <div class="container">
     <div class="container" style="padding:20px; max-width:600px; margin:auto;">
     <form method="POST">
