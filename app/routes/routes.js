@@ -12,7 +12,7 @@ module.exports = (app, passport, db, mail) => {
 	subscribe = subscribe(db, mailServer);
 
 	//Load routes
-	require('./project.js')(app, project, saveFile);
+	require('./project.js')(app, project, saveFile, subscribe);
 	require('./status.js')(app, project, subscribe);
 	require('./user.js')(app, project, passport);
 };
