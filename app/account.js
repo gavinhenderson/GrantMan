@@ -41,6 +41,7 @@ module.exports = (db) => {
 							cb(err);
 							return;
 						}
+						req.user.password = res; 
 					});
 				}
 			});
