@@ -41,13 +41,12 @@ module.exports = (db) => {
 							cb(err);
 							return;
 						}
-						req.user.password = res; 
+						req.user.password = res;
+						req.user.save();
 					});
 				}
 			});
-
-			console.log(req.user);
-			console.log(req.body);
+			
 			cb()
 		}
 	}
