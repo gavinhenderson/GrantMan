@@ -10,8 +10,10 @@
         <a class="navbar-item" href="/">Home</a>
         <% if(user.type=='Researcher'){%>
           <a class="navbar-item" href="/createproject">Create Project</a>
+          <a class="navbar-item" href="/changepassword">Change Password</a>
         <% }else if(user.type=='RIS'){%>
           <a class="navbar-item" href="/createaccount">Create Account</a>
+          <a class="navbar-item" href="/changepassword">Change Password</a>
         <% } %>
       </div>
       <div class="navbar-end">

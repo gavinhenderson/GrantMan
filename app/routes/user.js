@@ -56,10 +56,18 @@ module.exports = (app, project, passport, account) => {
 
   // Change password logic
   app.post("/changepassword", (req, res) => {
+<<<<<<< HEAD
   		account.changePassword(req, (err) => {
   			if (err) {res.send(err); return; }
   			res.redirect("/changepassword");
   		});
+=======
+  		account.changePassword(req.body, req.user, (err) => {
+  			if (err) {res.send(err); return; }
+  			res.redirect("/");
+  		});
+
+>>>>>>> cb41d0085639429359c23f537922b18c4089a96a
   });
 
 }
