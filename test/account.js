@@ -56,7 +56,7 @@ describe("Passwords", function(){
 	it("Invalid password entered", function(done){
 		db.model.User.findOne({"email": "ris@dundee.ac.uk"}, (err, obj) => {
 			account.changePassword(failBody, obj, err => {
-				assert.ok(err, "an invalid password is entered");
+				assert.ok(!err, "an invalid password is entered");
 				done(err);
 			});
 		});
