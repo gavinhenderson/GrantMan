@@ -145,7 +145,7 @@
       <div class="modal-card">
         <header class="modal-card-head">
           <p class="modal-card-title">Confirm Password</p>
-          <button onclick="closemodal()" class="delete" aria-label="close"></button>
+          <button onclick="closePassModal()" class="delete" aria-label="close"></button>
         </header>
         <section class="modal-card-body">
           <div class="field">
@@ -160,7 +160,7 @@
         </section>
         <footer class="modal-card-foot">
           <button type="submit" class="button is-success">Confirm</button>
-          <button type="button" class="button" onclick="closemodal()">Cancel</button>
+          <button type="button" class="button" onclick="closePassModal()">Cancel</button>
         </footer>
       </div>
     </div>
@@ -266,7 +266,7 @@
     $('#modal').addClass('is-active');
   }
 
-  function closemodal(){
+  function closePassModal(){
     $('#modal').removeClass('is-active');
   }
   </script>
