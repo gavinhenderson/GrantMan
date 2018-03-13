@@ -16,6 +16,22 @@
 
   <body style="margin-bottom:70px">
     <% include nav %><hr>
+      <div id="help-modal" class="modal">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Help</p>
+          <button onclick="closemodal()" class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+         <b>Creating a Project</b> <br>
+         To create a project, enter an appropriate Project Title and Project Description. <br>
+         Next, upload the Spreadsheet and Brief files by clicking the 'Spreadsheet Upload' and 'Brief Upload' buttons and choosing the appropriate file when prompted. <br>
+         Finally, click 'Create' to create the project.
+        </section>
+      </div>
+    </div>
+
     <div class="container">
     <form encType="multipart/form-data" method="POST"><div class="columns" style="padding:10px; margin:auto; max-width:800px;">
       <div class="column is-three-fifths">
