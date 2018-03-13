@@ -25,11 +25,7 @@
     "express": "^4.16.2",
     "express-fileupload": "^0.4.0",
     "express-session": "^1.15.6",
-<<<<<<< HEAD
-    "mongoose": "^5.0.4",
-=======
     "mongoose": "^5.0.9",
->>>>>>> cb41d0085639429359c23f537922b18c4089a96a
     "nodemailer": "^4.6.2",
     "passport": "^0.4.0",
     "passport-http": "^0.3.0",
