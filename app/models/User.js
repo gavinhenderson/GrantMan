@@ -24,5 +24,8 @@ module.exports = new require("mongoose").Schema({
 	school: {
 		type: String,
 		required: true
+	},
+	token: {
+		type: String
 	}
 });
