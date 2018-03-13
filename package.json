@@ -8,7 +8,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "node setupMockDB.js -d; mocha test --exit",
+    "test": "node setupMockDB.js -d; mocha test --exit; node setupMockDB.js -d;",
     "start": "node index.js --debug"
   },
   "author": "",

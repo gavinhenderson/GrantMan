@@ -25,8 +25,8 @@ module.exports = (db) => {
 			});
 		},
 
-		changePassword : function(req, cb){
-			require("./password.js").verifyHash(req.body.oldPassword, req.user.password, (err, res) => {
+		changePassword : function(body, user, cb){
+			require("./password.js").verifyHash(body.oldPassword, user.password, (err, res) => {
 				if (err){
 					cb(err);
 					return;
@@ -36,18 +36,17 @@ module.exports = (db) => {
 					return;
 				}
 				else{
-					require("./password.js").generateHash(req.body.newPassword, (err, res) => {
+					require("./password.js").generateHash(body.newPassword, (err, res) => {
 						if(err){
 							cb(err);
 							return;
 						}
-						req.user.password = res;
-						req.user.save();
+						user.password = res;
+						user.save();
+						cb(true);
 					});
 				}
 			});
-
-			cb()
 		}
 	}
 };
