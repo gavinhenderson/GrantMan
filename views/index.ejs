@@ -16,6 +16,24 @@
 
   <body style="margin-bottom:50px">
     <% include nav %>
+    <div id="help-modal" class="modal">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Help</p>
+          <button onclick="closemodal()" class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+         <b>Viewing Projects</b> <br>
+         You can view projects here. To view a project, simply click on it. <br>
+         There are different filtering options available for projects and these can be used by selecting the tabs under the search bar. <br> <br>
+
+         <b> Searching </b> <br>
+         To search, simply type keywords into the search bar and the results will be automatically displayed to you in a new tab labelled 'Search'. <br>
+         You can switch between these tabs and your previous search results will still remain in the search tab. 
+        </section>
+      </div>
+    </div>
     <hr>
 
     <div class="container">

@@ -1,4 +1,4 @@
-module.exports = (app, project, saveFile) => {
+module.exports = (app, project, saveFile, subscribe) => {
 
   //Returns all of a users projects
   app.get("/project", (req, res) => {
