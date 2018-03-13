@@ -41,15 +41,8 @@ module.exports = (db) => {
 							cb(err);
 							return;
 						}
-						if(req.body.newPassword == req.body.confirm){
-							req.user.password = res;
-							req.user.save();
-						}
-						else{
-							cb(err);
-							return;
-						}
-
+						req.user.password = res;
+						req.user.save();
 					});
 				}
 			});
