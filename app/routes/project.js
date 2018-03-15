@@ -14,7 +14,16 @@ module.exports = (app, project, saveFile, subscribe) => {
 		// /public/files/[id]/[projec title hash]/spreadsheet.xls
 		project.getProject(req.params.id, (err, proj) => {
 			if (err) { res.send(err); return; }
-			res.render("project", { user: req.user, project: proj });
+      var found = false;
+      var current = 0;
+      var fs = require("fs");
+      while (!found){
+        current ++
+        if(!fs.existsSync("public/files/" + proj._id + "/" + current)){
+          found = true
+        }
+      }
+			res.render("project", { user: req.user, project: proj, versions: current });
 		});
 	});
 
@@ -43,6 +52,34 @@ module.exports = (app, project, saveFile, subscribe) => {
 		res.render("createproject",{user:req.user});
 	});
 
+  //deletes a project when the delete button is pressed 
+  app.post("/project/:id/delete", (req,res) => {
+  		project.deleteProject(req.params.id,err => {
+  			if(err)
+  			{
+  				res.send(err); 
+  			}
+  			else
+  			{
+  				res.redirect("/"); 
+  			}
+  		})
+  });
+
+  //applies the edit to the project
+  app.post("/project/:id/edit", (req,res) => {
+  		project.editProject(req.params.id, req.body.title, req.body.description, err => {
+  			if(err)
+  			{
+  				res.send(err); 
+  			}
+  			else
+  			{
+  				res.redirect("/project/"+req.params.id); 
+  			}
+  		})
+  });
+
   //Takes the data of a new project and creates it
 	app.post("/createproject",(req,res) => {
 		project.createProject(req.user, req.body.title, req.body.description, function(newProject){
@@ -50,8 +87,8 @@ module.exports = (app, project, saveFile, subscribe) => {
 
 				project.updateStatus("RIS approval", null, newProject.projectId, req.user, (err) => {
 					if(err) console.log(err);
-					saveFile("spreadsheet.xls",req.files.spreadsheet,newProject._id,console.log);
-					saveFile("brief.doc",req.files.brief,newProject._id,console.log);
+					saveFile("spreadsheet.xls",req.files.spreadsheet,newProject._id, "1", console.log);
+					saveFile("brief.doc",req.files.brief,newProject._id, "1", console.log);
 					res.redirect("/project/"+newProject.projectId);
 				});
 			});

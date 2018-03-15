@@ -138,6 +138,28 @@ module.exports = (db) => {
 			});
 
 
+		}, 
+
+		deleteProject: (projectId, cb) => {
+			// Get the project and delete it 
+			db.model.Project.findOneAndRemove({ projectId: projectId }, (err, project) => {
+				if (err) return cb(err);
+				if (!project)
+					return cb(new Error("No project exists with ID" + projectId));
+				cb(); 
+			});
+		}, 
+
+		editProject: (projectId, title, description, cb) => {
+			// Find the project 
+			db.model.Project.update({ projectId: projectId }, { $set: { title: title, description: description } },(err, project) => { 
+				if (err) return cb(err);
+				if (!project)
+					return cb(new Error("No project exists with ID" + projectId));
+			
+				cb(); 
+			});
 		}
+
 	};
 };

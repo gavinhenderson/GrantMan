@@ -33,7 +33,8 @@ module.exports = (db) => {
 					return;
 				}
 				if(!res){
-					cb(res);
+					cb(new Error("Password doesn't match"));
+
 					return;
 				}
 				else{
@@ -44,7 +45,7 @@ module.exports = (db) => {
 						}
 						user.password = res;
 						user.save();
-						cb(true);
+						cb();
 					});
 				}
 			});
