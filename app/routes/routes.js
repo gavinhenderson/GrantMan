@@ -15,6 +15,6 @@ module.exports = (app, passport, db, mail) => {
 
 	//Load routes
 	require('./project.js')(app, project, saveFile, subscribe);
-	require('./status.js')(app, project, subscribe);
+	require('./status.js')(app, project, subscribe, db, saveFile);
 	require('./user.js')(app, project, passport, account);
 };
