@@ -1,3 +1,4 @@
+var password = require('./password');
 // app/account.js
 module.exports = (db) => {
 	return {
@@ -47,6 +48,24 @@ module.exports = (db) => {
 						cb();
 					});
 				}
+			});
+		},
+
+		createUserWithToken: function(email, type, school, cb){
+			var user;
+
+			// Generate a token
+			password.generateHash(email, (err, token) => {
+
+				// Create the user model
+				user = new db.model.User({
+					email: email,
+					type: type,
+					school: school,
+					token: token
+				});
+
+				cb(err, user);
 			});
 		}
 	}

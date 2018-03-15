@@ -14,7 +14,7 @@
     <link rel="icon" type="image/png" href="img/favicon.png">
   </head>
 
-  <body style="margin-bottom:50px;">
+  <body style="margin-bottom:100px;">
     <% include nav %><hr>
       <div id="help-modal" class="modal">
       <div class="modal-background"></div>
@@ -32,111 +32,117 @@
       </div>
     </div>
 
-    <div class="container">
-    <div class="container" style="padding:20px; max-width:600px; margin:auto;">
-    <form method="POST">
-      <div class="field">
-        <label class="label">Staff ID</label>
-        <div class="control has-icons-left has-icons-right">
-          <input class="input" type="number" name="id" placeholder="Text input" required>
-          <span class="icon is-small is-left">
-            <i class="fas fa-user"></i>
-          </span>
-        </div>
-      </div>
+    <form action="" method="post">
+      
+      <div class="container form-wrapper" style="max-width: 600px;">
+      
+      <div class="form-group form-group-template" style="border-bottom: 1px solid #363636; padding: 15px 0; margin: 10px 0;">
 
-      <div class="field">
-        <label class="label">Staff Position</label>
-        <div class="control">
-          <div class="select">
-            <select name="type">
-              <option>Researcher</option>
-              <option>RIS</option>
-              <option>Dean</option>
-              <option>Associate Dean</option>
-            </select>
+        <div class="field has-addons">
+          <p class="control">
+            <a class="button plus">
+              <span class="icon is-small">
+                <i class="fas fa-plus"></i>
+              </span>
+              <span>Add</span>
+            </a>
+          </p>
+          <p class="control">
+            <a class="button minus" disabled>
+              <span class="icon is-small">
+                <i class="fas fa-minus"></i>
+              </span>
+              <span>Remove</span>
+            </a>
+          </p>
+        </div>
+        
+        <div class="field">
+          <label for="email" class="label">Email</label>
+          <input type="email" name="email" class="input" required />
+        </div>
+
+        <div class="field">
+          <label for="type" class="label">User Type</label>
+          <div class="control">
+            <div class="select">
+              <select name="type" required>
+                <option value="Researcher">Researcher</option>
+                <option value="RIS">RIS</option>
+                <option value="Associate Dean">Associate Dean</option>
+                <option value="Dean">Dean</option>
+              </select>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="field">
-        <label class="label">School</label>
-        <div class="control">
-          <div class="select">
-            <select name="school" required>
-              <option>School of Science and Engineering</option>
-              <option>School of Art and Design</option>
-              <option>School of Social Sciences</option>
-              <option>School of Life Sciences</option>
-              <option>School of Humanities</option>
-              <option>School of Business</option>
-            </select>
+          <div class="field">
+            <label for="school" class="label">School</label>
+            <div class="control">
+              <div class="select">
+                <select name="school" required>
+                  <option value="School of Science and Engineering">School of Science and Engineering</option>
+                  <option value="School of Art and Design">School of Art and Design</option>
+                  <option value="School of Social Sciences">School of Social Sciences</option>
+                  <option value="School of Life Sciences">School of Life Sciences</option>
+                  <option value="School of Humanities">School of Humanities</option>
+                  <option value="School of Business">School of Business</option>
+                </select>
+              </div>
+            </div>
           </div>
-        </div>
+
       </div>
-
-
-      <div class="field">
-        <label class="label">Name</label>
-        <div class="control">
-          <input name="name" class="input" type="text" placeholder="Text input" required>
-        </div>
-      </div>
-
-
-
-      <div class="field">
-        <label class="label">Email</label>
-        <div class="control has-icons-left has-icons-right">
-          <input class="input" type="email" name="email" placeholder="Email input" required>
-          <span class="icon is-small is-left">
-            <i class="fas fa-envelope"></i>
-          </span>
-        </div>
-      </div>
-
-
-      <div class="field">
-        <label class="label">Password</label>
-        <div class="control has-icons-left has-icons-right">
-          <input class="input" type="password" name="password" id="password" placeholder="Password input" required>
-          <span class="icon is-small is-left">
-            <i class="fas fa-lock"></i>
-          </span>
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label">Confirm Password</label>
-        <div class="control has-icons-left has-icons-right">
-          <input class="input" type="password" id="confirm" placeholder="Password input" required>
-          <span class="icon is-small is-left">
-            <i class="fas fa-lock"></i>
-          </span>
-        </div>
-      </div>
-
-      <div class="field is-grouped">
-        <div class="control">
-          <button class="button is-link" type="submit" id="submit" disabled>Submit</button>
-        </div>
-      </div>
-    </form>
+      
+      
+    <input type="submit" class="button is-primary" value="Create Accounts" />
     </div>
+
+
+    </form>
+
     <% include footer %>
 
-    <script>
-      function checkPasswords(){
-        console.log($('#password')[0].value)
-        console.log($('#confirm')[0].value)
-        if($('#password')[0].value==$('#confirm')[0].value && $('#password')[0].value.length != 0){
-          document.getElementById("submit").disabled = false;
-        } else {
-          document.getElementById("submit").disabled = true;        }
-      }
-
-      $('#password').keyup(function(){ return checkPasswords() });
-      $('#confirm').keyup(function(){ return checkPasswords() });
-
+     <script>
+      var rows = 1;
+      var templateMaster = $('.form-group-template');
+      $('.plus').on('click', function(){
+        // Select one of the rows and make a clone of it
+        // Why .clone(true, true) ?
+        // @see: https://stackoverflow.com/a/9549716
+        // TL;DR This forces jQuery to copy the events attached to the elements (ie this function)
+        var template = templateMaster.clone(true, true);
+        template.removeClass('product-template');
+        console.log(templateMaster);
+        console.log(template);
+        // Remove the template class to not interfer in the future
+        // Remove values inside the input box of the clone
+        template.find('input[type=text]').val('');
+        template.find('.card-title').text('Enter a Product ID');
+        template.find('.card-text').text('');
+        template.find('.card').removeClass('bg-warning');
+        // Add the row to the start of the form
+        $('.form-wrapper').prepend(template);
+        // If the minus button has been disabled, enable it
+        $('.minus').removeClass('disabled');
+        $('.minus').attr('disabled', false);
+        rows++;
+        console.log(rows);
+      });
+      $('.minus').on('click', function(){
+        // Find the whole row
+        var template = $(this).parents('.form-group');
+        // If this isn't the last row, remove it
+        if(rows != 1){
+          template.remove();
+          rows--;
+        console.log(rows);
+          // If one row remains, disable the minus button
+          if(rows == 1){
+            $('.minus').addClass('disabled');
+            $('.minus').attr('disabled', true);
+          }
+        }
+      });
     </script>
   </body>
