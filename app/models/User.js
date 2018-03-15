@@ -2,11 +2,9 @@
 module.exports = new require("mongoose").Schema({
 	staffID: {
 		type: Number,
-		required: true
 	},
 	password: {
 		type: String,
-		required: true
 	},
 	email: {
 		type: String,
@@ -19,7 +17,6 @@ module.exports = new require("mongoose").Schema({
 	},
 	name: {
 		type: String,
-		required: true
 	},
 	school: {
 		type: String,

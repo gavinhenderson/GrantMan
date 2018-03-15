@@ -5,32 +5,6 @@ describe("Models", function() {
 
 	describe("User", function() {
 
-		it("should force staffID as a required type", function(done) {
-
-			// Create mock model
-			var user = new model.User({staffID: 1});
-
-			// Valid User Model
-			user.validate(function(err) {
-				if (err.errors.staffID) done(err.errors.staffID);
-				else done();
-			});
-
-		});
-
-		it("should force password as a required type", function(done) {
-
-			// Create mock model
-			var user = new model.User({password: "password"});
-
-			// Valid User Model
-			user.validate(function(err) {
-				if (err.errors.password) done(err.errors.password);
-				else done();
-			});
-
-		});
-
 		it("should force type as an enumerator value [RIS]", function(done) {
 
 			// Create mock model
@@ -92,19 +66,6 @@ describe("Models", function() {
 			user.validate(function(err) {
 				if (err.errors.type) done();
 				else done(err.errors.type);
-			});
-
-		});
-
-		it("should force name as a required type", function(done) {
-
-			// Create mock model
-			var user = new model.User({name: "John Doe"});
-
-			// Valid User Model
-			user.validate(function(err) {
-				if (err.errors.name) done(err.errors.name);
-				else done();
 			});
 
 		});
