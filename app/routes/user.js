@@ -1,4 +1,4 @@
-module.exports = (app, project, passport, account) => {
+module.exports = (app, project, passport, account, mailServer) => {
 
   //Webpage entry point
   app.get("/",(req, res) => {
@@ -38,11 +38,16 @@ module.exports = (app, project, passport, account) => {
   //Create account logic
 	app.post("/createaccount", (req,res) => {
 		
+
 		var emails = req.body.email;
 		var types = req.body.type;
 		var schools = req.body.school;
 
-		// res.send(req.body);
+		if (!Array.isArray(emails) && !Array.isArray(types) && !Array.isArray(schools)){
+			emails = [emails];			
+			types = [types];			
+			schools = [schools];			
+		}
 
 		for (var i = emails.length - 1; i >= 0; i--) {
 			
@@ -53,7 +58,7 @@ module.exports = (app, project, passport, account) => {
 
 				console.log(user);
 
-				//mail.sendEmail("New GrantMan Account", user.email, "NewAccountEmail", user, () => {});
+				//mailServer.sendEmail("New GrantMan Account", user.email, "NewAccountEmail", user, () => {});
 
 			});
 
