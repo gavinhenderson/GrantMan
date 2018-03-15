@@ -42,6 +42,19 @@ describe("Accounts",function(){
 			done();
 		});
 	});
+
+	it("should return a user model", function(done){
+
+		var email = "TestUser@dundee.ac.uk";
+		var type = "Researcher";
+		var school = "School of Science and Engineering";
+
+		account.createUserWithToken(email, type, school, (err, user) => {
+			done(err);
+		});
+
+	});
+
 });
 
 describe("Passwords", function(){
