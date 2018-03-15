@@ -1,4 +1,4 @@
-module.exports = (app, project, passport, account, mailServer) => {
+module.exports = (app, project, passport, account, mailServer, db, password) => {
 
   //Webpage entry point
   app.get("/",(req, res) => {
@@ -58,13 +58,58 @@ module.exports = (app, project, passport, account, mailServer) => {
 
 				console.log(user);
 
-				//mailServer.sendEmail("New GrantMan Account", user.email, "NewAccountEmail", user, () => {});
+				mailServer.sendEmail("New GrantMan Account", user.email, "NewAccountEmail", {'user': user}, () => {});
 
 			});
 
 		}
 
 		res.redirect("/");
+
+	});
+
+	app.get("/activateaccount", (req, res) => {
+		var token = req.query.token;
+
+		if (token === undefined || token == null) {
+			res.status(500).send("Token Required");
+		}
+
+		db.model.User.findOne({
+			'token': token,
+		}, (err, user) => {
+			if(user == null) {
+				res.status(500).send("Token Required");
+			}
+
+			res.render("activateAccount", {user: user});
+
+		});
+
+	});
+
+	app.post("/activateaccount", (req, res) => {
+
+		var updatedInfo = {
+			'staffID': req.body.id,
+			'password': req.body.password,
+			'name': req.body.name
+		};
+
+		password.generateHash(updatedInfo.password, (err, res) => {
+
+			updatedInfo.password = res;
+
+			db.model.User.findOneAndUpdate({
+				'token': req.body.token,
+			}, updatedInfo, (err, user) => {
+				if(err) console.log(err);
+			});
+
+		});
+
+		res.redirect("/login");
+
 
 	});
 
