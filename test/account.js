@@ -48,7 +48,8 @@ describe("Passwords", function(){
 	it("Valid password changes without error", function(done){
 		db.model.User.findOne({"email": "ris@dundee.ac.uk"}, (err, obj) => {
 			account.changePassword(mockBody, obj, (err) => {
-				assert.ok(err, "a valid password is changed");
+				console.log(err);
+				assert.ok(!err, "a valid password is changed");
 				done();
 			});
 		});
@@ -56,8 +57,9 @@ describe("Passwords", function(){
 	it("Invalid password entered", function(done){
 		db.model.User.findOne({"email": "ris@dundee.ac.uk"}, (err, obj) => {
 			account.changePassword(failBody, obj, err => {
-				assert.ok(!err, "an invalid password is entered");
-				done(err);
+				console.log(err);
+				assert.ok(err, "an invalid password is entered");
+				done();
 			});
 		});
 	});
