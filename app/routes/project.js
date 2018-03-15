@@ -43,6 +43,34 @@ module.exports = (app, project, saveFile, subscribe) => {
 		res.render("createproject",{user:req.user});
 	});
 
+  //deletes a project when the delete button is pressed 
+  app.post("/project/:id/delete", (req,res) => {
+  		project.deleteProject(req.params.id,err => {
+  			if(err)
+  			{
+  				res.send(err); 
+  			}
+  			else
+  			{
+  				res.redirect("/"); 
+  			}
+  		})
+  });
+
+  //applies the edit to the project
+  app.post("/project/:id/edit", (req,res) => {
+  		project.editProject(req.params.id, req.body.title, req.body.description, err => {
+  			if(err)
+  			{
+  				res.send(err); 
+  			}
+  			else
+  			{
+  				res.redirect("/project/"+req.params.id); 
+  			}
+  		})
+  });
+
   //Takes the data of a new project and creates it
 	app.post("/createproject",(req,res) => {
 		project.createProject(req.user, req.body.title, req.body.description, function(newProject){

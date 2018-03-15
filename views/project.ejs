@@ -61,34 +61,124 @@
     <div class="tile is-parent is-9">
       <div class="tile is-child box">
         <div class="columns">
-          <div class="column is-four-fifths">
-            <p class="title"><%= project.title %></p>
+          <div class="column is-half">
+            <p class="title" id="projectTitle"><%= project.title %></p>
             <p class="subtitle"><%= project.author.name %></p>
           </div>
-
+          <div class="column" style = "text-align:right">
           <% if(!subscriber){ %>
           <form method="post" action="/project/<%- project.projectId %>/subscribe" id="subscribe"></form>
-          <div class="column">
-            <p style="float:right;"><a onclick="document.getElementById('subscribe').submit();" class="button hover-success" style="margin-left:10px">
+          <button onclick="document.getElementById('subscribe').submit();" class="button hover-success">Subscribe</button>
+           <!-- <p style="float:right;"><a onclick="document.getElementById('subscribe').submit();" class="button hover-success" style="margin-left:10px,">
               <span class="icon is-small">
                 <i class="fas fa-envelope"></i>
               </span>
               <span>Subscribe</span>
-            </a></p>
-          </div>
+            </a></p> -->
+       
           <% } else { %>
           <form method="post" action="/project/<%- project.projectId %>/unsubscribe" id="unsubscribe"></form>
-          <div class="column">
-            <p style="float:right;"><a onclick="document.getElementById('unsubscribe').submit();" class="button hover-danger" style="margin-left:10px">
+          <button onclick="document.getElementById('unsubscribe').submit();" class="button hover-danger">Unsubscribe</button>
+
+            <!--<p><a onclick="document.getElementById('unsubscribe').submit();" class="button hover-danger" style="margin-left:10px">
               <span class="icon is-small">
                 <i class="fas fa-envelope"></i>
               </span>
               <span>Unsubscribe</span>
-            </a></p>
-          </div>
+            </a></p>-->
+        
           <% } %>
+              <% if(project.author.staffID == user.staffID){ %>
+
+                <button onclick="showDeletedModal()" class="button hover-danger">Delete</button>
+          
+                <button id="edit" onclick="showEditModal()" class="button hover-success">Edit</button>
+                <%}%>             
+              </div>
+            
+            <div id="modalDelete" class="modal">
+              <div class="modal-background"></div>
+                <div class="modal-card">
+                  <header class="modal-card-head">
+                    <p class="modal-card-title">Delete Project</p>
+                    <button onclick="closeModal()" class="delete" aria-label="close"></button>
+                  </header>
+                  <section class="modal-card-body">
+                    <div class="field">
+                      <label class="label">Are you sure you want to delete this project?</label>
+                        <form method="POST" action= "/project/<%-project.projectId%>/delete">
+                        <button type="submit" class="button is-danger">Confirm</button>
+                        <button type="button" class="button" onclick="closeModal()">Cancel</button> 
+                      </form>                       
+                        </span>
+                    </div>
+                  </section>
+                  <footer class="modal-card-foot">
+                  </footer>
+                </div>
+          </div>
+        
         </div>
-        <p><%= project.description %></p>
+         <script type="text/javascript">
+                  function showDeletedModal()
+                  {
+                    $('#modalDelete').addClass('is-active');
+
+                  }
+
+                  function closeModal()
+                  {
+                    $('#modalDelete').removeClass('is-active');
+                  }
+          </script>
+
+            <div id="modalEdit" class="modal">
+              <div class="modal-background"></div>
+                <div class="modal-card">
+                  <header class="modal-card-head">
+                    <p class="modal-card-title">Edit Project</p>
+                    <button onclick="closeEditModal()" class="delete" aria-label="close"></button>
+                  </header>
+                  <section class="modal-card-body">
+                    <div class="field">
+                      <label class="label">Edit your project below:</label>
+                        <form method="POST" action= "/project/<%-project.projectId%>/edit">
+                          <label class="label">Project Title:</label>
+                        <input class="input" type="text" name="title" id="titleInput" value = "<%=project.title%>" placeholder="Please enter a project title" required>
+                        <label class="label">Project Description: </label>
+                        <textarea id = "projectDesc" class="textarea" name="description" placeholder="Enter your project description" required><%= project.description %></textarea>             
+                        </span>
+                    </div>
+                  </section>
+                  <footer class="modal-card-foot">
+                    <button type="submit" class="button is-success">Confirm</button>
+                    </form> 
+                    <button type="button" class="button" onclick="closeEditModal()">Cancel</button>
+                  </footer>
+                </div>
+          </div>
+
+          <script>
+            function showEditModal()
+            {
+              $('#modalEdit').addClass('is-active'); 
+              var projectName = $('#projectTitle').text();
+              $('#titleInput').val(projectName);
+              var projectDes = $('#projectDescription').text();
+              $('#projectDesc').val(projectDes);
+    
+                
+            }
+
+            function closeEditModal()
+              {
+               $('#modalEdit').removeClass('is-active');
+               //location.reload(); 
+              }
+          </script>
+
+
+        <p id="projectDescription"><%= project.description %></p>
       </div>
     </div>
     <div class="tile is-parent is-3">

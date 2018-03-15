@@ -1,4 +1,4 @@
-module.exports = (app,project,subscribe) => {
+module.exports = (app,project,subscribe,db) => {
 
   //Changes the status of the project
   app.post("/project/:id/status", (req, res) => {
