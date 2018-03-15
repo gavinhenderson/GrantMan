@@ -184,13 +184,20 @@
     <div class="tile is-parent is-3">
       <div class="tile is-child box">
         <p class="title">Downloads</p>
-        <p style="margin-bottom:20px"><a href="/files/<%-project._id%>/spreadsheet.xls" class="button is-success" style="margin-left:10px">
+        <div class ="select" style="float:right">
+          <select id="versionID" onchange="updateDownloadLink()" >
+            <% for(var i = versions-1; i > 0; i--){%>
+              <option value="<%- i %>"> V<%- i %> </option>
+            <%  }%>
+          </select>
+        </div>
+        <p style="margin-bottom:20px"><a id="spreadsheetDownload" href="/files/<%-project._id%>/spreadsheet.xls" class="button is-success" style="margin-left:10px">
           <span class="icon is-small">
             <i class="fas fa-download"></i>
           </span>
           <span>Spreadsheet</span>
         </a></p>
-        <p><a href="/files/<%-project._id%>/brief.doc"class="button is-success"  style="margin-left:10px">
+        <p><a id="briefDownload" href="/files/<%-project._id%>/brief.doc"class="button is-success"  style="margin-left:10px">
           <span class="icon is-small">
             <i class="fas fa-download"></i>
           </span>
@@ -235,7 +242,7 @@
       <div class="modal-card">
         <header class="modal-card-head">
           <p class="modal-card-title">Confirm Password</p>
-          <button onclick="closemodal()" class="delete" aria-label="close"></button>
+          <button onclick="closePassModal()" class="delete" aria-label="close"></button>
         </header>
         <section class="modal-card-body">
           <div class="field">
@@ -250,7 +257,7 @@
         </section>
         <footer class="modal-card-foot">
           <button type="submit" class="button is-success">Confirm</button>
-          <button type="button" class="button" onclick="closemodal()">Cancel</button>
+          <button type="button" class="button" onclick="closePassModal()">Cancel</button>
         </footer>
       </div>
     </div>
@@ -341,7 +348,7 @@
 
   <% include footer %>
   <script>
-
+  updateDownloadLink();
   var postURL = window.location.href
   if(postURL.endsWith('/')){
     postURL.substring(0, postURL.length - 1);
@@ -356,7 +363,13 @@
     $('#modal').addClass('is-active');
   }
 
-  function closemodal(){
+  function updateDownloadLink(){
+    var downloadLink = "/files/<%-project._id%>/" + $('#versionID').val();
+    $('#spreadsheetDownload').attr("href", downloadLink + "/spreadsheet.xls");
+    $('#briefDownload').attr("href", downloadLink + "/brief.doc");
+  }
+
+  function closePassModal(){
     $('#modal').removeClass('is-active');
   }
   </script>

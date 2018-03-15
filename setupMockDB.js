@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const db = require("./app/database.js")(mongoose);
 const fs = require("fs");
-const cu = require('./app/account.js'); //createuser
+const cu = require('./app/account.js')(db); //createuser
 const pw = require("./app/password.js");
 const pj = require("./app/project.js")(db);
 
@@ -15,7 +15,7 @@ if (process.argv[2] == "--drop" || process.argv[2] == "-d") {
 var i=0;
 
 var makeUserAync = (newUser, makeProj, cb) => {
-	cu.createUser(db, newUser, (err,user)=>{
+	cu.createUser(newUser, (err,user)=>{
 		if(err) console.log(err);
 		console.log(newUser.email+" has been created")
 		if(makeProj) { makeProjects(cb); }
