@@ -50,8 +50,8 @@ module.exports = (app, project, saveFile, subscribe) => {
 
 				project.updateStatus("RIS approval", null, newProject.projectId, req.user, (err) => {
 					if(err) console.log(err);
-					saveFile("spreadsheet.xls",req.files.spreadsheet,newProject._id,console.log);
-					saveFile("brief.doc",req.files.brief,newProject._id,console.log);
+					saveFile("spreadsheet.xls",req.files.spreadsheet,newProject._id, "1", console.log);
+					saveFile("brief.doc",req.files.brief,newProject._id, "1", console.log);
 					res.redirect("/project/"+newProject.projectId);
 				});
 			});
