@@ -5,6 +5,7 @@ var saveFile = require("./../files.js");
 var subscribe = require("./../subscribe.js");
 var mailServer = require("./../mailServer.js");
 var account = require('./../account.js');
+var password = require('./../password.js');
 
 // app/routes.js
 module.exports = (app, passport, db, mail) => {
@@ -16,5 +17,5 @@ module.exports = (app, passport, db, mail) => {
 	//Load routes
 	require('./project.js')(app, project, saveFile, subscribe);
 	require('./status.js')(app, project, subscribe);
-	require('./user.js')(app, project, passport, account, mailServer);
+	require('./user.js')(app, project, passport, account, mailServer, db, password);
 };
